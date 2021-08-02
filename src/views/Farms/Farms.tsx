@@ -1,8 +1,9 @@
 import React, { useEffect, useCallback, useState, useMemo, useRef } from 'react'
 import { Route, useRouteMatch, useLocation, NavLink } from 'react-router-dom'
 import BigNumber from 'bignumber.js'
+import { useAppDispatch } from 'state'
 import { useWeb3React } from '@web3-react/core'
-import { Image, Heading, RowType, Toggle, Text, Button, ArrowForwardIcon, Flex } from '@ricefarm/uikitv2'
+import { Image, Heading, RowType, Toggle, Text, Button, ArrowForwardIcon, Flex, useModal } from '@ricefarm/uikitv2'
 import { ChainId } from '@pancakeswap/sdk'
 import styled from 'styled-components'
 import FlexLayout from 'components/Layout/Flex'
@@ -16,7 +17,7 @@ import { getFarmApr } from 'utils/apr'
 import { orderBy } from 'lodash'
 import isArchivedPid from 'utils/farmHelpers'
 import { latinise } from 'utils/latinise'
-import PageHeader from 'components/PageHeader'
+// import PageHeader from 'components/PageHeader'
 import SearchInput from 'components/SearchInput'
 import Select, { OptionProps } from 'components/Select/Select'
 import Loading from 'components/Loading'
@@ -26,6 +27,9 @@ import FarmTabButtons from './components/FarmTabButtons'
 import { RowProps } from './components/FarmTable/Row'
 import ToggleView from './components/ToggleView/ToggleView'
 import { DesktopColumnSchema, ViewMode } from './components/types'
+import PageHeader from './components/PageHeader'
+import NoticeModal from './components/NoticeModal'
+
 
 const ControlContainer = styled.div`
   display: flex;
@@ -111,7 +115,11 @@ const getDisplayApr = (cakeRewardsApr?: number, lpRewardsApr?: number) => {
   return null
 }
 
-const Farms: React.FC = () => {
+export interface FarmsProps {
+  tokenMode?: boolean
+}
+
+const Farms: React.FC<FarmsProps> = (farmsProps) => {
   const { path } = useRouteMatch()
   const { pathname } = useLocation()
   const { t } = useTranslation()
@@ -122,10 +130,16 @@ const Farms: React.FC = () => {
   const { account } = useWeb3React()
   const [sortOption, setSortOption] = useState('hot')
   const chosenFarmsLength = useRef(0)
+  const dispatch = useAppDispatch()
+
+  const [onNoticeModal] = useModal(<NoticeModal />, false)
+  const [showModal, setShowModal] = useState(false)
 
   const isArchived = pathname.includes('archived')
   const isInactive = pathname.includes('history')
   const isActive = !isInactive && !isArchived
+
+  const { tokenMode } = farmsProps
 
   usePollFarmsData(isArchived)
 
@@ -136,7 +150,13 @@ const Farms: React.FC = () => {
   const [stakedOnly, setStakedOnly] = useState(!isActive)
   useEffect(() => {
     setStakedOnly(!isActive)
-  }, [isActive])
+
+    if (!showModal) {
+      dispatch(onNoticeModal)
+      setShowModal(true)
+    }
+
+  }, [isActive, dispatch, onNoticeModal, showModal])
 
   const activeFarms = farmsLP.filter((farm) => farm.pid !== 0 && farm.multiplier !== '0X' && !isArchivedPid(farm.pid))
   const inactiveFarms = farmsLP.filter((farm) => farm.pid !== 0 && farm.multiplier === '0X' && !isArchivedPid(farm.pid))
@@ -382,7 +402,7 @@ const Farms: React.FC = () => {
 
   return (
     <>
-      <PageHeader>
+      {/* <PageHeader>
         <Heading as="h1" scale="xxl" color="secondary" mb="24px">
           {t('Farms')}
         </Heading>
@@ -397,7 +417,13 @@ const Farms: React.FC = () => {
             <ArrowForwardIcon color="primary" />
           </Button>
         </NavLink>
-      </PageHeader>
+      </PageHeader> */}
+            <PageHeader
+        title={tokenMode ? 'Rice Paddy' : 'Farms'}
+        subtitle={tokenMode ? 'Stake Tokens to earn RICE.' : 'Stake Liquidity Pool (LP) tokens to earn RICE.'}
+        text={tokenMode ? 'Warning: RICE and TS tax applies to staking/unstaking' : null}
+        bgImage={tokenMode ? 'pool-header.svg' : 'farm-header.svg'}
+      />
       <Page>
         <ControlContainer>
           <ViewControls>

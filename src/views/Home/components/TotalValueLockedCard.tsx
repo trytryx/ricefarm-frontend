@@ -16,7 +16,7 @@ const TotalValueLockedCard = () => {
   const tvl = data ? data.tvl.toLocaleString('en-US', { maximumFractionDigits: 0 }) : null
 
   return (
-    <StyledTotalValueLockedCard>
+    <StyledTotalValueLockedCard mt="16px">
       <CardBody>
         <Heading scale="lg" mb="24px">
           {t('Total Value Locked (TVL)')}

@@ -17,7 +17,7 @@ const NowLive = styled(Text)`
 `
 
 const Wrapper = styled.div`
-  background-image: linear-gradient(#7645d9, #452a7a);
+  background-image: linear-gradient(#1baad3, #452a7a);
   max-height: max-content;
   overflow: hidden;
   ${({ theme }) => theme.mediaQueries.md} {

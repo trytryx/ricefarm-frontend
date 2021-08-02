@@ -12,6 +12,7 @@ import PredictionPromotionCard from 'views/Home/components/PredictionPromotionCa
 import LotteryPromotionCard from 'views/Home/components/LotteryPromotionCard'
 import LotteryBanner from 'views/Home/components/LotteryBanner'
 import useFetchLotteryForPromos from 'views/Home/hooks/useFetchLotteryForPromos'
+import TwitterCard from 'views/Home/components/TwitterCard'
 
 const Hero = styled.div`
   align-items: center;
@@ -96,12 +97,24 @@ const Home: React.FC = () => {
       <Page>
         <Hero>
           <Heading as="h1" scale="xl" mb="24px" color="secondary">
-            {t('PancakeSwap')}
+            {t('Rice Farm')}
           </Heading>
-          <Text>{t('The #1 AMM and yield farm on Binance Smart Chain.')}</Text>
+          <Text>{t('The next evolution of AMM and yield farming on Binance Smart Chain.')}</Text>
         </Hero>
         <div>
           <Cards>
+            <FarmStakingCard />
+            <TwitterCard />
+          </Cards>
+          <Cards>
+            <div>
+              <EarnAPRCard />
+              <TotalValueLockedCard />
+            </div>
+            <CakeStats />
+            {/* <EarnAssetCard /> */}
+          </Cards>
+          {/* <Cards>
             <FarmStakingCard />
             <PredictionPromotionCard />
           </Cards>
@@ -113,7 +126,7 @@ const Home: React.FC = () => {
           <Cards>
             <CakeStats />
             <TotalValueLockedCard />
-          </Cards>
+          </Cards> */}
         </div>
       </Page>
     </>

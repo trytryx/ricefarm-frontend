@@ -13,8 +13,12 @@ const getGradient = (isDark: boolean) => {
 }
 
 const StyledHero = styled.div`
-  background: ${({ theme }) => getGradient(theme.isDark)};
-  padding-bottom: 40px;
+  background-color: ${({ theme }) => (theme.isDark ? '#396a63' : '#e9faff')};
+  background-image: url('/images/ifo-header.svg');
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: contain;
+  padding-bottom: 60px;
   padding-top: 40px;
 `
 
@@ -32,15 +36,14 @@ const Hero = () => {
     <Box mb="32px">
       <StyledHero>
         <Container>
-          <Heading as="h1" scale="xl" mb="24px">
-            {t('IFO: Initial Farm Offerings')}
+          <Heading as="h1" scale="xl" mb="8px">
+            {t('IFO: Initial RiceFarm Offerings')}
           </Heading>
-          <Text bold fontSize="20px">
+          <Text bold fontSize="20px" mb="8px">
             {t('Buy new tokens with a brand new token sale model.')}
           </Text>
         </Container>
       </StyledHero>
-      <CurtainBottom />
     </Box>
   )
 }
