@@ -9,6 +9,7 @@ import {
   fetchFarmUserAllowances,
   fetchFarmUserTokenBalances,
   fetchFarmUserStakedBalances,
+  fetchFarmUserCanHarvest,
 } from './fetchFarmUser'
 import { FarmsState, Farm } from '../types'
 
@@ -61,8 +62,12 @@ export const fetchFarmUserDataAsync = createAsyncThunk<FarmUserDataResponse[], {
     const farmsToFetch = farmsConfig.filter((farmConfig) => pids.includes(farmConfig.pid))
     const userFarmAllowances = await fetchFarmUserAllowances(account, farmsToFetch)
     const userFarmTokenBalances = await fetchFarmUserTokenBalances(account, farmsToFetch)
-    const userStakedBalances = await fetchFarmUserStakedBalances(account, farmsToFetch)
+    const { parsedStakedBalances: userStakedBalances, nextHarvestUntil } = await fetchFarmUserStakedBalances(
+      account,
+      farmsToFetch,
+    )
     const userFarmEarnings = await fetchFarmUserEarnings(account, farmsToFetch)
+    const userCanHarvest = await fetchFarmUserCanHarvest(account, farmsToFetch)
 
     return userFarmAllowances.map((farmAllowance, index) => {
       return {
@@ -71,6 +76,8 @@ export const fetchFarmUserDataAsync = createAsyncThunk<FarmUserDataResponse[], {
         tokenBalance: userFarmTokenBalances[index],
         stakedBalance: userStakedBalances[index],
         earnings: userFarmEarnings[index],
+        nextHarvest: nextHarvestUntil[index],
+        canHarvest: userCanHarvest[index],
       }
     })
   },
