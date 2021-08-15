@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react'
 import styled from 'styled-components'
 import BigNumber from 'bignumber.js'
-import { Button, Flex, Text } from '@ricefarm/uikitv2'
+import { Button, Flex, Text, TimerIcon, useModal } from '@ricefarm/uikitv2'
 import { getAddress } from 'utils/addressHelpers'
 import { useAppDispatch } from 'state'
 import { fetchFarmUserDataAsync } from 'state/farms'
@@ -9,9 +9,14 @@ import { Farm } from 'state/types'
 import { useTranslation } from 'contexts/Localization'
 import { useERC20 } from 'hooks/useContract'
 import ConnectWalletButton from 'components/ConnectWalletButton'
+import HarvestTimerModal from 'views/Farms/components/FarmCard/HarvestTimerModal'
 import StakeAction from './StakeAction'
 import HarvestAction from './HarvestAction'
 import useApproveFarm from '../../hooks/useApproveFarm'
+
+const TimerIconLink = styled(TimerIcon)`
+  cursor: pointer;
+`
 
 const Action = styled.div`
   padding-top: 16px;
@@ -35,6 +40,7 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
     tokenBalance: tokenBalanceAsString = 0,
     stakedBalance: stakedBalanceAsString = 0,
     earnings: earningsAsString = 0,
+    canHarvest,
   } = farm.userData || {}
   const allowance = new BigNumber(allowanceAsString)
   const tokenBalance = new BigNumber(tokenBalanceAsString)
@@ -43,6 +49,10 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
   const lpAddress = getAddress(lpAddresses)
   const isApproved = account && allowance && allowance.isGreaterThan(0)
   const dispatch = useAppDispatch()
+
+  console.log('userdata',farm.userData)
+
+  const [onHarvestTimer] = useModal(<HarvestTimerModal farm={farm} />)
 
   const lpContract = useERC20(lpAddress)
 
@@ -77,13 +87,16 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
 
   return (
     <Action>
-      <Flex>
-        <Text bold textTransform="uppercase" color="secondary" fontSize="12px" pr="4px">
-          CAKE
-        </Text>
-        <Text bold textTransform="uppercase" color="textSubtle" fontSize="12px">
-          {t('Earned')}
-        </Text>
+      <Flex justifyContent="space-between" mb="12px">
+        <div>
+          <Text bold textTransform="uppercase" color="secondary" fontSize="12px" pr="4px">
+            RICE
+          </Text>
+          <Text bold textTransform="uppercase" color="textSubtle" fontSize="12px">
+            {t('Earned')}
+          </Text>
+        </div>
+        {earnings.gt(0) && !canHarvest && <TimerIconLink onClick={onHarvestTimer} />}
       </Flex>
       <HarvestAction earnings={earnings} pid={pid} />
       <Flex>
