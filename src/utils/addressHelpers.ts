@@ -8,6 +8,12 @@ export const getAddress = (address: Address): string => {
   return address[chainId] ? address[chainId] : address[ChainId.MAINNET]
 }
 
+export const getRiceReferralAddress = () => {
+  return getAddress(addresses.riceReferral)
+}
+export const getRiceVaultAddress = () => {
+  return getAddress(addresses.riceVault)
+}
 export const getCakeAddress = () => {
   return getAddress(tokens.rice.address)
 }

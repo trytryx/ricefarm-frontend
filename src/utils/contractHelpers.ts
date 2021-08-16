@@ -1,3 +1,6 @@
+import Web3 from 'web3'
+import { AbiItem } from 'web3-utils'
+import web3NoAccount from 'utils/web3'
 import { ethers } from 'ethers'
 import { simpleRpcProvider } from 'utils/providers'
 import { poolsConfig } from 'config/constants'
@@ -18,6 +21,7 @@ import {
   getTradingCompetitionAddress,
   getEasterNftAddress,
   getCakeVaultAddress,
+  getRiceReferralAddress,
   getPredictionsAddress,
   getChainlinkOracleAddress,
   getMulticallAddress,
@@ -37,6 +41,7 @@ import lpTokenAbi from 'config/abi/lpToken.json'
 import cakeAbi from 'config/abi/cake.json'
 import ifoV1Abi from 'config/abi/ifoV1.json'
 import ifoV2Abi from 'config/abi/ifoV2.json'
+import riceReferralAbi from 'config/abi/riceReferral.json'
 import pointCenterIfo from 'config/abi/pointCenterIfo.json'
 import lotteryV2Abi from 'config/abi/lotteryV2.json'
 import masterChef from 'config/abi/masterchef.json'
@@ -58,6 +63,10 @@ import { ChainLinkOracleContract, FarmAuctionContract, PredictionsContract } fro
 const getContract = (abi: any, address: string, signer?: ethers.Signer | ethers.providers.Provider) => {
   const signerOrProvider = signer ?? simpleRpcProvider
   return new ethers.Contract(address, abi, signerOrProvider)
+}
+
+export const getReferralContract = (web3?: Web3) => {
+  return getContractV1(riceReferralAbi, getRiceReferralAddress(), web3)
 }
 
 const getContractV1 = (abi: any, address: string, web3?: Web3) => {
