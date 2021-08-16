@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import useWeb3 from 'hooks/useWeb3'
 import {
   getBep20Contract,
   getCakeContract,
@@ -24,6 +25,8 @@ import {
   getBunnySpecialCakeVaultContract,
   getBunnySpecialPredictionContract,
   getFarmAuctionContract,
+  getReferralContract,
+  getIfoV2ContractV1,
 } from 'utils/contractHelpers'
 
 // Imports below migrated from Exchange useContract.ts
@@ -50,6 +53,11 @@ export const useIfoV1Contract = (address: string) => {
 export const useIfoV2Contract = (address: string) => {
   const { library } = useActiveWeb3React()
   return useMemo(() => getIfoV2Contract(address, library.getSigner()), [address, library])
+}
+
+export const useIfoV2ContractV1 = (address: string) => {
+  const web3 = useWeb3()
+  return useMemo(() => getIfoV2ContractV1(address, web3), [address, web3])
 }
 
 export const useERC20 = (address: string) => {
@@ -227,4 +235,9 @@ export function usePairContract(pairAddress?: string, withSignerIfPossible?: boo
 export function useMulticallContract(): Contract | null {
   const { chainId } = useActiveWeb3React()
   return useContract(chainId && MULTICALL_NETWORKS[chainId], MULTICALL_ABI, false)
+}
+
+export const useReferralContract = () => {
+  const web3 = useWeb3()
+  return useMemo(() => getReferralContract(web3), [web3])
 }

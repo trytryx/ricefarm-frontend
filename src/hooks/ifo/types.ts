@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js'
-import { Contract } from 'ethers'
+import { Contract } from 'web3-eth-contract'
 import { IfoStatus, PoolIds } from 'config/constants/types'
 
 // PoolCharacteristics retrieved from the contract

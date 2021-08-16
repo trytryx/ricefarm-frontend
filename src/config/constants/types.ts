@@ -26,6 +26,7 @@ interface IfoPoolInfo {
   raiseAmount: string
   cakeToBurn: string
   distributionRatio: number // Range [0-1]
+  tokenOfferingPrice?: number
 }
 
 export interface Ifo {
@@ -34,12 +35,14 @@ export interface Ifo {
   address: string
   name: string
   currency: Token
+  currency2?: Token
   token: Token
   releaseBlockNumber: number
   articleUrl: string
   campaignId: string
   tokenOfferingPrice: number
   version: number
+  tokenListingPrice?: number
   [PoolIds.poolBasic]?: IfoPoolInfo
   [PoolIds.poolUnlimited]: IfoPoolInfo
 }

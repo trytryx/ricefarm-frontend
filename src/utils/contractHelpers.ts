@@ -60,6 +60,14 @@ const getContract = (abi: any, address: string, signer?: ethers.Signer | ethers.
   return new ethers.Contract(address, abi, signerOrProvider)
 }
 
+const getContractV1 = (abi: any, address: string, web3?: Web3) => {
+  const _web3 = web3 ?? web3NoAccount
+  return new _web3.eth.Contract(abi as unknown as AbiItem, address)
+}
+export const getIfoV2ContractV1 = (address: string, web3?: Web3) => {
+  return getContractV1(ifoV2Abi, address, web3)
+}
+
 export const getBep20Contract = (address: string, signer?: ethers.Signer | ethers.providers.Provider) => {
   return getContract(bep20Abi, address, signer)
 }

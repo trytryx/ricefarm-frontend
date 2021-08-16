@@ -8,6 +8,7 @@ import {
   HelpIcon,
   useTooltip,
   Button,
+  Image,
   AutoRenewIcon,
   BunnyPlaceholderIcon,
 } from '@ricefarm/uikitv2'
@@ -25,9 +26,11 @@ import { SkeletonCardTokens } from './Skeletons'
 interface TokenSectionProps extends FlexProps {
   primaryToken?: Token
   secondaryToken?: Token
+  img?: string
 }
 
-const TokenSection: React.FC<TokenSectionProps> = ({ primaryToken, secondaryToken, children, ...props }) => {
+
+const TokenSection: React.FC<TokenSectionProps> = ({ primaryToken, secondaryToken, img, children, ...props }) => {
   const renderTokenComponent = () => {
     if (!primaryToken) {
       return <BunnyPlaceholderIcon width={32} mr="16px" />
@@ -106,16 +109,16 @@ const IfoCardTokens: React.FC<IfoCardTokensProps> = ({
     if (isLoading) {
       return <SkeletonCardTokens />
     }
-    if (account && !hasProfile) {
-      if (publicIfoData.status === 'finished') {
-        return <Text textAlign="center">{t('Activate PancakeSwap Profile to take part in next IFO‘s!')}</Text>
-      }
-      return <Text textAlign="center">{t('You need an active PancakeSwap Profile to take part in an IFO!')}</Text>
-    }
+    // if (account && !hasProfile) {
+    //   if (publicIfoData.status === 'finished') {
+    //     return <Text textAlign="center">{t('Activate PancakeSwap Profile to take part in next IFO‘s!')}</Text>
+    //   }
+    //   return <Text textAlign="center">{t('You need an active PancakeSwap Profile to take part in an IFO!')}</Text>
+    // }
     if (publicIfoData.status === 'coming_soon') {
       return (
         <>
-          <TokenSection>
+          <TokenSection img="/images/rice-placeholder.svg">
             <Label>{t('On sale')}</Label>
             <Value>{ifo[poolId].saleAmount}</Value>
           </TokenSection>
@@ -157,7 +160,7 @@ const IfoCardTokens: React.FC<IfoCardTokensProps> = ({
     if (publicIfoData.status === 'finished') {
       return userPoolCharacteristics.amountTokenCommittedInLP.isEqualTo(0) ? (
         <Flex flexDirection="column" alignItems="center">
-          <BunnyPlaceholderIcon width={80} mb="16px" />
+          <Image src="/images/rice-placeholder.svg" width={80} height={80} mb="16px" />
           <Text>{t('You didn’t participate in this sale!')}</Text>
         </Flex>
       ) : (

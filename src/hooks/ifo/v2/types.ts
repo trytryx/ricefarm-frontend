@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js'
-import { Contract } from 'ethers'
+import { Contract } from 'web3-eth-contract'
 import { IfoStatus, PoolIds } from 'config/constants/types'
 
 // PoolCharacteristics retrieved from the contract
@@ -23,9 +23,7 @@ export interface PublicIfoData {
   endBlockNum: number
   currencyPriceInUSD: BigNumber
   currencyPriceInUSD2?: BigNumber
-  numberPoints?: number
-  fetchIfoData: () => void
-  [PoolIds.poolBasic]?: PoolCharacteristics
+  [PoolIds.poolBasic]: PoolCharacteristics
   [PoolIds.poolUnlimited]: PoolCharacteristics
 }
 
@@ -41,7 +39,7 @@ export interface UserPoolCharacteristics {
 
 // Use only inside the useGetWalletIfoData hook
 export interface WalletIfoState {
-  [PoolIds.poolBasic]?: UserPoolCharacteristics
+  [PoolIds.poolBasic]: UserPoolCharacteristics
   [PoolIds.poolUnlimited]: UserPoolCharacteristics
 }
 
@@ -50,6 +48,6 @@ export interface WalletIfoData extends WalletIfoState {
   allowance: BigNumber
   contract: Contract
   setPendingTx: (status: boolean, poolId: PoolIds) => void
+  addUserContributedAmount: (amount: BigNumber, poolId: PoolIds) => void
   setIsClaimed: (poolId: PoolIds) => void
-  fetchIfoData: () => void
 }
