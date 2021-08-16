@@ -16,7 +16,7 @@ import {
   Link,
   HelpIcon,
 } from '@ricefarm/uikitv2'
-import { BASE_BSC_SCAN_URL } from 'config'
+import { BASE_BSC_SCAN_URL, BASE_URL } from 'config'
 import { useBlock } from 'state/block/hooks'
 import { useCakeVault } from 'state/pools/hooks'
 import { Pool } from 'state/types'
@@ -173,7 +173,12 @@ const ExpandedFooter: React.FC<ExpandedFooterProps> = ({ pool, account }) => {
             variant="text"
             p="0"
             height="auto"
-            onClick={() => registerToken(tokenAddress, earningToken.symbol, earningToken.decimals)}
+            onClick={() => registerToken(
+              tokenAddress, 
+              earningToken.symbol, 
+              earningToken.decimals,
+              `${BASE_URL}/images/tokens/${earningToken.symbol}.png`
+              )}
           >
             <Text color="primary" fontSize="14px">
               {t('Add to Metamask')}

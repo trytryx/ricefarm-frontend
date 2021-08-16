@@ -13,7 +13,7 @@ import {
   TimerIcon,
   useTooltip,
 } from '@ricefarm/uikitv2'
-import { BASE_BSC_SCAN_URL } from 'config'
+import { BASE_BSC_SCAN_URL, BASE_URL } from 'config'
 import { getBscScanLink } from 'utils'
 import { useBlock } from 'state/block/hooks'
 import { useCakeVault } from 'state/pools/hooks'
@@ -258,7 +258,12 @@ const ActionPanel: React.FC<ActionPanelProps> = ({ account, pool, userDataLoaded
               variant="text"
               p="0"
               height="auto"
-              onClick={() => registerToken(tokenAddress, earningToken.symbol, earningToken.decimals)}
+              onClick={() => registerToken(
+                tokenAddress, 
+                earningToken.symbol, 
+                earningToken.decimals,
+                `${BASE_URL}/images/tokens/${earningToken.symbol}.png`
+                )}
             >
               <Text color="primary">{t('Add to Metamask')}</Text>
               <MetamaskIcon ml="4px" />

@@ -46,7 +46,12 @@ export const setupNetwork = async () => {
  * @param tokenDecimals
  * @returns {boolean} true if the token has been added, false otherwise
  */
-export const registerToken = async (tokenAddress: string, tokenSymbol: string, tokenDecimals: number) => {
+export const registerToken = async (
+  tokenAddress: string, 
+  tokenSymbol: string, 
+  tokenDecimals: number,
+  tokenImage: string,
+  ) => {
   const tokenAdded = await window.ethereum.request({
     method: 'wallet_watchAsset',
     params: {

@@ -14,6 +14,7 @@ import {
   Modal,
   InjectedModalProps,
 } from '@ricefarm/uikitv2'
+import { BASE_URL } from 'config'
 import { registerToken } from 'utils/wallet'
 import { useTranslation } from 'contexts/Localization'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
@@ -90,7 +91,12 @@ function TransactionSubmittedContent({
               variant="tertiary"
               mt="12px"
               width="fit-content"
-              onClick={() => registerToken(token.address, token.symbol, token.decimals)}
+              onClick={() => registerToken(
+                token.address, 
+                token.symbol, 
+                token.decimals,
+                `${BASE_URL}/images/tokens/${token.symbol}.png`
+                )}
             >
               <RowFixed>
                 {t('Add %asset% to Metamask', { asset: currencyToAdd.symbol })}
