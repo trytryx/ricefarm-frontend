@@ -4,6 +4,7 @@ import styled, { keyframes } from 'styled-components'
 import { Flex, Text, Skeleton } from '@ricefarm/uikitv2'
 import { Farm } from 'state/types'
 import { getBscScanLink } from 'utils'
+import { getBscScanAddressUrl } from 'utils/bscscan'
 import { useTranslation } from 'contexts/Localization'
 import ExpandableSectionButton from 'components/ExpandableSectionButton'
 import { BASE_ADD_LIQUIDITY_URL } from 'config'
@@ -80,7 +81,7 @@ interface FarmCardProps {
 
 const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePrice, account }) => {
   const { t } = useTranslation()
-
+  const chainId = process.env.REACT_APP_CHAIN_ID
   const [showExpandableSection, setShowExpandableSection] = useState(false)
 
   const totalValueFormatted =
@@ -158,8 +159,12 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
       <ExpandingWrapper expanded={showExpandableSection}>
         <DetailsSection
           removed={removed}
-          bscScanAddress={getBscScanLink(lpAddress, 'address')}
-          infoAddress={`https://pancakeswap.info/pool/${lpAddress}`}
+          bscScanAddress={
+            farm.isTokenOnly
+              ? getBscScanAddressUrl(farm.tokenAddresses[chainId])
+              : getBscScanAddressUrl(farm.lpAddresses[chainId])
+          }
+          infoAddress={farm.isTokenOnly ? null : `https://pancakeswap.info/pair/${lpAddress}`}
           totalValueFormatted={totalValueFormatted}
           lpLabel={lpLabel}
           addLiquidityUrl={addLiquidityUrl}
