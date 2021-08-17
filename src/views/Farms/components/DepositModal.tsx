@@ -5,7 +5,7 @@ import { ModalActions, ModalInput } from 'components/Modal'
 import { useTranslation } from 'contexts/Localization'
 import { getFullDisplayBalance } from 'utils/formatBalance'
 import useToast from 'hooks/useToast'
-import {DEFAULT_TOKEN_DECIMAL_PLACES, TESLA_SAFE_DECIMAL_PLACES} from 'config';
+import { DEFAULT_TOKEN_DECIMAL_PLACES, TESLA_SAFE_DECIMAL_PLACES } from 'config'
 
 interface DepositModalProps {
   max: BigNumber

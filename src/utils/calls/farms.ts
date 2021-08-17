@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
-import {DEFAULT_GAS_LIMIT, DEFAULT_TOKEN_DECIMAL, TS_TOKEN_DECIMAL} from 'config'
-import {getReferrer} from 'utils/referralHelpers'
+import { DEFAULT_GAS_LIMIT, DEFAULT_TOKEN_DECIMAL, TS_TOKEN_DECIMAL } from 'config'
+import { getReferrer } from 'utils/referralHelpers'
 
 const options = {
   gasLimit: DEFAULT_GAS_LIMIT,

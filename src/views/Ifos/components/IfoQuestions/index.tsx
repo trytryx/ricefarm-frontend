@@ -32,7 +32,6 @@ const IfoQuestions = () => {
 
   return (
     <Flex alignItems={['center', null, null, 'start']} flexDirection={['column', null, null, 'row']}>
-
       <DetailsWrapper>
         <Card>
           <CardHeader>

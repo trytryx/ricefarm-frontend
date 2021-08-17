@@ -143,7 +143,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
 
   const [stakedOnly, setStakedOnly] = useUserFarmStakedOnly(isActive)
 
-  const activeFarms = farmsLP.filter((farm) =>  farm.multiplier !== '0X' && !farm.hide)
+  const activeFarms = farmsLP.filter((farm) => farm.multiplier !== '0X' && !farm.hide)
   const inactiveFarms = farmsLP.filter((farm) => farm.pid !== 0 && farm.multiplier === '0X' && !farm.hide)
   const archivedFarms = farmsLP.filter((farm) => isArchivedPid(farm.pid))
 
