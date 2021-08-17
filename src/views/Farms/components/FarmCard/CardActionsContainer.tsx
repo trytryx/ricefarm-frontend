@@ -50,8 +50,6 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
   const isApproved = account && allowance && allowance.isGreaterThan(0)
   const dispatch = useAppDispatch()
 
-  console.log('userdata',farm.userData)
-
   const [onHarvestTimer] = useModal(<HarvestTimerModal farm={farm} />)
 
   const lpContract = useERC20(lpAddress)

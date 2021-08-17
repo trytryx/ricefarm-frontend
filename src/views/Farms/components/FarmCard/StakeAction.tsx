@@ -10,6 +10,7 @@ import { useAppDispatch } from 'state'
 import { fetchFarmUserDataAsync } from 'state/farms'
 import { useLpTokenPrice } from 'state/farms/hooks'
 import { getBalanceAmount, getBalanceNumber, getFullDisplayBalance } from 'utils/formatBalance'
+import {DEFAULT_TOKEN_DECIMAL_PLACES, TESLA_SAFE_DECIMAL_PLACES} from 'config'
 import DepositModal from '../DepositModal'
 import WithdrawModal from '../WithdrawModal'
 import useUnstakeFarms from '../../hooks/useUnstakeFarms'
@@ -56,7 +57,8 @@ const StakeAction: React.FC<FarmCardActionsProps> = ({
   }
 
   const displayBalance = useCallback(() => {
-    const stakedBalanceBigNumber = getBalanceAmount(stakedBalance)
+    const decimals = pid === 1 ? TESLA_SAFE_DECIMAL_PLACES : DEFAULT_TOKEN_DECIMAL_PLACES
+    const stakedBalanceBigNumber = getBalanceAmount(stakedBalance, decimals)
     if (stakedBalanceBigNumber.gt(0) && stakedBalanceBigNumber.lt(0.0000001)) {
       return stakedBalanceBigNumber.toFixed(10, BigNumber.ROUND_DOWN)
     }
@@ -64,7 +66,7 @@ const StakeAction: React.FC<FarmCardActionsProps> = ({
       return getFullDisplayBalance(stakedBalance).toLocaleString()
     }
     return stakedBalanceBigNumber.toFixed(3, BigNumber.ROUND_DOWN)
-  }, [stakedBalance])
+  }, [stakedBalance,pid])
 
   const [onPresentDeposit] = useModal(
     <DepositModal max={tokenBalance} onConfirm={handleStake} tokenName={tokenName} addLiquidityUrl={addLiquidityUrl} />,
