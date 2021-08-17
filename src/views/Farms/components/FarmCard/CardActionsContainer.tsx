@@ -9,10 +9,11 @@ import { Farm } from 'state/types'
 import { useTranslation } from 'contexts/Localization'
 import { useERC20 } from 'hooks/useContract'
 import ConnectWalletButton from 'components/ConnectWalletButton'
-import HarvestTimerModal from 'views/Farms/components/FarmCard/HarvestTimerModal'
+// import HarvestTimerModal from 'views/Farms/components/FarmCard/HarvestTimerModal'
 import StakeAction from './StakeAction'
 import HarvestAction from './HarvestAction'
 import useApproveFarm from '../../hooks/useApproveFarm'
+import WithdrawalFeeTimer from './WithdrawalFeeTimer'
 
 const TimerIconLink = styled(TimerIcon)`
   cursor: pointer;
@@ -50,7 +51,16 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
   const isApproved = account && allowance && allowance.isGreaterThan(0)
   const dispatch = useAppDispatch()
 
-  const [onHarvestTimer] = useModal(<HarvestTimerModal farm={farm} />)
+  // const [onHarvestTimer] = useModal(<HarvestTimerModal farm={farm} />)
+
+  const calcSecondsLeft = (unixTimeStamp) => {
+    const difference = +new Date(parseInt(unixTimeStamp) * 1000) - +new Date()
+    return (unixTimeStamp !== null && unixTimeStamp > 0) ? difference : 0
+  }
+  
+  const nextHarvestValue = farm.userData.nextHarvest ? farm.userData.nextHarvest : 0
+  const [secondsRemaining, setSecondsRemaining] = useState(calcSecondsLeft(nextHarvestValue))
+  
 
   const lpContract = useERC20(lpAddress)
 
@@ -94,7 +104,9 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
             {t('Earned')}
           </Text>
         </div>
-        {earnings.gt(0) && !canHarvest && <TimerIconLink onClick={onHarvestTimer} />}
+       
+        {earnings.gt(0) && !canHarvest &&  <WithdrawalFeeTimer secondsRemaining={secondsRemaining} />}
+        {/* {earnings.gt(0) && !canHarvest && <TimerIconLink onClick={onHarvestTimer} />} */}
       </Flex>
       <HarvestAction earnings={earnings} pid={pid} />
       <Flex>
