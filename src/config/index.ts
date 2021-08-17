@@ -5,6 +5,7 @@ import { BIG_TEN } from 'utils/bigNumber'
 BigNumber.config({
   EXPONENTIAL_AT: 1000,
   DECIMAL_PLACES: 80,
+  ROUNDING_MODE: BigNumber.ROUND_FLOOR,
 })
 
 export const BSC_BLOCK_TIME = 3
@@ -28,6 +29,10 @@ export const BASE_URL = 'https://pancakeswap.finance'
 export const BASE_ADD_LIQUIDITY_URL = `${BASE_URL}/add`
 export const BASE_LIQUIDITY_POOL_URL = `${BASE_URL}/pool`
 export const BASE_BSC_SCAN_URL = BASE_BSC_SCAN_URLS[ChainId.MAINNET]
+export const BASE_V1_EXCHANGE_URL = 'https://teslasafe.ricefarm.fi'
+export const BASE_V1_ADD_LIQUIDITY_URL = `${BASE_V1_EXCHANGE_URL}/#/add`
+export const BASE_V1_LIQUIDITY_POOL_URL = `${BASE_V1_EXCHANGE_URL}/#/pool`
+export const BASE_V1_SWAP_URL = `${BASE_V1_EXCHANGE_URL}/#/swap`
 export const LOTTERY_MAX_NUMBER_OF_TICKETS = 50
 export const LOTTERY_TICKET_PRICE = 1
 export const DEFAULT_TOKEN_DECIMAL = BIG_TEN.pow(18)
