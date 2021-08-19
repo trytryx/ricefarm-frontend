@@ -7,7 +7,7 @@ import { getBscScanLink } from 'utils'
 import { getBscScanAddressUrl } from 'utils/bscscan'
 import { useTranslation } from 'contexts/Localization'
 import ExpandableSectionButton from 'components/ExpandableSectionButton'
-import { BASE_ADD_LIQUIDITY_URL } from 'config'
+import { BASE_ADD_LIQUIDITY_URL, BASE_V1_ADD_LIQUIDITY_URL, BASE_V1_SWAP_TOKEN_URL, BASE_SWAP_TOKEN_URL } from 'config'
 import { getAddress } from 'utils/addressHelpers'
 import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
 import DetailsSection from './DetailsSection'
@@ -96,7 +96,14 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
     quoteTokenAddress: farm.quoteToken.address,
     tokenAddress: farm.token.address,
   })
-  const addLiquidityUrl = `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
+  // const addLiquidityUrl = `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
+  const addLiquidityUrl = farm.isV1
+  ? `${BASE_V1_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
+  : `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
+  const buyUrl = farm.isV1
+    ? `${BASE_V1_SWAP_TOKEN_URL}${farm.token.address[chainId]}`
+    : `${BASE_SWAP_TOKEN_URL}${farm.token.address[chainId]}`
+
   const lpAddress = getAddress(farm.lpAddresses)
   const isPromotedFarm = farm.token.symbol === 'RICE' || farm.token.symbol === 'TeslaSafe'
 
@@ -119,7 +126,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
               <>
                 <ApyButton
                   lpLabel={lpLabel}
-                  addLiquidityUrl={addLiquidityUrl}
+                  addLiquidityUrl={farm.isTokenOnly ? buyUrl : addLiquidityUrl}
                   cakePrice={cakePrice}
                   apr={farm.apr}
                   displayApr={displayApr}
@@ -167,7 +174,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
           infoAddress={farm.isTokenOnly ? null : `https://pancakeswap.info/pair/${lpAddress}`}
           totalValueFormatted={totalValueFormatted}
           lpLabel={lpLabel}
-          addLiquidityUrl={addLiquidityUrl}
+          addLiquidityUrl={farm.isTokenOnly ? buyUrl : addLiquidityUrl}
         />
       </ExpandingWrapper>
     </FCard>
