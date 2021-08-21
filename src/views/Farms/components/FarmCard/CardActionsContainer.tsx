@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import styled from 'styled-components'
 import BigNumber from 'bignumber.js'
 import { Button, Flex, Text, TimerIcon, useModal } from '@ricefarm/uikitv2'
@@ -56,11 +56,7 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
   const calcSecondsLeft = (unixTimeStamp) => {
     const difference = +new Date(parseInt(unixTimeStamp) * 1000) - +new Date()
     return (unixTimeStamp !== null && unixTimeStamp > 0) ? difference : 0
-  }
-  
-  const nextHarvestValue = farm.userData.nextHarvest ? farm.userData.nextHarvest : 0
-  const [secondsRemaining, setSecondsRemaining] = useState(calcSecondsLeft(nextHarvestValue))
-  
+  } 
 
   const lpContract = useERC20(lpAddress)
 
@@ -76,6 +72,17 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
       console.error(e)
     }
   }, [onApprove, dispatch, account, pid])
+
+  const nextHarvestValue = farm.userData.nextHarvest ? farm.userData.nextHarvest : 0
+  const [secondsRemaining, setSecondsRemaining] = useState(calcSecondsLeft(nextHarvestValue))
+  
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSecondsRemaining(calcSecondsLeft(nextHarvestValue))
+    }, 1000)
+    // Clear timeout if the component is unmounted
+    return () => clearTimeout(timer)
+  },[nextHarvestValue])
 
   const renderApprovalOrStakeButton = () => {
     return isApproved ? (
