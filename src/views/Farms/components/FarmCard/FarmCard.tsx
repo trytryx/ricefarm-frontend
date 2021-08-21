@@ -111,7 +111,9 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
   // NAR-CAKE LP. The images should be rice-bnb.svg, link-bnb.svg, nar-rice.svg
   const baseImage = farm.lpSymbol.split(' ')[0].toLocaleLowerCase()
   const farmImage = farm.isTokenOnly ? `${baseImage}-pool` : baseImage
-  
+
+  const depositFee = (typeof farm.depositFee !== 'undefined') ? `${farm.depositFee / 100}%` : `-`
+
   return (
     <FCard isPromotedFarm={isPromotedFarm}>
       {isPromotedFarm && <StyledCardAccent />}
@@ -152,7 +154,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
       </Flex>
       <Flex justifyContent="space-between">
         <Text>{t('Deposit Fee')}:</Text>
-        <Text bold>{`${farm.depositFee / 100}%`}</Text>
+        <Text bold>{depositFee}</Text>
       </Flex>
       <Flex justifyContent="space-between">
         <Text>{t('Harvest Delay')}:</Text>
