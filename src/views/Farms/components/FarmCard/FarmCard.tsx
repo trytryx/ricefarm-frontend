@@ -107,6 +107,11 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
   const lpAddress = getAddress(farm.lpAddresses)
   const isPromotedFarm = farm.token.symbol === 'RICE' || farm.token.symbol === 'TeslaSafe'
 
+    // We assume the token name is coin pair + lp e.g. CAKE-BNB LP, LINK-BNB LP,
+  // NAR-CAKE LP. The images should be rice-bnb.svg, link-bnb.svg, nar-rice.svg
+  const baseImage = farm.lpSymbol.split(' ')[0].toLocaleLowerCase()
+  const farmImage = farm.isTokenOnly ? `${baseImage}-pool` : baseImage
+  
   return (
     <FCard isPromotedFarm={isPromotedFarm}>
       {isPromotedFarm && <StyledCardAccent />}
@@ -115,6 +120,8 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
         multiplier={farm.multiplier}
         isCommunityFarm={farm.isCommunity}
         token={farm.token}
+        farmImage={farmImage}
+        tokenSymbol={farm.token.symbol}
         quoteToken={farm.quoteToken}
         isTokenOnly={farm.isTokenOnly}
       />

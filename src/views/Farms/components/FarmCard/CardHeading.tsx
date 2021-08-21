@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Tag, Flex, Heading } from '@ricefarm/uikitv2'
+import { Tag, Flex, Heading, Image } from '@ricefarm/uikitv2'
 import { CommunityTag, CoreTag } from 'components/Tags'
 import { Token } from 'config/constants/types'
 import { TokenPairImage } from 'components/TokenImage'
@@ -10,6 +10,8 @@ export interface ExpandableSectionProps {
   multiplier?: string
   isCommunityFarm?: boolean
   token: Token
+  farmImage?: string
+  tokenSymbol?: string
   quoteToken: Token
   isTokenOnly?: boolean
   index?: number
@@ -31,6 +33,8 @@ const CardHeading: React.FC<ExpandableSectionProps> = ({
   multiplier,
   isCommunityFarm,
   token,
+  farmImage,
+  tokenSymbol,
   quoteToken,
   isTokenOnly,
 }) => {
@@ -48,8 +52,8 @@ const CardHeading: React.FC<ExpandableSectionProps> = ({
     : quoteToken
   return (
     <Wrapper justifyContent="space-between" alignItems="center" mb="12px">
-      <TokenPairImage variant={variant} primaryToken={token} secondaryToken={secondary} width={64} height={64} />
-
+      {/* <TokenPairImage variant={variant} primaryToken={token} secondaryToken={secondary} width={64} height={64} /> */}
+      <Image src={`/images/farms/${farmImage}.svg`} alt={tokenSymbol} width={64} height={64} />
       <Flex flexDirection="column" alignItems="flex-end">
         <Heading mb="4px">{lpLabel.split(' ')[0]}</Heading>
         <Flex justifyContent="center">
