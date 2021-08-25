@@ -1,8 +1,9 @@
 import React, { useEffect, useCallback, useState, useMemo, useRef } from 'react'
 import { Route, useRouteMatch, useLocation, NavLink } from 'react-router-dom'
+import { useAppDispatch } from 'state'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
-import { /* Image, */ Heading, RowType, Toggle, Text, Button, ArrowForwardIcon, Flex } from '@ricefarm/uikitv2'
+import { /* Image, */ Heading, RowType, Toggle, Text, Button, ArrowForwardIcon, Flex, useModal } from '@ricefarm/uikitv2'
 import { ChainId } from '@pancakeswap/sdk'
 import styled from 'styled-components'
 import FlexLayout from 'components/Layout/Flex'
@@ -28,6 +29,7 @@ import { RowProps } from './components/FarmTable/Row'
 import ToggleView from './components/ToggleView/ToggleView'
 import { DesktopColumnSchema, ViewMode } from './components/types'
 import PageHeader from './components/PageHeader'
+import NoticeModal from './components/NoticeModal'
 
 const ControlContainer = styled.div`
   display: flex;
@@ -124,7 +126,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
   const { data: farmsLP, userDataLoaded } = useFarms()
   const cakePrice = usePriceCakeBusd()
   const [query, setQuery] = useState('')
-  const [viewMode, setViewMode] = usePersistState(ViewMode.TABLE, { localStorageKey: 'pancake_farm_view' })
+  const [viewMode, setViewMode] = usePersistState(ViewMode.CARD, { localStorageKey: 'pancake_farm_view' })
   const { account } = useWeb3React()
   const [sortOption, setSortOption] = useState('hot')
   const chosenFarmsLength = useRef(0)
@@ -256,6 +258,10 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
 
   chosenFarmsLength.current = chosenFarmsMemoized.length
 
+  const dispatch = useAppDispatch()
+  const [onNoticeModal] = useModal(<NoticeModal />, false)
+  const [showModal, setShowModal] = useState(false)
+
   useEffect(() => {
     const showMoreFarms = (entries) => {
       const [entry] = entries
@@ -277,7 +283,12 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
       loadMoreObserver.observe(loadMoreRef.current)
       setObserverIsSet(true)
     }
-  }, [chosenFarmsMemoized, observerIsSet])
+
+    if (!showModal && !tokenMode) {
+      dispatch(onNoticeModal)
+      setShowModal(true)
+    }
+  }, [chosenFarmsMemoized, observerIsSet, tokenMode, dispatch, onNoticeModal, showModal])
 
   const rowData = chosenFarmsMemoized.map((farm) => {
     const { token, quoteToken } = farm
@@ -404,7 +415,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
       <Page>
         <ControlContainer>
           <ViewControls>
-            <ToggleView viewMode={viewMode} onToggle={(mode: ViewMode) => setViewMode(mode)} />
+            {/* <ToggleView viewMode={viewMode} onToggle={(mode: ViewMode) => setViewMode(mode)} /> */}
             <ToggleWrapper>
               <Toggle checked={stakedOnly} onChange={() => setStakedOnly(!stakedOnly)} scale="sm" />
               <Text> {t('Staked only')}</Text>
