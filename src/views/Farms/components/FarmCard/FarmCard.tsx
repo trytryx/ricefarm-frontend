@@ -7,9 +7,9 @@ import { getBscScanLink } from 'utils'
 import { getBscScanAddressUrl } from 'utils/bscscan'
 import { useTranslation } from 'contexts/Localization'
 import ExpandableSectionButton from 'components/ExpandableSectionButton'
-import { BASE_ADD_LIQUIDITY_URL, BASE_V1_ADD_LIQUIDITY_URL, BASE_V1_SWAP_TOKEN_URL, BASE_SWAP_TOKEN_URL } from 'config'
+import { BASE_EXCHANGE_URL, BASE_ADD_LIQUIDITY_URL, BASE_V1_ADD_LIQUIDITY_URL, BASE_V1_SWAP_TOKEN_URL, BASE_SWAP_TOKEN_URL } from 'config'
 import { getAddress } from 'utils/addressHelpers'
-import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
+import getLiquidityUrlPathParts, { getLiquidityUrlPathPartsAddress } from 'utils/getLiquidityUrlPathParts'
 import DetailsSection from './DetailsSection'
 import CardHeading from './CardHeading'
 import CardActionsContainer from './CardActionsContainer'
@@ -96,10 +96,16 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
     quoteTokenAddress: farm.quoteToken.address,
     tokenAddress: farm.token.address,
   })
+
+  const toeknAddress = getLiquidityUrlPathPartsAddress({
+    quoteTokenAddress: farm.quoteToken.address,
+    tokenAddress: farm.token.address,
+  })
+  
   // const addLiquidityUrl = `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
   const addLiquidityUrl = farm.isV1
   ? `${BASE_V1_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
-  : `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
+  : `${BASE_EXCHANGE_URL}?outputCurrency=${toeknAddress}`
   const buyUrl = farm.isV1
     ? `${BASE_V1_SWAP_TOKEN_URL}${farm.token.address[chainId]}`
     : `${BASE_SWAP_TOKEN_URL}${farm.token.address[chainId]}`
