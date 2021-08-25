@@ -29,7 +29,6 @@ interface TokenSectionProps extends FlexProps {
   img?: string
 }
 
-
 const TokenSection: React.FC<TokenSectionProps> = ({ primaryToken, secondaryToken, img, children, ...props }) => {
   const renderTokenComponent = () => {
     if (!primaryToken) {
@@ -38,18 +37,26 @@ const TokenSection: React.FC<TokenSectionProps> = ({ primaryToken, secondaryToke
 
     if (primaryToken && secondaryToken) {
       return (
-        <TokenPairImage
-          variant="inverted"
-          primaryToken={primaryToken}
-          height={32}
-          width={32}
-          secondaryToken={secondaryToken}
-          mr="16px"
-        />
+        // <TokenPairImage
+        //   variant="inverted"
+        //   primaryToken={primaryToken}
+        //   height={32}
+        //   width={32}
+        //   secondaryToken={secondaryToken}
+        //   mr="16px"
+        // />
+        <Image src={`/images/ifos/${primaryToken.symbol.toLowerCase()}-pair.png`} width={32} height={32} mr="16px" />
       )
     }
 
-    return <TokenImage token={primaryToken} height={32} width={32} mr="16px" />
+    // return <TokenImage token={primaryToken} height={32} width={32} mr="16px" />
+
+    return (
+      <Flex>
+        <Image src={`/images/ifos/${primaryToken.symbol.toLowerCase()}.png`} width={32} height={32} mr="16px" />
+        <div>{children}</div>
+      </Flex>
+    )
   }
 
   return (
@@ -61,7 +68,7 @@ const TokenSection: React.FC<TokenSectionProps> = ({ primaryToken, secondaryToke
 }
 
 const CakeBnbTokenSection: React.FC<TokenSectionProps> = (props) => {
-  return <TokenSection primaryToken={tokens.cake} secondaryToken={tokens.wbnb} {...props} />
+  return <TokenSection primaryToken={tokens.rice} secondaryToken={tokens.wbnb} {...props} />
 }
 
 const Label = (props) => <Text bold fontSize="12px" color="secondary" textTransform="uppercase" {...props} />

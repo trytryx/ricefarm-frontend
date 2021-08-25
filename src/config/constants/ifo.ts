@@ -31,7 +31,7 @@ const ifos: Ifo[] = [
    */
   {
     id: 'epic',
-    address: '0x50A1255A52B027C93ae5ED5042175BDdC16a320F',
+    address: '0xA428922D60071C0344ba0EDd62b0F5ca5726Ceb0',
     isActive: true,
     name: 'EpicBuy (EPIC)',
     poolBasic: {
