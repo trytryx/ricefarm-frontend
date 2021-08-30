@@ -13,15 +13,4 @@ const getLiquidityUrlPathParts = ({ quoteTokenAddress, tokenAddress }) => {
   return `${firstPart}/${secondPart}`
 }
 
-export const getLiquidityUrlPathPartsAddress = ({ quoteTokenAddress, tokenAddress }) => {
-  const chainId = process.env.REACT_APP_CHAIN_ID
-  const wBNBAddressString = getWbnbAddress()
-  const quoteTokenAddressString: string = quoteTokenAddress ? quoteTokenAddress[chainId] : null
-  const tokenAddressString: string = tokenAddress ? tokenAddress[chainId] : null
-  const firstPart =
-    !quoteTokenAddressString || quoteTokenAddressString === wBNBAddressString ? 'BNB' : quoteTokenAddressString
-  const secondPart = !tokenAddressString || tokenAddressString === wBNBAddressString ? 'BNB' : tokenAddressString
-  return secondPart
-}
-
 export default getLiquidityUrlPathParts

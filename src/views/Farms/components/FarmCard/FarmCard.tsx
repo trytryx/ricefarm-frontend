@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import BigNumber from 'bignumber.js'
 import styled, { keyframes } from 'styled-components'
 import { Flex, Text, Skeleton } from '@ricefarm/uikitv2'
@@ -9,7 +9,7 @@ import { useTranslation } from 'contexts/Localization'
 import ExpandableSectionButton from 'components/ExpandableSectionButton'
 import { BASE_EXCHANGE_URL, BASE_ADD_LIQUIDITY_URL, BASE_V1_ADD_LIQUIDITY_URL, BASE_V1_SWAP_TOKEN_URL, BASE_SWAP_TOKEN_URL } from 'config'
 import { getAddress } from 'utils/addressHelpers'
-import getLiquidityUrlPathParts, { getLiquidityUrlPathPartsAddress } from 'utils/getLiquidityUrlPathParts'
+import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
 import DetailsSection from './DetailsSection'
 import CardHeading from './CardHeading'
 import CardActionsContainer from './CardActionsContainer'
@@ -19,6 +19,7 @@ export interface FarmWithStakedValue extends Farm {
   apr?: number
   lpRewardsApr?: number
   liquidity?: BigNumber
+  harvestInterval?: number
 }
 
 const AccentGradient = keyframes`  
@@ -97,15 +98,10 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
     tokenAddress: farm.token.address,
   })
 
-  const toeknAddress = getLiquidityUrlPathPartsAddress({
-    quoteTokenAddress: farm.quoteToken.address,
-    tokenAddress: farm.token.address,
-  })
-  
   // const addLiquidityUrl = `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
   const addLiquidityUrl = farm.isV1
   ? `${BASE_V1_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
-  : `${BASE_EXCHANGE_URL}?outputCurrency=${toeknAddress}`
+  : `${BASE_EXCHANGE_URL}?outputCurrency=${farm.token.address[chainId]}`
   const buyUrl = farm.isV1
     ? `${BASE_V1_SWAP_TOKEN_URL}${farm.token.address[chainId]}`
     : `${BASE_SWAP_TOKEN_URL}${farm.token.address[chainId]}`
@@ -118,8 +114,19 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
   const baseImage = farm.lpSymbol.split(' ')[0].toLocaleLowerCase()
   const farmImage = farm.isTokenOnly ? `${baseImage}-pool` : baseImage
 
-  const depositFee = (typeof farm.depositFee !== 'undefined') ? `${farm.depositFee / 100}%` : `-`
+  const depositFee = (typeof farm.depositFee !== 'undefined') ? `${farm.depositFee / 100}%` : `0%`
+  const [harvestInterval, setHarvestInterval] = useState('0')
 
+  // console.log(`card: ${farm.lpSymbol} : ${farm.harvestInterval}`)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setHarvestInterval(`${farm.harvestInterval / 60 / 60} hour(s)`)
+    }, 1000)
+    // Clear timeout if the component is unmounted
+    return () => clearTimeout(timer)
+  },[farm])
+
+  // console.log(`${farm.lpSymbol} : ${farm.harvestInterval}`, farm)
   return (
     <FCard isPromotedFarm={isPromotedFarm}>
       {isPromotedFarm && <StyledCardAccent />}
@@ -164,7 +171,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
       </Flex>
       <Flex justifyContent="space-between">
         <Text>{t('Harvest Delay')}:</Text>
-        <Text bold>{farm.harvestInterval > 0 ? `${farm.harvestInterval / 60 / 60} hour(s)` : '0'}</Text>
+        <Text bold>{harvestInterval}</Text>
       </Flex>
       {!farm.isTokenOnly && (
         <Flex justifyContent="space-between">

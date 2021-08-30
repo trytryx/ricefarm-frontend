@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import BigNumber from 'bignumber.js'
 import { Button, Flex, Heading } from '@ricefarm/uikitv2'
 import { useTranslation } from 'contexts/Localization'
 import { useAppDispatch } from 'state'
 import { fetchFarmUserDataAsync } from 'state/farms'
+import { Farm } from 'state/types'
 import useToast from 'hooks/useToast'
 import { getBalanceAmount } from 'utils/formatBalance'
 import { BIG_ZERO } from 'utils/bigNumber'
@@ -15,9 +16,10 @@ import useHarvestFarm from '../../hooks/useHarvestFarm'
 interface FarmCardActionsProps {
   earnings?: BigNumber
   pid?: number
+  farm: Farm
 }
 
-const HarvestAction: React.FC<FarmCardActionsProps> = ({ earnings, pid }) => {
+const HarvestAction: React.FC<FarmCardActionsProps> = ({ earnings, pid, farm }) => {
   const { account } = useWeb3React()
   const { toastSuccess, toastError } = useToast()
   const { t } = useTranslation()
@@ -28,6 +30,7 @@ const HarvestAction: React.FC<FarmCardActionsProps> = ({ earnings, pid }) => {
   const rawEarningsBalance = account ? getBalanceAmount(earnings) : BIG_ZERO
   const displayBalance = rawEarningsBalance.toFixed(3, BigNumber.ROUND_DOWN)
   const earningsBusd = rawEarningsBalance ? rawEarningsBalance.multipliedBy(cakePrice).toNumber() : 0
+  const canHarvest = farm.userData && farm.userData.canHarvest
 
   return (
     <Flex mb="8px" justifyContent="space-between" alignItems="center">
@@ -38,7 +41,7 @@ const HarvestAction: React.FC<FarmCardActionsProps> = ({ earnings, pid }) => {
         )}
       </Flex>
       <Button
-        disabled={rawEarningsBalance.eq(0) || pendingTx}
+        disabled={rawEarningsBalance.eq(0) || pendingTx || !canHarvest}
         onClick={async () => {
           setPendingTx(true)
           try {

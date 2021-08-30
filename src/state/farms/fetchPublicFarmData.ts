@@ -23,6 +23,7 @@ type PublicFarmData = {
 const fetchFarm = async (farm: Farm): Promise<PublicFarmData> => {
   const { pid, lpAddresses, token, quoteToken, isTokenOnly, tokenAddresses } = farm
   const lpAddress = getAddress(lpAddresses)
+
   const calls = [
     // Balance of token in the LP contract
     {
@@ -60,8 +61,8 @@ const fetchFarm = async (farm: Farm): Promise<PublicFarmData> => {
   ]
 
   const [tokenBalanceLP, quoteTokenBalanceLP, lpTokenBalanceMC, lpTotalSupply, tokenDecimals, quoteTokenDecimals] =
-    await multicall(erc20, calls)
-
+  await multicall(erc20, calls)
+  
   let tokenAmountMc // token amount in mc contract
   let quoteTokenAmountMc // quote token amount in mc contract
   let tokenAmountTotal // raw amount of token in lp
@@ -110,13 +111,13 @@ const fetchFarm = async (farm: Farm): Promise<PublicFarmData> => {
           },
         ])
       : [null, null]
-
+  
+      
   const allocPoint = info ? new BigNumber(info.allocPoint?._hex) : BIG_ZERO
   const poolWeight = totalAllocPoint ? allocPoint.div(new BigNumber(totalAllocPoint)) : BIG_ZERO
   const harvestInterval = info ? new BigNumber(info.harvestInterval?._hex) : BIG_ZERO
   const depositFee = info ? new BigNumber(info.depositFeeBP) : BIG_ZERO
-  // const depositFee = info.depositFeeBP
-
+  
   return {
     tokenAmountMc: tokenAmountMc.toJSON(),
     quoteTokenAmountMc: quoteTokenAmountMc.toJSON(),
