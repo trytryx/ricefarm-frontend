@@ -26,7 +26,9 @@ const getDisplayTime = (time, isSeconds = false) => {
   if (!time) {
     return isSeconds ? '00' : null
   }
-  return time.toString().length === 2 ? time.toString() : `0${time}`
+
+  const timeFixed = parseFloat(time).toFixed(0) 
+  return timeFixed.toString().length === 2 ? timeFixed.toString() : `0${timeFixed}`
 }
 
 const calculateTimeLeft = (unixTimeStamp) => {
@@ -87,16 +89,7 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
   const isApproved = account && allowance && allowance.isGreaterThan(0)
   const dispatch = useAppDispatch()
 
-  // const [onHarvestTimer] = useModal(<HarvestTimerModal farm={farm} />)
-
-  const calcSecondsLeft = (unixTimeStamp) => {
-    const currentTime = new Date().getTime() * 1000;
-    const difference = +new Date(parseInt(unixTimeStamp) * 1000) - currentTime
-    return (unixTimeStamp !== null && unixTimeStamp > 0) ? difference : 0
-  } 
-
   const lpContract = useERC20(lpAddress)
-
   const { onApprove } = useApproveFarm(lpContract)
 
   const handleApprove = useCallback(async () => {

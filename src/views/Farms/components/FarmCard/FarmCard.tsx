@@ -98,15 +98,14 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
     tokenAddress: farm.token.address,
   })
 
-  // const addLiquidityUrl = `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
   const addLiquidityUrl = farm.isV1
-  ? `${BASE_V1_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
-  : `${BASE_EXCHANGE_URL}?outputCurrency=${farm.token.address[chainId]}`
+    ? `${BASE_V1_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
+    : `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
   const buyUrl = farm.isV1
     ? `${BASE_V1_SWAP_TOKEN_URL}${farm.token.address[chainId]}`
     : `${BASE_SWAP_TOKEN_URL}${farm.token.address[chainId]}`
 
-  const lpAddress = getAddress(farm.lpAddresses)
+  const lpAddress = farm.isTokenOnly ? farm.tokenAddresses[chainId] : farm.lpAddresses[chainId]
   const isPromotedFarm = farm.token.symbol === 'RICE' || farm.token.symbol === 'TeslaSafe'
 
     // We assume the token name is coin pair + lp e.g. CAKE-BNB LP, LINK-BNB LP,
@@ -120,7 +119,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
   // console.log(`card: ${farm.lpSymbol} : ${farm.harvestInterval}`)
   useEffect(() => {
     const timer = setTimeout(() => {
-      setHarvestInterval(`${farm.harvestInterval / 60 / 60} hour(s)`)
+      setHarvestInterval(`${(farm.harvestInterval / 60 / 60).toFixed(2)} hour(s)`)
     }, 1000)
     // Clear timeout if the component is unmounted
     return () => clearTimeout(timer)

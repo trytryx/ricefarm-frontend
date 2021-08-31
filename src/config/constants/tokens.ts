@@ -81,7 +81,7 @@ const tokens = {
     symbol: 'BNB',
     projectLink: 'https://www.binance.com/',
   },
-  epic: {
+    epic: {
     symbol: 'EPIC',
     address: {
       56: '0x8C8B57F82b662553B2BdD053c7154Fe1821cC9C4',
@@ -126,6 +126,87 @@ const tokens = {
     decimals: 18,
     projectLink: 'https://pancakeswap.finance/',
   },
+  // chess: {
+  //   symbol: 'CHESS',
+  //   address: {
+  //     56: '0x20de22029ab63cf9A7Cf5fEB2b737Ca1eE4c82A6',
+  //     97: '',
+  //   },
+  //   decimals: 18,
+  //   projectLink: 'https://tranchess.com/',
+  // },
+  // titan: {
+  //   symbol: 'TITAN',
+  //   address: {
+  //     56: '0xe898EDc43920F357A93083F1d4460437dE6dAeC2',
+  //     97: '',
+  //   },
+  //   decimals: 18,
+  //   projectLink: 'https://titanswap.org',
+  // },
+  // harmony: {
+  //   symbol: 'ONE',
+  //   address: {
+  //     56: '0x03fF0ff224f904be3118461335064bB48Df47938',
+  //     97: '',
+  //   },
+  //   decimals: 18,
+  //   projectLink: 'https://www.harmony.one/',
+  // },
+  // mask: {
+  //   symbol: 'MASK',
+  //   address: {
+  //     56: '0x2eD9a5C8C13b93955103B9a7C167B67Ef4d568a3',
+  //     97: '',
+  //   },
+  //   decimals: 18,
+  //   projectLink: 'https://mask.io/',
+  // },
+  // dvi: {
+  //   symbol: 'DVI',
+  //   address: {
+  //     56: '0x758FB037A375F17c7e195CC634D77dA4F554255B',
+  //     97: '',
+  //   },
+  //   decimals: 18,
+  //   projectLink: 'https://dvision.network/',
+  // },
+  // adx: {
+  //   symbol: 'ADX',
+  //   address: {
+  //     56: '0x6bfF4Fb161347ad7de4A625AE5aa3A1CA7077819',
+  //     97: '',
+  //   },
+  //   decimals: 18,
+  //   projectLink: 'https://www.adex.network',
+  // },
+  // bscpad: {
+  //   symbol: 'BSCPAD',
+  //   address: {
+  //     56: '0x5A3010d4d8D3B5fB49f8B6E57FB9E48063f16700',
+  //     97: '',
+  //   },
+  //   decimals: 18,
+  //   projectLink: 'https://bscpad.com/',
+  // },
+  // rabbit: {
+  //   symbol: 'RABBIT',
+  //   address: {
+  //     56: '0x95a1199EBA84ac5f19546519e287d43D2F0E1b41',
+  //     97: '',
+  //   },
+  //   decimals: 18,
+  //   projectLink: 'https://rabbitfinance.io/earn',
+  // },
+  // form: {
+  //   symbol: 'FORM',
+  //   address: {
+  //     56: '0x25A528af62e56512A19ce8c3cAB427807c28CC19',
+  //     97: '',
+  //   },
+  //   decimals: 18,
+  //   projectLink: 'https://formation.fi/',
+  // },
   txl: {
     symbol: 'TXL',
     address: {
@@ -135,6 +216,15 @@ const tokens = {
     decimals: 18,
     projectLink: 'https://tixl.org/',
   },
+  // orbs: {
+  //   symbol: 'ORBS',
+  //   address: {
+  //     56: '0xeBd49b26169e1b52c04cFd19FCf289405dF55F80',
+  //     97: '',
+  //   },
+  //   decimals: 18,
+  //   projectLink: 'https://www.orbs.com/',
+  // },
   cos: {
     symbol: 'COS',
     address: {
@@ -610,7 +700,7 @@ const tokens = {
       97: '',
     },
     decimals: 18,
-    projectLink: 'http://stablexswap.com/',
+    projectLink: 'https://stablexswap.com/',
   },
   nar: {
     symbol: 'NAR',
@@ -808,7 +898,7 @@ const tokens = {
       97: '',
     },
     decimals: 18,
-    projectLink: 'http://www.makerdao.com/',
+    projectLink: 'https://www.makerdao.com/',
   },
   ada: {
     symbol: 'ADA',
@@ -916,7 +1006,7 @@ const tokens = {
       97: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
     },
     decimals: 18,
-    projectLink: 'http://bch.info/',
+    projectLink: 'https://bch.info/',
   },
   yfi: {
     symbol: 'YFI',
@@ -1530,6 +1620,24 @@ const tokens = {
     decimals: 18,
     projectLink: 'https://www.bitwellex.com/',
   },
+  // wex: {
+  //   symbol: 'WEX',
+  //   address: {
+  //     56: '0xa9c41A46a6B3531d28d5c32F6633dd2fF05dFB90',
+  //     97: '',
+  //   },
+  //   decimals: 18,
+  //   projectLink: 'https://wault.finance/',
+  // },
+  // waultx: {
+  //   symbol: 'WAULTx',
+  //   address: {
+  //     56: '0xB64E638E60D154B43f660a6BF8fD8a3b249a6a21',
+  //     97: '',
+  //   },
+  //   decimals: 18,
+  //   projectLink: 'https://wault.finance/',
+  // },
   popen: {
     symbol: 'pOPEN',
     address: {
@@ -1683,6 +1791,33 @@ const tokens = {
     decimals: 18,
     projectLink: 'https://www.hotbit.io/',
   },
+  // woo: {
+  //   symbol: 'WOO',
+  //   address: {
+  //     56: '0x4691937a7508860F876c9c0a2a617E7d9E945D4B',
+  //     97: '',
+  //   },
+  //   decimals: 18,
+  //   projectLink: 'https://woo.network/',
+  // },
+  // $dg: {
+  //   symbol: '$DG',
+  //   address: {
+  //     56: '0x9Fdc3ae5c814b79dcA2556564047C5e7e5449C19',
+  //     97: '',
+  //   },
+  //   decimals: 18,
+  //   projectLink: 'https://decentral.games/',
+  // },
+  // safemoon: {
+  //   symbol: 'SAFEMOON',
+  //   address: {
+  //     56: '0x8076C74C5e3F5852037F31Ff0093Eeb8c8ADd8D3',
+  //     97: '',
+  //   },
+  //   decimals: 9,
+  //   projectLink: 'https://safemoon.net/',
+  // },
 }
 
 export default tokens
