@@ -27,9 +27,10 @@ export const TELEGRAM = 'https://t.me/fuzionchain'
 export const CAKE_PER_BLOCK = new BigNumber(7)
 export const BLOCKS_PER_YEAR = new BigNumber((60 / BSC_BLOCK_TIME) * 60 * 24 * 365) // 10512000
 export const CAKE_PER_YEAR = CAKE_PER_BLOCK.times(BLOCKS_PER_YEAR)
-export const BASE_URL = 'https://ricefarm.fi'
+// export const BASE_URL = 'https://ricefarm.fi'
+export const BASE_URL = 'http://localhost:3000'
 export const BASE_EXCHANGE_URL = `${BASE_URL}/swap`
-export const BASE_ADD_LIQUIDITY_URL = `${BASE_URL}/pool`
+export const BASE_ADD_LIQUIDITY_URL = `${BASE_URL}/add`
 export const BASE_LIQUIDITY_POOL_URL = `${BASE_URL}/pools`
 export const BASE_V1_EXCHANGE_URL = 'https://teslasafe.ricefarm.fi'
 export const BASE_V1_ADD_LIQUIDITY_URL = `${BASE_V1_EXCHANGE_URL}/#/add`
@@ -40,7 +41,7 @@ export const BASE_V1_SWAP_URL = `${BASE_V1_EXCHANGE_URL}/#/swap`
 export const BASE_V1_SWAP_TOKEN_URL = `${BASE_V1_SWAP_URL}?outputCurrency=`
 
 export const BASE_PANCAKE_URL = 'https://pancakeswap.finance'
-export const BASE_SWAP_URL = `${BASE_PANCAKE_URL}/swap`
+export const BASE_SWAP_URL = `${BASE_URL}/swap`
 export const BASE_SWAP_TOKEN_URL = `${BASE_SWAP_URL}?outputCurrency=`
 
 export const LOTTERY_MAX_NUMBER_OF_TICKETS = 50
