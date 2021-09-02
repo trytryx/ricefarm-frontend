@@ -1,5 +1,5 @@
 import React from 'react'
-import { CardHeader, Heading, Text, Flex } from '@ricefarm/uikitv2'
+import { CardHeader, Heading, Text, Flex, Image } from '@ricefarm/uikitv2'
 import styled from 'styled-components'
 import { useTranslation } from 'contexts/Localization'
 import { Token } from 'config/constants/types'
@@ -23,22 +23,26 @@ const StyledCardHeader: React.FC<{
   const isCakePool = earningToken.symbol === 'RICE' && stakingToken.symbol === 'RICE'
   const background = isStaking ? 'bubblegum' : 'cardHeader'
 
+  const poolImageSrc = isAutoVault
+    ? `cake-cakevault.svg`
+    : `${earningToken.symbol}-${stakingToken.symbol}vault.svg`.toLocaleLowerCase()
+
   const getHeadingPrefix = () => {
     if (isAutoVault) {
       // vault
-      return t('Auto')
+      return `${t('Vault:')}`
     }
     if (isCakePool) {
       // manual cake
-      return t('Manual')
+      return `${t('Manual')}`
     }
     // all other pools
-    return t('Earn')
+    return `${t('Earn')}`
   }
 
   const getSubHeading = () => {
     if (isAutoVault) {
-      return t('Automatic restaking')
+      return t('Automatic compounding')
     }
     if (isCakePool) {
       return t('Earn RICE, stake RICE')
@@ -55,11 +59,12 @@ const StyledCardHeader: React.FC<{
           </Heading>
           <Text color={isFinished ? 'textDisabled' : 'textSubtle'}>{getSubHeading()}</Text>
         </Flex>
-        {isAutoVault ? (
+        {/* {isAutoVault ? (
           <CakeVaultTokenPairImage width={64} height={64} />
         ) : (
           <TokenPairImage primaryToken={earningToken} secondaryToken={stakingToken} width={64} height={64} />
-        )}
+        )} */}
+        <Image src={`/images/pools/${poolImageSrc}`} alt={earningToken.symbol} width={64} height={64} />
       </Flex>
     </Wrapper>
   )

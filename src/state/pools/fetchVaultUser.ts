@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js'
-import { getCakeVaultContract } from 'utils/contractHelpers'
+import { getRiceVaultContract } from 'utils/contractHelpers'
 
-const cakeVaultContract = getCakeVaultContract()
+const cakeVaultContract = getRiceVaultContract()
 
 const fetchVaultUser = async (account: string) => {
   try {
@@ -11,7 +11,7 @@ const fetchVaultUser = async (account: string) => {
       userShares: new BigNumber(userContractResponse.shares.toString()).toJSON(),
       lastDepositedTime: userContractResponse.lastDepositedTime.toString(),
       lastUserActionTime: userContractResponse.lastUserActionTime.toString(),
-      cakeAtLastUserAction: new BigNumber(userContractResponse.cakeAtLastUserAction.toString()).toJSON(),
+      cakeAtLastUserAction: new BigNumber(userContractResponse.riceAtLastUserAction.toString()).toJSON(),
     }
   } catch (error) {
     return {

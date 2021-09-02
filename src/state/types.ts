@@ -94,6 +94,8 @@ export interface VaultUser {
   lastUserActionTime: string
 }
 export interface CakeVault {
+  canHarvest?: boolean
+  nextHarvestUntil?: string
   totalShares?: string
   pricePerFullShare?: string
   totalCakeInVault?: string

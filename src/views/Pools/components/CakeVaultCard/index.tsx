@@ -33,6 +33,7 @@ const CakeVaultCard: React.FC<CakeVaultProps> = ({ pool, showStakedOnly }) => {
     fees: { performanceFee },
   } = useCakeVault()
 
+  const timesCompoundedDaily = 12
   const accountHasSharesStaked = userShares && userShares.gt(0)
   const isLoading = !pool.userData || isVaultUserDataLoading
   const performanceFeeAsDecimal = performanceFee && performanceFee / 100
@@ -47,8 +48,8 @@ const CakeVaultCard: React.FC<CakeVaultProps> = ({ pool, showStakedOnly }) => {
         <StyledCardHeader
           isStaking={accountHasSharesStaked}
           isAutoVault
-          earningToken={tokens.cake}
-          stakingToken={tokens.cake}
+          earningToken={tokens.rice}
+          stakingToken={tokens.rice}
         />
         <StyledCardBody isLoading={isLoading}>
           <AprRow pool={pool} performanceFee={performanceFeeAsDecimal} />

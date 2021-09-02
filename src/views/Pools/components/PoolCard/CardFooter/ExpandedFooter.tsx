@@ -20,7 +20,7 @@ import { BASE_BSC_SCAN_URL } from 'config'
 import { useBlock } from 'state/block/hooks'
 import { useCakeVault } from 'state/pools/hooks'
 import { Pool } from 'state/types'
-import { getAddress, getCakeVaultAddress } from 'utils/addressHelpers'
+import { getAddress, getRiceVaultAddress } from 'utils/addressHelpers'
 import { registerToken } from 'utils/wallet'
 import { getBscScanLink } from 'utils'
 import Balance from 'components/Balance'
@@ -60,7 +60,7 @@ const ExpandedFooter: React.FC<ExpandedFooterProps> = ({ pool, account }) => {
 
   const tokenAddress = earningToken.address ? getAddress(earningToken.address) : ''
   const poolContractAddress = getAddress(contractAddress)
-  const cakeVaultContractAddress = getCakeVaultAddress()
+  const cakeVaultContractAddress = getRiceVaultAddress()
   const isMetaMaskInScope = !!window.ethereum?.isMetaMask
   const isManualCakePool = sousId === 0
 
@@ -146,11 +146,11 @@ const ExpandedFooter: React.FC<ExpandedFooterProps> = ({ pool, account }) => {
           </Flex>
         </Flex>
       )}
-      <Flex mb="2px" justifyContent="flex-end">
+      {/* <Flex mb="2px" justifyContent="flex-end">
         <LinkExternal href={`https://pancakeswap.info/token/${getAddress(earningToken.address)}`} bold={false} small>
           {t('See Token Info')}
         </LinkExternal>
-      </Flex>
+      </Flex> */}
       <Flex mb="2px" justifyContent="flex-end">
         <LinkExternal href={earningToken.projectLink} bold={false} small>
           {t('View Project Site')}

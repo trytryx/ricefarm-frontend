@@ -29,6 +29,7 @@ import {
   getBunnySpecialPredictionAddress,
   getFarmAuctionAddress,
   getRiceReferralAddress,
+  getRiceVaultAddress,
 } from 'utils/addressHelpers'
 
 // ABI
@@ -40,6 +41,7 @@ import bep20Abi from 'config/abi/erc20.json'
 import erc721Abi from 'config/abi/erc721.json'
 import lpTokenAbi from 'config/abi/lpToken.json'
 import cakeAbi from 'config/abi/cake.json'
+import riceAbi from 'config/abi/rice.json'
 import ifoV1Abi from 'config/abi/ifoV1.json'
 import ifoV2Abi from 'config/abi/ifoV2.json'
 import pointCenterIfo from 'config/abi/pointCenterIfo.json'
@@ -52,6 +54,7 @@ import claimRefundAbi from 'config/abi/claimRefund.json'
 import tradingCompetitionAbi from 'config/abi/tradingCompetition.json'
 import easterNftAbi from 'config/abi/easterNft.json'
 import cakeVaultAbi from 'config/abi/cakeVault.json'
+import riceVaultAbi from 'config/abi/riceVault.json'
 import predictionsAbi from 'config/abi/predictions.json'
 import chainlinkOracleAbi from 'config/abi/chainlinkOracle.json'
 import MultiCallAbi from 'config/abi/Multicall.json'
@@ -125,7 +128,9 @@ export const getEasterNftContract = (signer?: ethers.Signer | ethers.providers.P
 export const getCakeVaultContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
   return getContract(cakeVaultAbi, getCakeVaultAddress(), signer)
 }
-
+export const getRiceVaultContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
+  return getContract(riceVaultAbi, getRiceVaultAddress(), signer)
+}
 export const getPredictionsContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
   return getContract(predictionsAbi, getPredictionsAddress(), signer) as PredictionsContract
 }
@@ -145,7 +150,9 @@ export const getBunnySpecialPredictionContract = (signer?: ethers.Signer | ether
 export const getFarmAuctionContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
   return getContract(farmAuctionAbi, getFarmAuctionAddress(), signer) as FarmAuctionContract
 }
-
+export const getRiceContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
+  return getContract(riceAbi, getCakeAddress(), signer)
+}
 const getContractv1 = (abi: any, address: string, web3?: Web3) => {
   const _web3 = web3 ?? web3NoAccount
   return new _web3.eth.Contract(abi as unknown as AbiItem, address)
@@ -153,3 +160,4 @@ const getContractv1 = (abi: any, address: string, web3?: Web3) => {
 export const getReferralContract = (web3?: Web3) => {
   return getContractv1(riceReferralAbi, getRiceReferralAddress(), web3)
 }
+

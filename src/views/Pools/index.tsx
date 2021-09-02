@@ -84,7 +84,7 @@ const Pools: React.FC = () => {
   const [numberOfPoolsVisible, setNumberOfPoolsVisible] = useState(NUMBER_OF_POOLS_VISIBLE)
   const [observerIsSet, setObserverIsSet] = useState(false)
   const loadMoreRef = useRef<HTMLDivElement>(null)
-  const [viewMode, setViewMode] = usePersistState(ViewMode.TABLE, { localStorageKey: 'pancake_pool_view' })
+  const [viewMode, setViewMode] = usePersistState(ViewMode.CARD, { localStorageKey: 'pancake_pool_view' })
   const [searchQuery, setSearchQuery] = useState('')
   const [sortOption, setSortOption] = useState('hot')
   const chosenPoolsLength = useRef(0)
@@ -96,15 +96,17 @@ const Pools: React.FC = () => {
   } = useCakeVault()
   const accountHasVaultShares = userShares && userShares.gt(0)
   const performanceFeeAsDecimal = performanceFee && performanceFee / 100
-
+  
   const pools = useMemo(() => {
     const cakePool = poolsWithoutAutoVault.find((pool) => pool.sousId === 0)
     const cakeAutoVault = { ...cakePool, isAutoVault: true }
-    return [cakeAutoVault, ...poolsWithoutAutoVault]
+    // return [cakeAutoVault, ...poolsWithoutAutoVault]
+    return [cakeAutoVault]
   }, [poolsWithoutAutoVault])
-
+  
   // TODO aren't arrays in dep array checked just by reference, i.e. it will rerender every time reference changes?
   const [finishedPools, openPools] = useMemo(() => partition(pools, (pool) => pool.isFinished), [pools])
+  
   const stakedOnlyFinishedPools = useMemo(
     () =>
       finishedPools.filter((pool) => {
@@ -223,11 +225,12 @@ const Pools: React.FC = () => {
   const cardLayout = (
     <CardLayout>
       {chosenPools.map((pool) =>
-        pool.isAutoVault ? (
-          <CakeVaultCard key="auto-cake" pool={pool} showStakedOnly={stakedOnly} />
-        ) : (
-          <PoolCard key={pool.sousId} pool={pool} account={account} />
-        ),
+        <CakeVaultCard key="auto-cake" pool={pool} showStakedOnly={stakedOnly} />
+        // pool.isAutoVault ? (
+        //   <CakeVaultCard key="auto-cake" pool={pool} showStakedOnly={stakedOnly} />
+        // ) : (
+        //   <PoolCard key={pool.sousId} pool={pool} account={account} />
+        // ),
       )}
     </CardLayout>
   )
@@ -263,7 +266,7 @@ const Pools: React.FC = () => {
             viewMode={viewMode}
             setViewMode={setViewMode}
           />
-          <FilterContainer>
+          {/* <FilterContainer>
             <LabelWrapper>
               <Text fontSize="12px" bold color="textSubtle" textTransform="uppercase">
                 {t('Sort by')}
@@ -298,11 +301,11 @@ const Pools: React.FC = () => {
               </Text>
               <SearchInput onChange={handleChangeSearchQuery} placeholder="Search Pools" />
             </LabelWrapper>
-          </FilterContainer>
+          </FilterContainer> */}
         </PoolControls>
         {showFinishedPools && (
           <Text fontSize="20px" color="failure" pb="32px">
-            {t('These pools are no longer distributing rewards. Please unstake your tokens.')}
+            {/* {t('These pools are no longer distributing rewards. Please unstake your tokens.')} */}
           </Text>
         )}
         {account && !userDataLoaded && stakedOnly && (

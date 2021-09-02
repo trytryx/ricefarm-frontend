@@ -26,6 +26,8 @@ import {
   getBunnySpecialPredictionContract,
   getFarmAuctionContract,
   getReferralContract,
+  getRiceVaultContract,
+  getRiceContract,
 } from 'utils/contractHelpers'
 
 // Imports below migrated from Exchange useContract.ts
@@ -70,6 +72,11 @@ export const useERC721 = (address: string) => {
 export const useCake = () => {
   const { library } = useActiveWeb3React()
   return useMemo(() => getCakeContract(library.getSigner()), [library])
+}
+
+export const useRice = () => {
+  const { library } = useActiveWeb3React()
+  return useMemo(() => getRiceContract(library.getSigner()), [library])
 }
 
 export const useBunnyFactory = () => {
@@ -135,6 +142,11 @@ export const useEasterNftContract = () => {
 export const useCakeVaultContract = () => {
   const { library } = useActiveWeb3React()
   return useMemo(() => getCakeVaultContract(library.getSigner()), [library])
+}
+
+export const useRiceVaultContract = () => {
+  const { library } = useActiveWeb3React()
+  return useMemo(() => getRiceVaultContract(library.getSigner()), [library])
 }
 
 export const usePredictionsContract = () => {

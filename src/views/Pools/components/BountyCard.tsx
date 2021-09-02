@@ -13,6 +13,7 @@ import {
   useModal,
   Box,
   useTooltip,
+  TimerIcon,
 } from '@ricefarm/uikitv2'
 import { useTranslation } from 'contexts/Localization'
 import { getBalanceNumber } from 'utils/formatBalance'
@@ -20,6 +21,11 @@ import { usePriceCakeBusd } from 'state/farms/hooks'
 import { useCakeVault } from 'state/pools/hooks'
 import Balance from 'components/Balance'
 import BountyModal from './BountyModal'
+import CompoundTimerModal from './CakeVaultCard/CompoundTimerModal'
+
+const TimerIconLink = styled(TimerIcon)`
+  cursor: pointer;
+`
 
 const StyledCard = styled(Card)`
   width: 100%;
@@ -43,20 +49,29 @@ const StyledCard = styled(Card)`
 const BountyCard = () => {
   const { t } = useTranslation()
   const {
+    canHarvest,
+    nextHarvestUntil,
     estimatedCakeBountyReward,
+    totalPendingCakeHarvest,
     fees: { callFee },
   } = useCakeVault()
   const cakePriceBusd = usePriceCakeBusd()
+  const cakePriceBusdAsNumber = cakePriceBusd.toNumber()
+
+  // console.log(nextHarvestUntil)
+  // const estimatedDollarBountyReward = useMemo(() => {
+  //   return new BigNumber(estimatedCakeBountyReward).multipliedBy(cakePriceBusd)
+  // }, [cakePriceBusd, estimatedCakeBountyReward])
 
   const estimatedDollarBountyReward = useMemo(() => {
-    return new BigNumber(estimatedCakeBountyReward).multipliedBy(cakePriceBusd)
-  }, [cakePriceBusd, estimatedCakeBountyReward])
+    return new BigNumber(estimatedCakeBountyReward).multipliedBy(cakePriceBusdAsNumber)
+  }, [cakePriceBusdAsNumber, estimatedCakeBountyReward])
 
   const hasFetchedDollarBounty = estimatedDollarBountyReward.gte(0)
   const hasFetchedCakeBounty = estimatedCakeBountyReward ? estimatedCakeBountyReward.gte(0) : false
   const dollarBountyToDisplay = hasFetchedDollarBounty ? getBalanceNumber(estimatedDollarBountyReward, 18) : 0
   const cakeBountyToDisplay = hasFetchedCakeBounty ? getBalanceNumber(estimatedCakeBountyReward, 18) : 0
-
+  
   const TooltipComponent = ({ fee }: { fee: number }) => (
     <>
       <Text mb="16px">{t('This bounty is given as a reward for providing a service to other users.')}</Text>
@@ -71,7 +86,13 @@ const BountyCard = () => {
     </>
   )
 
-  const [onPresentBountyModal] = useModal(<BountyModal TooltipComponent={TooltipComponent} />)
+  const [onHarvestTimer] = useModal(<CompoundTimerModal pid={0} nextHarvestUntil={nextHarvestUntil.toString()} />)
+  const [onPresentBountyModal] = useModal(
+    <BountyModal
+      callFee={callFee}
+      TooltipComponent={TooltipComponent}
+    />,
+  )
 
   const { targetRef, tooltip, tooltipVisible } = useTooltip(<TooltipComponent fee={callFee} />, {
     placement: 'bottom-end',
@@ -86,7 +107,7 @@ const BountyCard = () => {
           <Flex flexDirection="column">
             <Flex alignItems="center" mb="12px">
               <Text fontSize="16px" bold color="textSubtle" mr="4px">
-                {t('Auto CAKE Bounty')}
+                {t('Compound For All Bounty')}
               </Text>
               <Box ref={targetRef}>
                 <HelpIcon color="textSubtle" />
@@ -115,13 +136,15 @@ const BountyCard = () => {
                 <Skeleton height={16} width={62} />
               )}
             </Flex>
+            {!canHarvest && dollarBountyToDisplay && cakeBountyToDisplay && callFee ? (
+              <TimerIconLink onClick={onHarvestTimer} />
+            ) : null}
             <Button
-              disabled={!dollarBountyToDisplay || !cakeBountyToDisplay || !callFee}
+              disabled={!dollarBountyToDisplay || !cakeBountyToDisplay || !callFee || !canHarvest}
               onClick={onPresentBountyModal}
               scale="sm"
-              id="clickClaimVaultBounty"
             >
-              {t('Claim')}
+              {t('Compound')}
             </Button>
           </Flex>
         </CardBody>
