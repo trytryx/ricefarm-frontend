@@ -29,7 +29,6 @@ import {
   getBunnySpecialPredictionAddress,
   getFarmAuctionAddress,
   getRiceReferralAddress,
-  getRiceVaultAddress,
 } from 'utils/addressHelpers'
 
 // ABI
@@ -53,8 +52,7 @@ import sousChefBnb from 'config/abi/sousChefBnb.json'
 import claimRefundAbi from 'config/abi/claimRefund.json'
 import tradingCompetitionAbi from 'config/abi/tradingCompetition.json'
 import easterNftAbi from 'config/abi/easterNft.json'
-import cakeVaultAbi from 'config/abi/cakeVault.json'
-import riceVaultAbi from 'config/abi/riceVault.json'
+import cakeVaultAbi from 'config/abi/riceVault.json'
 import predictionsAbi from 'config/abi/predictions.json'
 import chainlinkOracleAbi from 'config/abi/chainlinkOracle.json'
 import MultiCallAbi from 'config/abi/Multicall.json'
@@ -126,15 +124,11 @@ export const getEasterNftContract = (signer?: ethers.Signer | ethers.providers.P
   return getContract(easterNftAbi, getEasterNftAddress(), signer)
 }
 export const getCakeVaultContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
-  return getContract(riceVaultAbi, getRiceVaultAddress(), signer)
-}
-export const getRiceVaultContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
-  return getContract(riceVaultAbi, getRiceVaultAddress(), signer)
+  return getContract(cakeVaultAbi, getCakeVaultAddress(), signer)
 }
 export const getPredictionsContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
   return getContract(predictionsAbi, getPredictionsAddress(), signer) as PredictionsContract
 }
-
 export const getChainlinkOracleContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
   return getContract(chainlinkOracleAbi, getChainlinkOracleAddress(), signer) as ChainLinkOracleContract
 }
@@ -160,4 +154,3 @@ const getContractv1 = (abi: any, address: string, web3?: Web3) => {
 export const getReferralContract = (web3?: Web3) => {
   return getContractv1(riceReferralAbi, getRiceReferralAddress(), web3)
 }
-

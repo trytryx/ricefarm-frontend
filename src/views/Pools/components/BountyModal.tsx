@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { MEDIUM_GAS_LIMIT } from 'config'
 import { Modal, Text, Flex, Button, HelpIcon, AutoRenewIcon, useTooltip } from '@ricefarm/uikitv2'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { useCakeVaultContract, useRiceVaultContract } from 'hooks/useContract'
+import { useCakeVaultContract } from 'hooks/useContract'
 import useTheme from 'hooks/useTheme'
 import useToast from 'hooks/useToast'
 import { useTranslation } from 'contexts/Localization'
@@ -18,6 +18,7 @@ interface BountyModalProps {
   callFee: number
   onDismiss?: () => void
   TooltipComponent: React.ElementType
+
 }
 
 const Divider = styled.div`
@@ -35,7 +36,7 @@ const BountyModal: React.FC<BountyModalProps> = ({
   const { account } = useWeb3React()
   const { theme } = useTheme()
   const { toastError, toastSuccess } = useToast()
-  const cakeVaultContract = useRiceVaultContract()
+  const cakeVaultContract = useCakeVaultContract()
   const [pendingTx, setPendingTx] = useState(false)
   const {
     estimatedCakeBountyReward,

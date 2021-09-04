@@ -8,7 +8,7 @@ import { BIG_TEN } from 'utils/bigNumber'
 import { usePriceCakeBusd } from 'state/farms/hooks'
 import {MEDIUM_GAS_LIMIT} from 'config'
 import { useCakeVault } from 'state/pools/hooks'
-import { useRiceVaultContract } from 'hooks/useContract'
+import { useCakeVaultContract } from 'hooks/useContract'
 import useTheme from 'hooks/useTheme'
 import useWithdrawalFeeTimer from 'views/Pools/hooks/useWithdrawalFeeTimer'
 import BigNumber from 'bignumber.js'
@@ -40,7 +40,7 @@ const VaultStakeModal: React.FC<VaultStakeModalProps> = ({ pool, stakingMax, isR
   const dispatch = useAppDispatch()
   const { stakingToken } = pool
   const { account } = useWeb3React()
-  const cakeVaultContract = useRiceVaultContract()
+  const cakeVaultContract = useCakeVaultContract()
   const {
     userData: { lastDepositedTime, userShares },
     pricePerFullShare,

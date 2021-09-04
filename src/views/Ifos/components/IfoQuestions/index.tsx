@@ -5,16 +5,16 @@ import { useTranslation } from 'contexts/Localization'
 import FoldableText from 'components/FoldableText'
 import config from './config'
 
-const ImageWrapper = styled.div`
-  flex: none;
-  order: 2;
-  max-width: 414px;
-  width: 100%;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    order: 1;
-  }
-`
+// const ImageWrapper = styled.div`
+//   flex: none;
+//   order: 2;
+//   max-width: 414px;
+//   width: 100%;
+//
+//   ${({ theme }) => theme.mediaQueries.md} {
+//     order: 1;
+//   }
+// `
 
 const DetailsWrapper = styled.div`
   order: 1;

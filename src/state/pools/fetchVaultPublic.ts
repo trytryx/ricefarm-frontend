@@ -1,10 +1,9 @@
 import BigNumber from 'bignumber.js'
 import { convertSharesToCake } from 'views/Pools/helpers'
 import multicall, { multicallv2 } from 'utils/multicall'
-import cakeVaultAbi from 'config/abi/cakeVault.json'
-import riceVaultAbi from 'config/abi/riceVault.json'
+import cakeVaultAbi from 'config/abi/riceVault.json'
 import masterChef from 'config/abi/masterchef.json'
-import { getCakeVaultAddress, getRiceVaultAddress, getMasterChefAddress } from 'utils/addressHelpers'
+import { getCakeVaultAddress, getMasterChefAddress } from 'utils/addressHelpers'
 import { BIG_ZERO } from 'utils/bigNumber'
 
 export const fetchPublicVaultData = async () => {
@@ -17,12 +16,12 @@ export const fetchPublicVaultData = async () => {
       // 'calculateHarvestCakeRewards',
       // 'calculateTotalPendingCakeRewards',
     ].map((method) => ({
-      address: getRiceVaultAddress(),
+      address: getCakeVaultAddress(),
       name: method,
     }))
 
-    const [[sharePrice], [shares], [estimatedCakeBountyReward], [totalPendingCakeHarvest]] = await multicall(
-      riceVaultAbi,
+    const [[sharePrice], [shares], [estimatedCakeBountyReward], [totalPendingCakeHarvest]] = await multicallv2(
+      cakeVaultAbi,
       calls,
     )
 
@@ -32,12 +31,12 @@ export const fetchPublicVaultData = async () => {
         {
           address:getMasterChefAddress(),
           name: 'canHarvest',
-          params: [0, getRiceVaultAddress()]
+          params: [0, getCakeVaultAddress()]
         },
         {
           address:getMasterChefAddress(),
           name: 'userInfo',
-          params: [0, getRiceVaultAddress()]
+          params: [0, getCakeVaultAddress()]
         }
       ],
     )
@@ -73,11 +72,11 @@ export const fetchPublicVaultData = async () => {
 export const fetchVaultFees = async () => {
   try {
     const calls = ['performanceFee', 'callFee', 'withdrawFee', 'withdrawFeePeriod'].map((method) => ({
-      address: getRiceVaultAddress(),
+      address: getCakeVaultAddress(),
       name: method,
     }))
 
-    const [[performanceFee], [callFee], [withdrawalFee], [withdrawalFeePeriod]] = await multicall(riceVaultAbi, calls)
+    const [[performanceFee], [callFee], [withdrawalFee], [withdrawalFeePeriod]] = await multicall(cakeVaultAbi, calls)
 
     return {
       performanceFee: performanceFee.toNumber(),

@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js'
-import { getRiceVaultContract } from 'utils/contractHelpers'
+import { getCakeVaultContract } from 'utils/contractHelpers'
 
-const cakeVaultContract = getRiceVaultContract()
+const cakeVaultContract = getCakeVaultContract()
 
 const fetchVaultUser = async (account: string) => {
   try {

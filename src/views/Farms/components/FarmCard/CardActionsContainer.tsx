@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import styled from 'styled-components'
 import BigNumber from 'bignumber.js'
-import { Button, Flex, Text, TimerIcon, useModal } from '@ricefarm/uikitv2'
+import { Button, Flex, Text } from '@ricefarm/uikitv2'
 import { getAddress } from 'utils/addressHelpers'
 import { useAppDispatch } from 'state'
 import { fetchFarmUserDataAsync } from 'state/farms'
@@ -9,14 +9,9 @@ import { Farm } from 'state/types'
 import { useTranslation } from 'contexts/Localization'
 import { useERC20 } from 'hooks/useContract'
 import ConnectWalletButton from 'components/ConnectWalletButton'
-// import HarvestTimerModal from 'views/Farms/components/FarmCard/HarvestTimerModal'
 import StakeAction from './StakeAction'
 import HarvestAction from './HarvestAction'
 import useApproveFarm from '../../hooks/useApproveFarm'
-
-const TimerIconLink = styled(TimerIcon)`
-  cursor: pointer;
-`
 
 const Action = styled.div`
   padding-top: 16px;

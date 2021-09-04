@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import BigNumber from 'bignumber.js'
 import { Button, Flex, Heading } from '@ricefarm/uikitv2'
 import { useTranslation } from 'contexts/Localization'

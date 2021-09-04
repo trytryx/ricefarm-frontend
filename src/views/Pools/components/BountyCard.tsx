@@ -52,16 +52,10 @@ const BountyCard = () => {
     canHarvest,
     nextHarvestUntil,
     estimatedCakeBountyReward,
-    totalPendingCakeHarvest,
     fees: { callFee },
   } = useCakeVault()
   const cakePriceBusd = usePriceCakeBusd()
   const cakePriceBusdAsNumber = cakePriceBusd.toNumber()
-
-  // console.log(nextHarvestUntil)
-  // const estimatedDollarBountyReward = useMemo(() => {
-  //   return new BigNumber(estimatedCakeBountyReward).multipliedBy(cakePriceBusd)
-  // }, [cakePriceBusd, estimatedCakeBountyReward])
 
   const estimatedDollarBountyReward = useMemo(() => {
     return new BigNumber(estimatedCakeBountyReward).multipliedBy(cakePriceBusdAsNumber)

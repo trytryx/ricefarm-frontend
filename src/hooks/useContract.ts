@@ -26,7 +26,6 @@ import {
   getBunnySpecialPredictionContract,
   getFarmAuctionContract,
   getReferralContract,
-  getRiceVaultContract,
   getRiceContract,
 } from 'utils/contractHelpers'
 
@@ -144,10 +143,10 @@ export const useCakeVaultContract = () => {
   return useMemo(() => getCakeVaultContract(library.getSigner()), [library])
 }
 
-export const useRiceVaultContract = () => {
-  const { library } = useActiveWeb3React()
-  return useMemo(() => getRiceVaultContract(library.getSigner()), [library])
-}
+// export const useRiceVaultContract = () => {
+//   const { library } = useActiveWeb3React()
+//   return useMemo(() => getCakeVaultContract(library.getSigner()), [library])
+// }
 
 export const usePredictionsContract = () => {
   const { library } = useActiveWeb3React()

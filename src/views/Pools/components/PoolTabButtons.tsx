@@ -3,7 +3,7 @@ import { useRouteMatch, Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { ButtonMenu, ButtonMenuItem, Toggle, Text, NotificationDot, Flex, Button, HelpIcon, Link as UiKitLink, } from '@ricefarm/uikitv2'
 import { useTranslation } from 'contexts/Localization'
-import ToggleView, { ViewMode } from './ToggleView/ToggleView'
+// import ToggleView, { ViewMode } from './ToggleView/ToggleView'
 
 const ButtonText = styled(Text)`
   display: none;
@@ -67,11 +67,12 @@ const Wrapper = styled.div`
   }
 `
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const PoolTabButtons = ({ stakedOnly, setStakedOnly, hasStakeInFinishedPools, viewMode, setViewMode }) => {
   const { url, isExact } = useRouteMatch()
   const { t } = useTranslation()
 
-  const viewModeToggle = <ToggleView viewMode={viewMode} onToggle={(mode: ViewMode) => setViewMode(mode)} />
+  // const viewModeToggle = <ToggleView viewMode={viewMode} onToggle={(mode: ViewMode) => setViewMode(mode)} />
 
   const liveOrFinishedSwitch = (
     <Wrapper>
