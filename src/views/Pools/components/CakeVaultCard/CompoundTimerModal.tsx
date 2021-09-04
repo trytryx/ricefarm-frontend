@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Button, Modal, Text } from '@ricefarm/uikitv2'
 import ModalActions from 'components/ModalActions'
 import { useTranslation } from 'contexts/Localization'
-import { useFarmFromPid } from 'state/hooks'
+import { useFarmFromPid } from 'state/farms/hooks'
 
 interface CompoundTimerModalProps {
   pid: number

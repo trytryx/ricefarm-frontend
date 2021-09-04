@@ -1,11 +1,8 @@
 import { useMemo } from 'react'
-import BigNumber from 'bignumber.js'
 import { useSelector } from 'react-redux'
 import { ethers } from 'ethers'
 import { minBy, orderBy } from 'lodash'
-import { BIG_ZERO } from 'utils/bigNumber'
-import { filterFarmsByQuoteToken } from 'utils/farmsPriceHelpers'
-import { State, NodeRound, Farm, ReduxNodeLedger, NodeLedger, ReduxNodeRound } from './types'
+import { State, NodeRound, ReduxNodeLedger, NodeLedger, ReduxNodeRound } from './types'
 import { parseBigNumberObj } from './predictions/helpers'
 
 // /!\
@@ -147,72 +144,4 @@ export const useGetLastOraclePrice = () => {
   return useMemo(() => {
     return ethers.BigNumber.from(lastOraclePrice)
   }, [lastOraclePrice])
-}
-
-export const useFarmFromPid = (pid): Farm => {
-  const farm = useSelector((state: State) => state.farms.data.find((f) => f.pid === pid))
-  return farm
-}
-
-export const usePriceBnbBusd = (): BigNumber => {
-  const bnbBusdFarm = useFarmFromPid(5)
-  return bnbBusdFarm.tokenPriceVsQuote ? new BigNumber(1).div(bnbBusdFarm.tokenPriceVsQuote) : BIG_ZERO
-}
-
-// Return a farm for a given token symbol. The farm is filtered based on attempting to return a farm with a quote token from an array of preferred quote tokens
-export const useFarmFromTokenSymbol = (tokenSymbol: string, preferredQuoteTokens?: string[]): Farm => {
-  const farms = useSelector((state: State) => state.farms.data.filter((farm) => farm.token.symbol === tokenSymbol))
-  const filteredFarm = filterFarmsByQuoteToken(farms, preferredQuoteTokens)
-  return filteredFarm
-}
-
-export const useBusdPriceFromPid = (pid: number): BigNumber => {
-  const farm = useFarmFromPid(pid)
-  const bnbPriceBusd = usePriceBnbBusd()
-  const quoteTokenFarm = useFarmFromTokenSymbol(farm?.quoteToken?.symbol)
-
-  // Catch in case a farm isn't found
-  if (!farm) {
-    return null
-  }
-
-  // With a quoteToken of BUSD or wBNB, it is straightforward to return the token price.
-  if (farm.quoteToken.symbol === 'BUSD') {
-    return farm.tokenPriceVsQuote ? new BigNumber(farm.tokenPriceVsQuote) : BIG_ZERO
-  }
-
-  if (farm.quoteToken.symbol === 'wBNB') {
-    return bnbPriceBusd.gt(0) ? bnbPriceBusd.times(farm.tokenPriceVsQuote) : BIG_ZERO
-  }
-
-  // Possible alternative farm quoteTokens:
-  // UST (i.e. MIR-UST), pBTC (i.e. PNT-pBTC), BTCB (i.e. bBADGER-BTCB), ETH (i.e. SUSHI-ETH)
-  // If the farm's quote token isn't BUSD or wBNB, we then use the quote token, of the original farm's quote token
-  // i.e. for farm PNT - pBTC
-  // we find the pBTC farm (pBTC - BNB)'s quote token - BNB
-  // from the BNB - pBTC BUSD price, we can calculate the PNT - BUSD price
-  if (quoteTokenFarm.quoteToken.symbol === 'wBNB') {
-    const quoteTokenInBusd = bnbPriceBusd.gt(0) && bnbPriceBusd.times(quoteTokenFarm.tokenPriceVsQuote)
-    return farm.tokenPriceVsQuote ? new BigNumber(farm.tokenPriceVsQuote).times(quoteTokenInBusd) : BIG_ZERO
-  }
-
-  if (quoteTokenFarm.quoteToken.symbol === 'BUSD') {
-    const quoteTokenInBusd = quoteTokenFarm.tokenPriceVsQuote
-    return quoteTokenInBusd ? new BigNumber(farm.tokenPriceVsQuote).times(quoteTokenInBusd) : BIG_ZERO
-  }
-
-  // Catch in case token does not have immediate or once-removed BUSD/wBNB quoteToken
-  return BIG_ZERO
-}
-
-export const useBusdPriceFromToken = (tokenSymbol: string): BigNumber | null => {
-  const tokenFarmForPriceCalc = useFarmFromTokenSymbol(tokenSymbol)
-  const tokenPrice = useBusdPriceFromPid(tokenFarmForPriceCalc?.pid)
-
-  // todo: hack for now
-  if (tokenSymbol === 'CAKE') {
-    return new BigNumber(15)
-  }
-
-  return tokenPrice
 }

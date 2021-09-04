@@ -22,7 +22,6 @@ import PoolCard from './components/PoolCard'
 import CakeVaultCard from './components/CakeVaultCard'
 import PoolTabButtons from './components/PoolTabButtons'
 import BountyCard from './components/BountyCard'
-import HelpButton from './components/HelpButton'
 import PoolsTable from './components/PoolsTable/PoolsTable'
 import { ViewMode } from './components/ToggleView/ToggleView'
 import { getAprData, getCakeVaultEarnings } from './helpers'
@@ -80,11 +79,11 @@ const Pools: React.FC = () => {
   const { t } = useTranslation()
   const { account } = useWeb3React()
   const { pools: poolsWithoutAutoVault, userDataLoaded } = usePools(account)
-  const [stakedOnly, setStakedOnly] = usePersistState(false, { localStorageKey: 'pancake_pool_staked' })
+  const [stakedOnly, setStakedOnly] = usePersistState(false, { localStorageKey: 'rice_pool_staked' })
   const [numberOfPoolsVisible, setNumberOfPoolsVisible] = useState(NUMBER_OF_POOLS_VISIBLE)
   const [observerIsSet, setObserverIsSet] = useState(false)
   const loadMoreRef = useRef<HTMLDivElement>(null)
-  const [viewMode, setViewMode] = usePersistState(ViewMode.CARD, { localStorageKey: 'pancake_pool_view' })
+  const [viewMode, setViewMode] = usePersistState(ViewMode.CARD, { localStorageKey: 'rice_pool_view' })
   const [searchQuery, setSearchQuery] = useState('')
   const [sortOption, setSortOption] = useState('hot')
   const chosenPoolsLength = useRef(0)
@@ -225,12 +224,11 @@ const Pools: React.FC = () => {
   const cardLayout = (
     <CardLayout>
       {chosenPools.map((pool) =>
-        <CakeVaultCard key="auto-cake" pool={pool} showStakedOnly={stakedOnly} />
-        // pool.isAutoVault ? (
-        //   <CakeVaultCard key="auto-cake" pool={pool} showStakedOnly={stakedOnly} />
-        // ) : (
-        //   <PoolCard key={pool.sousId} pool={pool} account={account} />
-        // ),
+        pool.isAutoVault ? (
+          <CakeVaultCard key="auto-cake" pool={pool} showStakedOnly={stakedOnly} />
+        ) : (
+          <PoolCard key={pool.sousId} pool={pool} account={account} />
+        ),
       )}
     </CardLayout>
   )
@@ -266,7 +264,7 @@ const Pools: React.FC = () => {
             viewMode={viewMode}
             setViewMode={setViewMode}
           />
-          {/* <FilterContainer>
+          <FilterContainer>
             <LabelWrapper>
               <Text fontSize="12px" bold color="textSubtle" textTransform="uppercase">
                 {t('Sort by')}
@@ -299,13 +297,13 @@ const Pools: React.FC = () => {
               <Text fontSize="12px" bold color="textSubtle" textTransform="uppercase">
                 {t('Search')}
               </Text>
-              <SearchInput onChange={handleChangeSearchQuery} placeholder="Search Pools" />
+              <SearchInput onChange={handleChangeSearchQuery} placeholder="Search Vaults" />
             </LabelWrapper>
-          </FilterContainer> */}
+          </FilterContainer>
         </PoolControls>
         {showFinishedPools && (
           <Text fontSize="20px" color="failure" pb="32px">
-            {/* {t('These pools are no longer distributing rewards. Please unstake your tokens.')} */}
+             {t('These pools are no longer distributing rewards. Please unstake your tokens.')}
           </Text>
         )}
         {account && !userDataLoaded && stakedOnly && (
