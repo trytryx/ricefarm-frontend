@@ -106,11 +106,6 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
   const lpAddress = farm.isTokenOnly ? getAddress(farm.tokenAddresses) : getAddress(farm.lpAddresses)
   const isPromotedFarm = farm.token.symbol === 'RICE' || farm.token.symbol === 'TeslaSafe'
 
-    // We assume the token name is coin pair + lp e.g. CAKE-BNB LP, LINK-BNB LP,
-  // NAR-CAKE LP. The images should be rice-bnb.svg, link-bnb.svg, nar-rice.svg
-  const baseImage = farm.lpSymbol.split(' ')[0].toLocaleLowerCase()
-  const farmImage = farm.isTokenOnly ? `${baseImage}-pool` : baseImage
-
   const depositFee = (typeof farm.depositFee !== 'undefined') ? `${farm.depositFee / 100}%` : `0%`
   const [harvestInterval, setHarvestInterval] = useState('0')
 
@@ -130,8 +125,6 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
         multiplier={farm.multiplier}
         isCommunityFarm={farm.isCommunity}
         token={farm.token}
-        farmImage={farmImage}
-        tokenSymbol={farm.token.symbol}
         quoteToken={farm.quoteToken}
         isTokenOnly={farm.isTokenOnly}
       />
