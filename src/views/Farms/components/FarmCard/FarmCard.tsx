@@ -3,11 +3,10 @@ import BigNumber from 'bignumber.js'
 import styled, { keyframes } from 'styled-components'
 import { Flex, Text, Skeleton } from '@ricefarm/uikitv2'
 import { Farm } from 'state/types'
-import { getBscScanLink } from 'utils'
 import { getBscScanAddressUrl } from 'utils/bscscan'
 import { useTranslation } from 'contexts/Localization'
 import ExpandableSectionButton from 'components/ExpandableSectionButton'
-import { BASE_EXCHANGE_URL, BASE_ADD_LIQUIDITY_URL, BASE_V1_ADD_LIQUIDITY_URL, BASE_V1_SWAP_TOKEN_URL, BASE_SWAP_TOKEN_URL } from 'config'
+import { BASE_ADD_LIQUIDITY_URL, BASE_V1_ADD_LIQUIDITY_URL, BASE_V1_SWAP_TOKEN_URL, BASE_SWAP_TOKEN_URL } from 'config'
 import { getAddress } from 'utils/addressHelpers'
 import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
 import DetailsSection from './DetailsSection'
@@ -82,7 +81,6 @@ interface FarmCardProps {
 
 const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePrice, account }) => {
   const { t } = useTranslation()
-  const chainId = process.env.REACT_APP_CHAIN_ID
   const [showExpandableSection, setShowExpandableSection] = useState(false)
 
   const totalValueFormatted =
@@ -102,10 +100,10 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
     ? `${BASE_V1_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
     : `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
   const buyUrl = farm.isV1
-    ? `${BASE_V1_SWAP_TOKEN_URL}${farm.token.address[chainId]}`
-    : `${BASE_SWAP_TOKEN_URL}${farm.token.address[chainId]}`
+    ? `${BASE_V1_SWAP_TOKEN_URL}${getAddress(farm.token.address)}`
+    : `${BASE_SWAP_TOKEN_URL}${getAddress(farm.token.address)}`
 
-  const lpAddress = farm.isTokenOnly ? farm.tokenAddresses[chainId] : farm.lpAddresses[chainId]
+  const lpAddress = farm.isTokenOnly ? getAddress(farm.tokenAddresses) : getAddress(farm.lpAddresses)
   const isPromotedFarm = farm.token.symbol === 'RICE' || farm.token.symbol === 'TeslaSafe'
 
     // We assume the token name is coin pair + lp e.g. CAKE-BNB LP, LINK-BNB LP,
@@ -116,7 +114,6 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
   const depositFee = (typeof farm.depositFee !== 'undefined') ? `${farm.depositFee / 100}%` : `0%`
   const [harvestInterval, setHarvestInterval] = useState('0')
 
-  // console.log(`card: ${farm.lpSymbol} : ${farm.harvestInterval}`)
   useEffect(() => {
     const timer = setTimeout(() => {
       setHarvestInterval(`${(farm.harvestInterval / 60 / 60).toFixed(2)} hour(s)`)
@@ -125,7 +122,6 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
     return () => clearTimeout(timer)
   },[farm])
 
-  // console.log(`${farm.lpSymbol} : ${farm.harvestInterval}`, farm)
   return (
     <FCard isPromotedFarm={isPromotedFarm}>
       {isPromotedFarm && <StyledCardAccent />}
@@ -189,8 +185,8 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
           removed={removed}
           bscScanAddress={
             farm.isTokenOnly
-              ? getBscScanAddressUrl(farm.tokenAddresses[chainId])
-              : getBscScanAddressUrl(farm.lpAddresses[chainId])
+              ? getBscScanAddressUrl(getAddress(farm.tokenAddresses))
+              : getBscScanAddressUrl(getAddress(farm.lpAddresses))
           }
           infoAddress={farm.isTokenOnly ? null : `https://pancakeswap.info/pair/${lpAddress}`}
           totalValueFormatted={totalValueFormatted}

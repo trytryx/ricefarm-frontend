@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
-import { MEDIUM_GAS } from 'config'
+import { MEDIUM_GAS_LIMIT } from 'config'
 import { Modal, Text, Flex, Button, HelpIcon, AutoRenewIcon, useTooltip } from '@ricefarm/uikitv2'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { useCakeVaultContract, useRiceVaultContract } from 'hooks/useContract'
@@ -63,7 +63,7 @@ const BountyModal: React.FC<BountyModalProps> = ({
   const handleConfirmClick = async () => {
     setPendingTx(true)
     try {
-      const tx = await cakeVaultContract.harvest({ gasLimit: MEDIUM_GAS })
+      const tx = await cakeVaultContract.harvest({ gasLimit: MEDIUM_GAS_LIMIT })
       const receipt = await tx.wait()
       if (receipt.status) {
         toastSuccess(
