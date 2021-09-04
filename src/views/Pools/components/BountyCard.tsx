@@ -65,7 +65,7 @@ const BountyCard = () => {
   const hasFetchedCakeBounty = estimatedCakeBountyReward ? estimatedCakeBountyReward.gte(0) : false
   const dollarBountyToDisplay = hasFetchedDollarBounty ? getBalanceNumber(estimatedDollarBountyReward, 18) : 0
   const cakeBountyToDisplay = hasFetchedCakeBounty ? getBalanceNumber(estimatedCakeBountyReward, 18) : 0
-  
+
   const TooltipComponent = ({ fee }: { fee: number }) => (
     <>
       <Text mb="16px">{t('This bounty is given as a reward for providing a service to other users.')}</Text>
@@ -81,12 +81,7 @@ const BountyCard = () => {
   )
 
   const [onHarvestTimer] = useModal(<CompoundTimerModal pid={0} nextHarvestUntil={nextHarvestUntil.toString()} />)
-  const [onPresentBountyModal] = useModal(
-    <BountyModal
-      callFee={callFee}
-      TooltipComponent={TooltipComponent}
-    />,
-  )
+  const [onPresentBountyModal] = useModal(<BountyModal callFee={callFee} TooltipComponent={TooltipComponent} />)
 
   const { targetRef, tooltip, tooltipVisible } = useTooltip(<TooltipComponent fee={callFee} />, {
     placement: 'bottom-end',

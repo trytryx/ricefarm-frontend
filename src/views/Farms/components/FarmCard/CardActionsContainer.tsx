@@ -22,7 +22,7 @@ const getDisplayTime = (time, isSeconds = false) => {
     return isSeconds ? '00' : null
   }
 
-  const timeFixed = parseFloat(time).toFixed(0) 
+  const timeFixed = parseFloat(time).toFixed(0)
   return timeFixed.toString().length === 2 ? timeFixed.toString() : `0${timeFixed}`
 }
 
@@ -136,8 +136,8 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
             {t('Earned')}
           </Text>
         </div>
-       
-        {earnings.gt(0) && !canHarvest &&  <Text fontSize="14px">{timeLeft}</Text>}
+
+        {earnings.gt(0) && !canHarvest && <Text fontSize="14px">{timeLeft}</Text>}
         {/* {earnings.gt(0) && !canHarvest && <TimerIconLink onClick={onHarvestTimer} />} */}
       </Flex>
       <HarvestAction farm={farm} earnings={earnings} pid={pid} />

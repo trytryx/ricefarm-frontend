@@ -18,7 +18,6 @@ interface BountyModalProps {
   callFee: number
   onDismiss?: () => void
   TooltipComponent: React.ElementType
-
 }
 
 const Divider = styled.div`
@@ -28,10 +27,7 @@ const Divider = styled.div`
   width: 100%;
 `
 
-const BountyModal: React.FC<BountyModalProps> = ({
-  onDismiss,
-  TooltipComponent,
-}) => {
+const BountyModal: React.FC<BountyModalProps> = ({ onDismiss, TooltipComponent }) => {
   const { t } = useTranslation()
   const { account } = useWeb3React()
   const { theme } = useTheme()

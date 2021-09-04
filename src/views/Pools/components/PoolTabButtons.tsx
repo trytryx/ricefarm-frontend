@@ -1,7 +1,17 @@
 import React from 'react'
 import { useRouteMatch, Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { ButtonMenu, ButtonMenuItem, Toggle, Text, NotificationDot, Flex, Button, HelpIcon, Link as UiKitLink, } from '@ricefarm/uikitv2'
+import {
+  ButtonMenu,
+  ButtonMenuItem,
+  Toggle,
+  Text,
+  NotificationDot,
+  Flex,
+  Button,
+  HelpIcon,
+  Link as UiKitLink,
+} from '@ricefarm/uikitv2'
 import { useTranslation } from 'contexts/Localization'
 // import ToggleView, { ViewMode } from './ToggleView/ToggleView'
 
@@ -36,7 +46,7 @@ const ViewControls = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  margin:0 auto;
+  margin: 0 auto;
 
   > div {
     padding: 8px 0px;

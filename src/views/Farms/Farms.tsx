@@ -127,7 +127,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
   const cakePrice = usePriceCakeBusd()
 
   const [query, setQuery] = useState('')
-  const [viewMode/* , setViewMode */] = usePersistState(ViewMode.CARD, { localStorageKey: 'rice_farm_view' })
+  const [viewMode /* , setViewMode */] = usePersistState(ViewMode.CARD, { localStorageKey: 'rice_farm_view' })
   const { account } = useWeb3React()
   const [sortOption, setSortOption] = useState('hot')
   const chosenFarmsLength = useRef(0)
@@ -149,7 +149,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
   // const activeFarms = farmsLP.filter((farm) => farm.multiplier !== '0X' && !farm.hide)
   // const inactiveFarms = farmsLP.filter((farm) => farm.pid !== 0 && farm.multiplier === '0X' && !farm.hide)
   // const archivedFarms = farmsLP.filter((farm) => isArchivedPid(farm.pid))
-  
+
   const activeFarms = farmsLP.filter(
     (farm) => !!farm.isTokenOnly === !!tokenMode && farm.multiplier !== '0X' && !isArchivedPid(farm.pid) && !farm.hide,
   )
@@ -171,7 +171,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
   )
 
   const farmsList = useCallback(
-    (farmsToDisplay: Farm[]): FarmWithStakedValue[] => {     
+    (farmsToDisplay: Farm[]): FarmWithStakedValue[] => {
       let farmsToDisplayWithAPR: FarmWithStakedValue[] = farmsToDisplay.map((farm) => {
         if (!farm.lpTotalInQuoteToken || !farm.quoteToken.busdPrice) {
           return farm
@@ -241,7 +241,6 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
       chosenFarms = stakedOnly ? farmsList(stakedArchivedFarms) : farmsList(archivedFarms)
     }
 
-
     return sortFarms(chosenFarms).slice(0, numberOfFarmsVisible)
   }, [
     sortOption,
@@ -292,7 +291,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
       setShowModal(true)
     }
   }, [chosenFarmsMemoized, observerIsSet, tokenMode, dispatch, onNoticeModal, showModal])
-  
+
   const rowData = chosenFarmsMemoized.map((farm) => {
     const { token, quoteToken } = farm
     const tokenAddress = token.address

@@ -25,21 +25,18 @@ export const fetchPublicVaultData = async () => {
       calls,
     )
 
-    const [[canHarvest], userInfo] = await multicall(
-      masterChef,
-      [
-        {
-          address:getMasterChefAddress(),
-          name: 'canHarvest',
-          params: [0, getCakeVaultAddress()]
-        },
-        {
-          address:getMasterChefAddress(),
-          name: 'userInfo',
-          params: [0, getCakeVaultAddress()]
-        }
-      ],
-    )
+    const [[canHarvest], userInfo] = await multicall(masterChef, [
+      {
+        address: getMasterChefAddress(),
+        name: 'canHarvest',
+        params: [0, getCakeVaultAddress()],
+      },
+      {
+        address: getMasterChefAddress(),
+        name: 'userInfo',
+        params: [0, getCakeVaultAddress()],
+      },
+    ])
 
     const nextHarvestUntilAsString = (userInfo && userInfo[3] && userInfo[3].toString()) || ''
     const canHarvestAsBoolean = Boolean(canHarvest)
@@ -56,7 +53,6 @@ export const fetchPublicVaultData = async () => {
       totalPendingCakeHarvest: new BigNumber(totalPendingCakeHarvest.toString()).toJSON(),
     }
   } catch (error) {
-
     return {
       canHarvest: null,
       nextHarvestUntil: null,

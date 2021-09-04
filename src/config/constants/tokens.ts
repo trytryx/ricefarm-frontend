@@ -81,7 +81,7 @@ const tokens = {
     symbol: 'BNB',
     projectLink: 'https://www.binance.com/',
   },
-    epic: {
+  epic: {
     symbol: 'EPIC',
     address: {
       56: '0x8C8B57F82b662553B2BdD053c7154Fe1821cC9C4',

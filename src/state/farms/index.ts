@@ -59,7 +59,6 @@ interface FarmUserDataResponse {
 export const fetchFarmUserDataAsync = createAsyncThunk<FarmUserDataResponse[], { account: string; pids: number[] }>(
   'farms/fetchFarmUserDataAsync',
   async ({ account, pids }) => {
-    
     const farmsToFetch = farmsConfig.filter((farmConfig) => pids.includes(farmConfig.pid))
     const userFarmAllowances = await fetchFarmUserAllowances(account, farmsToFetch)
     const userFarmTokenBalances = await fetchFarmUserTokenBalances(account, farmsToFetch)
@@ -98,7 +97,7 @@ export const farmsSlice = createSlice({
     builder.addCase(fetchFarmsPublicDataAsync.fulfilled, (state, action) => {
       state.data = state.data.map((farm) => {
         const liveFarmData = action.payload.find((farmData) => farmData.pid === farm.pid)
-        
+
         return { ...farm, ...liveFarmData }
       })
     })
@@ -109,7 +108,6 @@ export const farmsSlice = createSlice({
         const { pid } = userDataEl
         const index = state.data.findIndex((farm) => farm.pid === pid)
         state.data[index] = { ...state.data[index], userData: userDataEl }
-        
       })
       state.userDataLoaded = true
     })

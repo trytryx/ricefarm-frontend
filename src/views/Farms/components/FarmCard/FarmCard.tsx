@@ -106,7 +106,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
   const lpAddress = farm.isTokenOnly ? getAddress(farm.tokenAddresses) : getAddress(farm.lpAddresses)
   const isPromotedFarm = farm.token.symbol === 'RICE' || farm.token.symbol === 'TeslaSafe'
 
-  const depositFee = (typeof farm.depositFee !== 'undefined') ? `${farm.depositFee / 100}%` : `0%`
+  const depositFee = typeof farm.depositFee !== 'undefined' ? `${farm.depositFee / 100}%` : `0%`
   const [harvestInterval, setHarvestInterval] = useState('0')
 
   useEffect(() => {
@@ -115,7 +115,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
     }, 1000)
     // Clear timeout if the component is unmounted
     return () => clearTimeout(timer)
-  },[farm])
+  }, [farm])
 
   return (
     <FCard isPromotedFarm={isPromotedFarm}>

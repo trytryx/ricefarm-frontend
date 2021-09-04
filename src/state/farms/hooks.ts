@@ -43,7 +43,7 @@ export const usePollCoreFarmData = () => {
 
 export const useFarms = (): FarmsState => {
   const farms = useSelector((state: State) => state.farms)
-  
+
   return farms
 }
 
