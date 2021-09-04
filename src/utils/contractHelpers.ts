@@ -126,7 +126,7 @@ export const getEasterNftContract = (signer?: ethers.Signer | ethers.providers.P
   return getContract(easterNftAbi, getEasterNftAddress(), signer)
 }
 export const getCakeVaultContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
-  return getContract(cakeVaultAbi, getCakeVaultAddress(), signer)
+  return getContract(riceVaultAbi, getRiceVaultAddress(), signer)
 }
 export const getRiceVaultContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
   return getContract(riceVaultAbi, getRiceVaultAddress(), signer)
