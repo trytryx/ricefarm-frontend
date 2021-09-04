@@ -2794,10 +2794,10 @@
     eslint-plugin-react "^7.21.5"
     eslint-plugin-react-hooks "^4.0.0"
 
-"@ricefarm/uikitv2@^0.45.1":
-  version "0.45.1"
-  resolved "https://registry.yarnpkg.com/@ricefarm/uikitv2/-/uikitv2-0.45.1.tgz#4b6f91b98238fa54cb1630234961037075db167c"
-  integrity sha512-qkn2lXvufucCQBMFZyYCJYLXFrg8+GDugJth0X86ayzNkUzcZBcjdpBocOhszNey4xBpSoEp3EPVUV81mk8EyQ==
+"@ricefarm/uikitv2@^0.45.2":
+  version "0.45.2"
+  resolved "https://registry.yarnpkg.com/@ricefarm/uikitv2/-/uikitv2-0.45.2.tgz#4a506a33b058a7decdbb58f2b494275f2ce0c98d"
+  integrity sha512-PTZ5c4Q3eaRYNetOysL7AOpgiiJwVaz+LvzqkylZW3I+IirUKOa6VS88P+OZXfG62kMX/tb6S3PjM1997ETsdw==
   dependencies:
     "@popperjs/core" "^2.9.2"
     "@types/lodash" "^4.14.168"
