@@ -1,8 +1,9 @@
 import BigNumber from 'bignumber.js'
 import { convertSharesToCake } from 'views/Pools/helpers'
-import { multicallv2 } from 'utils/multicall'
-import cakeVaultAbi from 'config/abi/cakeVault.json'
-import { getCakeVaultAddress } from 'utils/addressHelpers'
+import multicall, { multicallv2 } from 'utils/multicall'
+import cakeVaultAbi from 'config/abi/riceVault.json'
+import masterChef from 'config/abi/masterchef.json'
+import { getCakeVaultAddress, getMasterChefAddress } from 'utils/addressHelpers'
 import { BIG_ZERO } from 'utils/bigNumber'
 
 export const fetchPublicVaultData = async () => {
@@ -10,8 +11,10 @@ export const fetchPublicVaultData = async () => {
     const calls = [
       'getPricePerFullShare',
       'totalShares',
-      'calculateHarvestCakeRewards',
-      'calculateTotalPendingCakeRewards',
+      'calculateHarvestRiceRewards',
+      'calculateTotalPendingRiceRewards',
+      // 'calculateHarvestCakeRewards',
+      // 'calculateTotalPendingCakeRewards',
     ].map((method) => ({
       address: getCakeVaultAddress(),
       name: method,
@@ -22,10 +25,27 @@ export const fetchPublicVaultData = async () => {
       calls,
     )
 
+    const [[canHarvest], userInfo] = await multicall(masterChef, [
+      {
+        address: getMasterChefAddress(),
+        name: 'canHarvest',
+        params: [0, getCakeVaultAddress()],
+      },
+      {
+        address: getMasterChefAddress(),
+        name: 'userInfo',
+        params: [0, getCakeVaultAddress()],
+      },
+    ])
+
+    const nextHarvestUntilAsString = (userInfo && userInfo[3] && userInfo[3].toString()) || ''
+    const canHarvestAsBoolean = Boolean(canHarvest)
     const totalSharesAsBigNumber = shares ? new BigNumber(shares.toString()) : BIG_ZERO
     const sharePriceAsBigNumber = sharePrice ? new BigNumber(sharePrice.toString()) : BIG_ZERO
     const totalCakeInVaultEstimate = convertSharesToCake(totalSharesAsBigNumber, sharePriceAsBigNumber)
     return {
+      canHarvest: canHarvestAsBoolean,
+      nextHarvestUntil: nextHarvestUntilAsString,
       totalShares: totalSharesAsBigNumber.toJSON(),
       pricePerFullShare: sharePriceAsBigNumber.toJSON(),
       totalCakeInVault: totalCakeInVaultEstimate.cakeAsBigNumber.toJSON(),
@@ -34,6 +54,8 @@ export const fetchPublicVaultData = async () => {
     }
   } catch (error) {
     return {
+      canHarvest: null,
+      nextHarvestUntil: null,
       totalShares: null,
       pricePerFullShare: null,
       totalCakeInVault: null,
@@ -50,7 +72,7 @@ export const fetchVaultFees = async () => {
       name: method,
     }))
 
-    const [[performanceFee], [callFee], [withdrawalFee], [withdrawalFeePeriod]] = await multicallv2(cakeVaultAbi, calls)
+    const [[performanceFee], [callFee], [withdrawalFee], [withdrawalFeePeriod]] = await multicall(cakeVaultAbi, calls)
 
     return {
       performanceFee: performanceFee.toNumber(),

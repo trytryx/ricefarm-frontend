@@ -26,7 +26,7 @@ const StyledCardHeader: React.FC<{
   const getHeadingPrefix = () => {
     if (isAutoVault) {
       // vault
-      return t('Auto')
+      return t('Vault:')
     }
     if (isCakePool) {
       // manual cake
@@ -38,7 +38,7 @@ const StyledCardHeader: React.FC<{
 
   const getSubHeading = () => {
     if (isAutoVault) {
-      return t('Automatic restaking')
+      return t('Automatic compounding')
     }
     if (isCakePool) {
       return t('Earn RICE, stake RICE')

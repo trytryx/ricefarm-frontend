@@ -6,6 +6,7 @@ import { useWeb3React } from '@web3-react/core'
 import { useAppDispatch } from 'state'
 import { BIG_TEN } from 'utils/bigNumber'
 import { usePriceCakeBusd } from 'state/farms/hooks'
+import { MEDIUM_GAS_LIMIT } from 'config'
 import { useCakeVault } from 'state/pools/hooks'
 import { useCakeVaultContract } from 'hooks/useContract'
 import useTheme from 'hooks/useTheme'
@@ -15,6 +16,7 @@ import { getFullDisplayBalance, formatNumber, getDecimalAmount } from 'utils/for
 import useToast from 'hooks/useToast'
 import { fetchCakeVaultUserData } from 'state/pools'
 import { Pool } from 'state/types'
+import { getReferrer } from 'utils/referralHelpers'
 import { getAddress } from 'utils/addressHelpers'
 import { convertCakeToShares } from '../../helpers'
 import FeeSummary from './FeeSummary'
@@ -31,7 +33,7 @@ const StyledButton = styled(Button)`
 `
 
 const callOptions = {
-  gasLimit: 380000,
+  gasLimit: MEDIUM_GAS_LIMIT,
 }
 
 const VaultStakeModal: React.FC<VaultStakeModalProps> = ({ pool, stakingMax, isRemovingStake = false, onDismiss }) => {
@@ -122,7 +124,7 @@ const VaultStakeModal: React.FC<VaultStakeModalProps> = ({ pool, stakingMax, isR
     try {
       // .toString() being called to fix a BigNumber error in prod
       // as suggested here https://github.com/ChainSafe/web3.js/issues/2077
-      const tx = await cakeVaultContract.deposit(convertedStakeAmount.toString(), callOptions)
+      const tx = await cakeVaultContract.deposit(convertedStakeAmount.toString(), getReferrer(), callOptions)
       const receipt = await tx.wait()
       if (receipt.status) {
         toastSuccess(t('Staked!'), t('Your funds have been staked in the pool'))

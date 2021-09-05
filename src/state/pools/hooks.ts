@@ -67,6 +67,8 @@ export const useFetchCakeVault = () => {
 
 export const useCakeVault = () => {
   const {
+    canHarvest: canHarvestAsBoolean,
+    nextHarvestUntil: nextHarvestUntilAsString,
     totalShares: totalSharesAsString,
     pricePerFullShare: pricePerFullShareAsString,
     totalCakeInVault: totalCakeInVaultAsString,
@@ -110,7 +112,17 @@ export const useCakeVault = () => {
     return new BigNumber(cakeAtLastUserActionAsString)
   }, [cakeAtLastUserActionAsString])
 
+  const nextHarvestUntil = useMemo(() => {
+    return new BigNumber(nextHarvestUntilAsString)
+  }, [nextHarvestUntilAsString])
+
+  const canHarvest = useMemo(() => {
+    return canHarvestAsBoolean
+  }, [canHarvestAsBoolean])
+
   return {
+    canHarvest,
+    nextHarvestUntil,
     totalShares,
     pricePerFullShare,
     totalCakeInVault,

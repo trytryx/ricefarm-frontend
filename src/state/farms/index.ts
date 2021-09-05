@@ -97,6 +97,7 @@ export const farmsSlice = createSlice({
     builder.addCase(fetchFarmsPublicDataAsync.fulfilled, (state, action) => {
       state.data = state.data.map((farm) => {
         const liveFarmData = action.payload.find((farmData) => farmData.pid === farm.pid)
+
         return { ...farm, ...liveFarmData }
       })
     })

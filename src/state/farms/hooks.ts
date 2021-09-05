@@ -43,6 +43,7 @@ export const usePollCoreFarmData = () => {
 
 export const useFarms = (): FarmsState => {
   const farms = useSelector((state: State) => state.farms)
+
   return farms
 }
 
@@ -99,6 +100,6 @@ export const usePriceBnbBusd = (): BigNumber => {
 }
 
 export const usePriceCakeBusd = (): BigNumber => {
-  const cakeBnbFarm = useFarmFromPid(2)
+  const cakeBnbFarm = useFarmFromPid(4)
   return new BigNumber(cakeBnbFarm.token.busdPrice)
 }

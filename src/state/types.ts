@@ -36,6 +36,8 @@ export interface Farm extends FarmConfig {
     tokenBalance: string
     stakedBalance: string
     earnings: string
+    canHarvest?: boolean
+    nextHarvest?: string
   }
 }
 
@@ -92,6 +94,8 @@ export interface VaultUser {
   lastUserActionTime: string
 }
 export interface CakeVault {
+  canHarvest?: boolean
+  nextHarvestUntil?: string
   totalShares?: string
   pricePerFullShare?: string
   totalCakeInVault?: string
