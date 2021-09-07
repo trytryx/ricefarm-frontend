@@ -28,13 +28,13 @@ interface CardConfig {
 
 const cardConfig: CardConfig = {
   [PoolIds.poolBasic]: {
-    title: 'Basic Sale',
-    variant: 'blue',
+    title: 'TeslaSafe (Limited)',
+    variant: 'violet',
     tooltip: 'Every person can only commit a limited amount, but may expect a higher return per token committed.',
   },
   [PoolIds.poolUnlimited]: {
-    title: 'Unlimited Sale',
-    variant: 'violet',
+    title: 'Rice (Unlimited)',
+    variant: 'blue',
     tooltip: 'No limits on the amount you can commit. Additional fee applies when claiming.',
   },
 }

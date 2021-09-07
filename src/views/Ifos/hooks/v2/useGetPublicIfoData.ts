@@ -30,6 +30,7 @@ const formatPool = (pool) => ({
 const useGetPublicIfoData = (ifo: Ifo): PublicIfoData => {
   const { address, releaseBlockNumber } = ifo
   const lpTokenPriceInUsd = useLpTokenPrice(ifo.currency.symbol)
+  const lpTokenPriceInUsd2 = useLpTokenPrice(ifo.currency2.symbol)
   const { fastRefresh } = useRefresh()
 
   const [state, setState] = useState({
@@ -56,7 +57,7 @@ const useGetPublicIfoData = (ifo: Ifo): PublicIfoData => {
     },
     startBlockNum: 0,
     endBlockNum: 0,
-    numberPoints: 0,
+    // numberPoints: 0,
   })
   const { currentBlock } = useBlock()
 
@@ -85,13 +86,13 @@ const useGetPublicIfoData = (ifo: Ifo): PublicIfoData => {
         name: 'viewPoolTaxRateOverflow',
         params: [1],
       },
-      {
-        address,
-        name: 'numberPoints',
-      },
+      // {
+      //   address,
+      //   name: 'numberPoints',
+      // },
     ]
 
-    const [startBlock, endBlock, poolBasic, poolUnlimited, taxRate, numberPoints] = await multicallv2(
+    const [startBlock, endBlock, poolBasic, poolUnlimited, taxRate] = await multicallv2(
       ifoV2Abi,
       ifoCalls,
     )
@@ -124,7 +125,7 @@ const useGetPublicIfoData = (ifo: Ifo): PublicIfoData => {
       blocksRemaining,
       startBlockNum,
       endBlockNum,
-      numberPoints: numberPoints ? numberPoints[0].toNumber() : 0,
+      // numberPoints: numberPoints ? numberPoints[0].toNumber() : 0,
     }))
   }, [address, currentBlock, releaseBlockNumber])
 
@@ -132,7 +133,7 @@ const useGetPublicIfoData = (ifo: Ifo): PublicIfoData => {
     fetchIfoData()
   }, [fetchIfoData, fastRefresh])
 
-  return { ...state, currencyPriceInUSD: lpTokenPriceInUsd, fetchIfoData }
+  return { ...state, currencyPriceInUSD: lpTokenPriceInUsd, currencyPriceInUSD2: lpTokenPriceInUsd2, fetchIfoData }
 }
 
 export default useGetPublicIfoData

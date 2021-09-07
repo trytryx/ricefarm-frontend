@@ -34,9 +34,7 @@ const StyledApproveConfirmButtonRow = styled.div`
 const Button = styled(UIKitButton)`
   width: 100%;
 
-  ${({ theme }) => theme.mediaQueries.md} {
-    min-width: 160px;
-  }
+
 `
 
 const iconAttrs = { width: '24px', color: 'textDisabled' }
@@ -83,7 +81,7 @@ const ApproveConfirmButtons: React.FC<ApproveConfirmButtonsProps> = ({
             endIcon={isApproving ? spinnerIcon : undefined}
             isLoading={isApproving}
           >
-            {isApproving ? t('Enabling') : t('Enable')}
+            {isApproving ? t('Approving') : t('Approve')}
           </Button>
         </Box>
         <Flex justifyContent="center">
@@ -123,7 +121,7 @@ const ApproveConfirmButtons: React.FC<ApproveConfirmButtonsProps> = ({
         ) : (
           <Box>
             <Button onClick={onApprove} endIcon={isApproving ? spinnerIcon : undefined} isLoading={isApproving}>
-              {isApproving ? t('Enabling') : t('Enable')}
+              {isApproving ? t('Approving') : t('Approve')}
             </Button>
           </Box>
         )}

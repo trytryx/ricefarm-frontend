@@ -1,21 +1,22 @@
 const config = [
   {
-    title: 'What’s the difference between a Basic Sale and Unlimited Sale?',
+    title: 'What’s the difference between a TeslaSafe Sale (Limited) and Rice Sale (Unlimited)?',
     description: [
-      'In the Basic Sale, every user can commit a maximum of about 100 USD worth of CAKE-BNB LP Tokens. We calculate the maximum LP amount about 30 minutes before each IFO. The Basic Sale has no participation fee.',
-      'In the Unlimited Sale, there’s no limit to the amount of CAKE-BNB LP Tokens you can commit. However, there’s a fee for participation: see below.',
+      'In the TeslaSafe Sale, every user can commit a maximum of about 1000 USD worth of TeslaSafe-BNB LP Tokens. We calculate the maximum LP amount about 30 minutes before each IFO. The TeslaSafe Sale has no participation fee.',
+      'In the Rice Sale, there’s no limit to the amount of RICE-BNB LP Tokens you can commit. However, there’s a fee for participation: see below.',
+      'In the TeslaSafe Sale, the price is slightly more favorable.',
     ],
   },
   {
     title: 'Which sale should I commit to? Can I do both?',
     description: [
-      'You can choose one or both at the same time! If you’re only committing a small amount, we recommend the Basic Sale first. Just remember you need a PancakeSwap Profile in order to participate.',
+      'You can choose one or both at the same time! If you’re only committing a small amount, we recommend the TeslaSafe Sale first.',
     ],
   },
   {
     title: 'How much is the participation fee?',
     description: [
-      'There’s only a participation fee for the Unlimited Sale: there’s no fee for the Basic Sale.',
+      'There’s only a participation fee for the Rice Sale (Unlimited): there’s no fee for the TeslaSafe Sale (Limited).',
       'The fee will start at 1%.',
       'The 1% participation fee decreases in cliffs, based on the percentage of overflow from the “Unlimited” portion of the sale.',
     ],
@@ -23,14 +24,14 @@ const config = [
   {
     title: 'Where does the participation fee go?',
     description: [
-      'We burn it. The CAKE-BNB LP tokens from the participation fee will be decomposed. We will then use the BNB portion to market buy the CAKE equivalent, and finally throw all of the CAKE into the weekly token burn.',
+      'Buy back and burned. The RICE-BNB LP tokens from the participation fee will be broken up into RICE & BNB, we use the BNB portion to do a big buy back on RICE, and then we give it to the burn wallet for burning.',
     ],
   },
   {
-    title: 'How can I get an achievement for participating in the IFO?',
+    title: 'What does TeslaSafe pledged mean?',
     description: [
-      'You need to contribute a minimum of about 10 USD worth of CAKE-BNB LP Tokens to either sale.',
-      'You can contribute to one or both, it doesn’t matter: only your overall contribution is counted for the achievement.',
+      'The TeslaSafe from the IFO never be sold by the team. It is pledged towards marketing efforts, airdrops, dual yield TeslaSafe + RICE pools, etc.',
+      'The Team commits the raised TeslaSafe for expanding the protocol and growing our community. Please let us know if you have any ideas for our pledged TeslaSafe!',
     ],
   },
 ]
