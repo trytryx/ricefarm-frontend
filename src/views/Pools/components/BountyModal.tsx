@@ -77,7 +77,7 @@ const BountyModal: React.FC<BountyModalProps> = ({ onDismiss, TooltipComponent }
   }
 
   return (
-    <Modal title={t('Claim Bounty')} onDismiss={onDismiss} headerBackground={theme.colors.gradients.cardHeader}>
+    <Modal title={t('Compound For All')} onDismiss={onDismiss} headerBackground={theme.colors.gradients.cardHeader}>
       {tooltipVisible && tooltip}
       <Flex alignItems="flex-start" justifyContent="space-between">
         <Text>{t('You’ll claim')}</Text>
