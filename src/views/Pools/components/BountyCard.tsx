@@ -74,6 +74,11 @@ const BountyCard = () => {
         'Whenever you successfully claim the bounty, you’re also helping out by activating the Auto RICE Pool’s compounding function for everyone.',
         )}
       </Text>
+      <Text color="#0000FF" mb="16px">
+        {t(
+          'Anyone staked in the vault can claim the bounty but only 1 lucky person actually receives the reward. Compound at your own risk!',
+        )}
+      </Text>
       <Text style={{ fontWeight: 'bold' }}>
         {t('Auto-Compound Bounty: %fee%% of all Auto RICE pool users pending yield', { fee: fee / 100 })}
       </Text>
