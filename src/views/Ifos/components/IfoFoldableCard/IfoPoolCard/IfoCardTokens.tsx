@@ -101,7 +101,7 @@ const IfoCardTokens: React.FC<IfoCardTokensProps> = ({
   const { currency, currency2, token } = ifo
   const { hasClaimed } = userPoolCharacteristics
   const distributionRatio = ifo[poolId].distributionRatio * 100
-  
+
   const primaryToken = poolId === 'poolBasic' ? tokens.teslasafe : tokens.rice
   const lpToken = (poolId === 'poolBasic' ? currency : currency2) || currency
 

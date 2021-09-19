@@ -124,10 +124,10 @@ const Hero = () => {
           position="relative"
         >
           <BunnyWrapper>
-              <img src={`${imagePath}${imageSrc}.png`} srcSet={getSrcSet(imagePath, imageSrc)} alt={t('RiceFarm Logo')} />
+            <img src={`${imagePath}${imageSrc}.png`} srcSet={getSrcSet(imagePath, imageSrc)} alt={t('RiceFarm Logo')} />
           </BunnyWrapper>
           <StarsWrapper>
-             <CompositeImage {...starsImage} />
+            <CompositeImage {...starsImage} />
           </StarsWrapper>
         </Flex>
       </Flex>

@@ -27,13 +27,12 @@ const ContributeButton: React.FC<Props> = ({ poolId, ifo, publicIfoData, walletI
   const currency = (poolId === 'poolBasic' ? ifo.currency : ifo.currency2) || ifo.currency
   const { balance: userCurrencyBalance } = useTokenBalance(getAddress(currency.address))
 
-  
   // Re-fetch all the data, and display a message when fetching is done
   const handleContributeSuccess = async (amount: BigNumber) => {
     await Promise.all([publicIfoData.fetchIfoData(), walletIfoData.fetchIfoData()])
     toastSuccess(
       t('Success!'),
-      t('You have contributed %amount% %lpName% tokens to this IFO!', { 
+      t('You have contributed %amount% %lpName% tokens to this IFO!', {
         amount: getBalanceNumber(amount),
         lpName: currency.symbol,
       }),

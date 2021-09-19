@@ -33,8 +33,6 @@ const StyledApproveConfirmButtonRow = styled.div`
 
 const Button = styled(UIKitButton)`
   width: 100%;
-
-
 `
 
 const iconAttrs = { width: '24px', color: 'textDisabled' }

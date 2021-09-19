@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Flex, LinkExternal, Button, Text, MetamaskIcon, /* Skeleton */ } from '@ricefarm/uikitv2'
+import { Flex, LinkExternal, Button, Text, MetamaskIcon /* Skeleton */ } from '@ricefarm/uikitv2'
 import { useTranslation } from 'contexts/Localization'
 import { PublicIfoData } from 'views/Ifos/types'
 import { Ifo } from 'config/constants/types'
@@ -44,7 +44,7 @@ const StyledLink = styled(Text)`
   }
 `
 
-const Achievement: React.FC<Props> = ({ ifo, /* publicIfoData */ }) => {
+const Achievement: React.FC<Props> = ({ ifo /* publicIfoData */ }) => {
   const { t } = useTranslation()
   // const tokenName = ifo.token.symbol.toLowerCase()
   const campaignTitle = ifo.name
@@ -88,11 +88,7 @@ const Achievement: React.FC<Props> = ({ ifo, /* publicIfoData */ }) => {
             p="0"
             height="auto"
             onClick={() =>
-              registerToken(
-                ifo.token.address[process.env.REACT_APP_CHAIN_ID],
-                ifo.token.symbol,
-                ifo.token.decimals,
-              )
+              registerToken(ifo.token.address[process.env.REACT_APP_CHAIN_ID], ifo.token.symbol, ifo.token.decimals)
             }
           >
             <Text color="primary" bold fontSize="16px">

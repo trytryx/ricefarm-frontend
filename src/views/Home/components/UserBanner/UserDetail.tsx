@@ -75,16 +75,20 @@ const UserDetail = () => {
     <>
       <Desktop>
         <AvatarWrapper>
-          <Sticker><StyledNoProfileAvatarIcon /></Sticker>
+          <Sticker>
+            <StyledNoProfileAvatarIcon />
+          </Sticker>
           {/* <Sticker>{profile ? <ProfileAvatar profile={profile} /> : <StyledNoProfileAvatarIcon />}</Sticker> */}
         </AvatarWrapper>
         <Flex flexDirection="column">
           {getDesktopHeading()}
-          { /* isLoading || */ !account ? (
-            <Skeleton width={160} height={16} my="4px" />
-          ) : (
-            <Text fontSize="16px"> {t('Connected with %address%', { address: truncatedAddress })}</Text>
-          )}
+          {
+            /* isLoading || */ !account ? (
+              <Skeleton width={160} height={16} my="4px" />
+            ) : (
+              <Text fontSize="16px"> {t('Connected with %address%', { address: truncatedAddress })}</Text>
+            )
+          }
         </Flex>
       </Desktop>
       <Mobile>{getMobileHeading()}</Mobile>

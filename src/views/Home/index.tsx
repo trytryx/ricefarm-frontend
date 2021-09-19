@@ -64,7 +64,7 @@ const Home: React.FC = () => {
         <Hero />
       </StyledHeroSection>
 
-{/*      <PageSection
+      {/*      <PageSection
         innerProps={{ style: { margin: '0', width: '100%' } }}
         background={
           theme.isDark
@@ -104,7 +104,7 @@ const Home: React.FC = () => {
         <SalesSection {...earnSectionData} />
       </PageSection>
 
-{/*      <PageSection
+      {/*      <PageSection
         innerProps={{ style: HomeSectionContainerStyles }}
         background={
           theme.isDark

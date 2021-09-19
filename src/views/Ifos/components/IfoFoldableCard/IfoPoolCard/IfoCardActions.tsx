@@ -19,7 +19,13 @@ interface Props {
   isLoading: boolean
 }
 
-const IfoCardActions: React.FC<Props> = ({ poolId, ifo, publicIfoData, walletIfoData, /* hasProfile, */ isLoading }) => {
+const IfoCardActions: React.FC<Props> = ({
+  poolId,
+  ifo,
+  publicIfoData,
+  walletIfoData,
+  /* hasProfile, */ isLoading,
+}) => {
   // const { t } = useTranslation()
   const { account } = useWeb3React()
   const userPoolCharacteristics = walletIfoData[poolId]

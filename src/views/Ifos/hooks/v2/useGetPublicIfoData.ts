@@ -92,10 +92,7 @@ const useGetPublicIfoData = (ifo: Ifo): PublicIfoData => {
       // },
     ]
 
-    const [startBlock, endBlock, poolBasic, poolUnlimited, taxRate] = await multicallv2(
-      ifoV2Abi,
-      ifoCalls,
-    )
+    const [startBlock, endBlock, poolBasic, poolUnlimited, taxRate] = await multicallv2(ifoV2Abi, ifoCalls)
 
     const poolBasicFormatted = formatPool(poolBasic)
     const poolUnlimitedFormatted = formatPool(poolUnlimited)
