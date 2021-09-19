@@ -31,7 +31,7 @@ const config: (t: ContextApi['t']) => MenuEntry[] = (t) => [
       },
       {
         label: 'Liquidity',
-        href: '/pools',
+        href: '/liquidity',
       },
     ],
   },

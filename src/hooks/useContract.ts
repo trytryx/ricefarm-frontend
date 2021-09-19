@@ -3,7 +3,7 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import useWeb3 from 'hooks/useWeb3'
 import {
   getBep20Contract,
-  getCakeContract,
+  // getCakeContract,
   getBunnyFactoryContract,
   getBunnySpecialContract,
   getPancakeRabbitContract,
@@ -70,7 +70,7 @@ export const useERC721 = (address: string) => {
 
 export const useCake = () => {
   const { library } = useActiveWeb3React()
-  return useMemo(() => getCakeContract(library.getSigner()), [library])
+  return useMemo(() => getRiceContract(library.getSigner()), [library])
 }
 
 export const useRice = () => {

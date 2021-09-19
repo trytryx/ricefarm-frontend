@@ -75,7 +75,7 @@ const StarsWrapper = styled.div`
 `
 
 const imagePath = '/images/home/lunar-bunny/'
-const imageSrc = 'bunny'
+const imageSrc = 'coin'
 
 const starsImage: CompositeImageProps = {
   path: '/images/home/lunar-bunny/',
@@ -104,10 +104,10 @@ const Hero = () => {
       >
         <Flex flex="1" flexDirection="column">
           <Heading scale="xxl" color="secondary" mb="24px">
-            {t('The moon is made of pancakes.')}
+            {t('RiceFarm')}
           </Heading>
           <Heading scale="md" mb="24px">
-            {t('Trade, earn, and win crypto on the most popular decentralized platform in the galaxy.')}
+            {t('Trade and earn crypto on the next evolution of defi.')}
           </Heading>
           <Flex>
             {!account && <ConnectWalletButton mr="8px" />}
@@ -124,10 +124,10 @@ const Hero = () => {
           position="relative"
         >
           <BunnyWrapper>
-            <img src={`${imagePath}${imageSrc}.png`} srcSet={getSrcSet(imagePath, imageSrc)} alt={t('Lunar bunny')} />
+              <img src={`${imagePath}${imageSrc}.png`} srcSet={getSrcSet(imagePath, imageSrc)} alt={t('RiceFarm Logo')} />
           </BunnyWrapper>
           <StarsWrapper>
-            <CompositeImage {...starsImage} />
+             <CompositeImage {...starsImage} />
           </StarsWrapper>
         </Flex>
       </Flex>

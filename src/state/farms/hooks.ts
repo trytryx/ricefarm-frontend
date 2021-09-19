@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from 'state'
 import { useWeb3React } from '@web3-react/core'
@@ -30,6 +30,7 @@ export const usePollFarmsData = (includeArchive = false) => {
 /**
  * Fetches the "core" farm data used globally
  * 2 = RICE-BNB LP
+ * 3 = TS-BNB LP
  * 5 = BUSD-BNB LP
  */
 export const usePollCoreFarmData = () => {
@@ -37,7 +38,7 @@ export const usePollCoreFarmData = () => {
   const { fastRefresh } = useRefresh()
 
   useEffect(() => {
-    dispatch(fetchFarmsPublicDataAsync([2, 5]))
+    dispatch(fetchFarmsPublicDataAsync([2, 3, 5]))
   }, [dispatch, fastRefresh])
 }
 
@@ -101,5 +102,11 @@ export const usePriceBnbBusd = (): BigNumber => {
 
 export const usePriceCakeBusd = (): BigNumber => {
   const cakeBnbFarm = useFarmFromPid(4)
-  return new BigNumber(cakeBnbFarm.token.busdPrice)
+  const cakePriceBusdAsString = cakeBnbFarm.token.busdPrice
+
+  const cakePriceBusd = useMemo(() => {
+    return new BigNumber(cakePriceBusdAsString)
+  }, [cakePriceBusdAsString])
+
+  return cakePriceBusd
 }

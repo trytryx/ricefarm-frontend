@@ -17,9 +17,9 @@ export const swapSectionData: SalesSectionProps = {
   images: {
     path: '/images/home/trade/',
     attributes: [
-      { src: 'BNB', alt: 'BNB token' },
-      { src: 'BTC', alt: 'BTC token' },
-      { src: 'RICE', alt: 'RiceFarm token' },
+      { src: 'teslasafe', alt: 'TeslaSafe Token' },
+      { src: 'fuzion', alt: 'Fuzion Token' },
+      { src: 'rice', alt: 'RiceFarm Token' },
     ],
   },
 }
@@ -34,16 +34,16 @@ export const earnSectionData: SalesSectionProps = {
     external: false,
   },
   secondaryButton: {
-    to: 'https://docs.pancakeswap.finance/products/yield-farming',
+    to: 'https://docs.ricefarm.fi/products/farms-pools-vaults',
     text: 'Learn',
     external: true,
   },
   images: {
-    path: '/images/home/earn/',
+    path: '/images/home/earn-rice/',
     attributes: [
       { src: 'pie', alt: 'Pie chart' },
       { src: 'stonks', alt: 'Stocks chart' },
-      { src: 'folder', alt: 'Folder with cake token' },
+      { src: 'folder', alt: 'Folder with rice token' },
     ],
   },
 }
@@ -51,21 +51,21 @@ export const earnSectionData: SalesSectionProps = {
 export const cakeSectionData: SalesSectionProps = {
   headingText: 'RICE makes our world go round.',
   bodyText:
-    'RICE token is at the heart of the Ricefarm ecosystem. Buy it, win it, farm it, spend it, stake it... heck, you can even vote with it!',
+    'RICE token is at the heart of the RiceFarm ecosystem. Buy it, win it, farm it, spend it, stake it... heck, you can even vote with it!',
   reverse: false,
   primaryButton: {
-    to: '/swap?outputCurrency=0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82',
+    to: '/swap?outputCurrency=0xC4eEFF5aab678C3FF32362D80946A3f5De4a1861',
     text: 'Buy RICE',
     external: false,
   },
   secondaryButton: {
-    to: 'https://docs.ricefarm.fi/tokenomics/rice',
+    to: 'https://docs.ricefarm.fi/tokenomics/rice-farm-token',
     text: 'Learn',
     external: true,
   },
 
   images: {
-    path: '/images/home/cake/',
+    path: '/images/home/rice/',
     attributes: [
       { src: 'bottom-right', alt: 'Small 3d ricefarm' },
       { src: 'top-right', alt: 'Small 3d ricefarm' },
