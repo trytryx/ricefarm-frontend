@@ -1,8 +1,8 @@
 import React from 'react'
-import { useTranslation } from 'contexts/Localization'
-import { Button } from '@ricefarm/uikitv2'
+// import { useTranslation } from 'contexts/Localization'
+// import { Button } from '@ricefarm/uikitv2'
 import { useWeb3React } from '@web3-react/core'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import { Ifo, PoolIds } from 'config/constants/types'
 import { WalletIfoData, PublicIfoData } from 'views/Ifos/types'
 import ConnectWalletButton from 'components/ConnectWalletButton'
@@ -15,12 +15,12 @@ interface Props {
   ifo: Ifo
   publicIfoData: PublicIfoData
   walletIfoData: WalletIfoData
-  hasProfile: boolean
+  // hasProfile: boolean
   isLoading: boolean
 }
 
-const IfoCardActions: React.FC<Props> = ({ poolId, ifo, publicIfoData, walletIfoData, hasProfile, isLoading }) => {
-  const { t } = useTranslation()
+const IfoCardActions: React.FC<Props> = ({ poolId, ifo, publicIfoData, walletIfoData, /* hasProfile, */ isLoading }) => {
+  // const { t } = useTranslation()
   const { account } = useWeb3React()
   const userPoolCharacteristics = walletIfoData[poolId]
 

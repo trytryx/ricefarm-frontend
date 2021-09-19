@@ -1,15 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Flex, LinkExternal, Button, Text, MetamaskIcon, Skeleton } from '@ricefarm/uikitv2'
+import { Flex, LinkExternal, Button, Text, MetamaskIcon, /* Skeleton */ } from '@ricefarm/uikitv2'
 import { useTranslation } from 'contexts/Localization'
 import { PublicIfoData } from 'views/Ifos/types'
 import { Ifo } from 'config/constants/types'
-import { BIG_TEN } from 'utils/bigNumber'
+// import { BIG_TEN } from 'utils/bigNumber'
 import { getBscScanLink } from 'utils'
-import { BASE_URL } from 'config'
-import { registerToken } from '../../../../utils/wallet'
+import { registerToken } from 'utils/wallet'
 
-const MIN_DOLLAR_FOR_ACHIEVEMENT = BIG_TEN
+// const MIN_DOLLAR_FOR_ACHIEVEMENT = BIG_TEN
 
 interface Props {
   ifo: Ifo
@@ -26,9 +25,9 @@ const Container = styled(Flex)`
   }
 `
 
-const AchievementFlex = styled(Flex)<{ isFinished: boolean }>`
-  ${({ isFinished }) => (isFinished ? 'filter: grayscale(100%)' : '')};
-`
+// const AchievementFlex = styled(Flex)<{ isFinished: boolean }>`
+//   ${({ isFinished }) => (isFinished ? 'filter: grayscale(100%)' : '')};
+// `
 
 const StyledLinkExternal = styled(LinkExternal)`
   margin-top: 32px;
@@ -45,11 +44,11 @@ const StyledLink = styled(Text)`
   }
 `
 
-const Achievement: React.FC<Props> = ({ ifo, publicIfoData }) => {
+const Achievement: React.FC<Props> = ({ ifo, /* publicIfoData */ }) => {
   const { t } = useTranslation()
-  const tokenName = ifo.token.symbol.toLowerCase()
+  // const tokenName = ifo.token.symbol.toLowerCase()
   const campaignTitle = ifo.name
-  const minLpForAchievement = MIN_DOLLAR_FOR_ACHIEVEMENT.div(publicIfoData.currencyPriceInUSD).toNumber()
+  // const minLpForAchievement = MIN_DOLLAR_FOR_ACHIEVEMENT.div(publicIfoData.currencyPriceInUSD).toNumber()
 
   return (
     <Container>

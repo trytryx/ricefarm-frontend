@@ -41,7 +41,12 @@ const ContributeModal: React.FC<Props> = ({
   const publicPoolCharacteristics = publicIfoData[poolId]
   const userPoolCharacteristics = walletIfoData[poolId]
 
-  const { currency } = ifo
+  const { currency: currency1, currency2 } = ifo
+  const currency = poolId === 'poolBasic' ? currency1 : currency2
+  const currencyPriceInUSD =
+    poolId === 'poolBasic'
+      ? publicIfoData.currencyPriceInUSD
+      : publicIfoData.currencyPriceInUSD2 || publicIfoData.currencyPriceInUSD
   const { limitPerUserInLP } = publicPoolCharacteristics
   const { amountTokenCommittedInLP } = userPoolCharacteristics
   const { contract } = walletIfoData
@@ -49,7 +54,7 @@ const ContributeModal: React.FC<Props> = ({
   const { account } = useWeb3React()
   const raisingTokenContract = useERC20(getAddress(currency.address))
   const { t } = useTranslation()
-  const valueWithTokenDecimals = new BigNumber(value).times(DEFAULT_TOKEN_DECIMAL)
+  const valueWithTokenDecimals = new BigNumber(value).times(DEFAULT_TOKEN_DECIMAL).decimalPlaces(0)
 
   const { isApproving, isApproved, isConfirmed, isConfirming, handleApprove, handleConfirm } =
     useApproveConfirmTransaction({
@@ -107,7 +112,7 @@ const ContributeModal: React.FC<Props> = ({
         </Flex>
         <BalanceInput
           value={value}
-          currencyValue={publicIfoData.currencyPriceInUSD.times(value || 0).toFixed(2)}
+          currencyValue={currencyPriceInUSD.times(value || 0).toFixed(2)}
           onUserInput={setValue}
           isWarning={valueWithTokenDecimals.isGreaterThan(maximumLpCommitable)}
           decimals={currency.decimals}

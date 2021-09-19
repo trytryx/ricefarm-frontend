@@ -2,12 +2,6 @@ import tokens from './tokens'
 import farms from './farms'
 import { Ifo, Token } from './types'
 
-const cakeBnbLpToken: Token = {
-  symbol: farms[1].lpSymbol,
-  address: farms[1].lpAddresses,
-  decimals: 18,
-}
-
 const riceBnbLpToken: Token = {
   symbol: farms[2].lpSymbol,
   address: farms[2].lpAddresses,
@@ -23,7 +17,9 @@ const teslaSafeBnbLpToken: Token = {
 const ifos: Ifo[] = [
   /**
    * live: 0x50A1255A52B027C93ae5ED5042175BDdC16a320F
+   * testnet 0xebCd54d2208980fB82034Ddec17776C407016AC7 starts in 1 year
    * testnet 0xA428922D60071C0344ba0EDd62b0F5ca5726Ceb0 started will never end
+   * testnet 0x3d6ADb7ba5a23a28e56b5912b28883Fcf064B207 started and ends tomorrow
    * testnet 0xEecAfce12Ee1D5FCF02BAa399Fd84f341d167BF1 ends tomorrow we can test
    * testnet 0x579b525E876Bf1b1586B179E3028DcAee0546924 will test ending today
    * testnet 0x6F04bb871A69ACD1A33563073Fc782959e237A55 end soon
@@ -31,7 +27,7 @@ const ifos: Ifo[] = [
    */
   {
     id: 'epic',
-    address: '0xA428922D60071C0344ba0EDd62b0F5ca5726Ceb0',
+    address: '0x50A1255A52B027C93ae5ED5042175BDdC16a320F',
     isActive: true,
     name: 'EpicBuy (EPIC)',
     poolBasic: {
