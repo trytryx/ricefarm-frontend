@@ -60,7 +60,7 @@ const ifos: Ifo[] = [
    */
   {
     id: 'rice',
-    address: '0x79c06d6151c19dbc3B99A522cd8da37a5479AB66',
+    address: '0x01D9918ac9015bd0477dDF83319E06E7bC117528',
     isActive: false,
     name: 'RiceFarm Token (RICE)',
     poolUnlimited: {

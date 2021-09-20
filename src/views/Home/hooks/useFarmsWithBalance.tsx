@@ -27,9 +27,20 @@ const useFarmsWithBalance = () => {
         params: [farm.pid, account],
       }))
 
+      const canHarvestCalls = farmsConfig.map((farm) => ({
+        address: getMasterChefAddress(),
+        name: 'canHarvest',
+        params: [farm.pid, account],
+      }))
+
       const rawResults = await multicall(masterChefABI, calls)
-      const results = farmsConfig.map((farm, index) => ({ ...farm, balance: new BigNumber(rawResults[index]) }))
-      const farmsWithBalances = results.filter((balanceType) => balanceType.balance.gt(0))
+      const rawResultsCanHarvest = await multicall(masterChefABI, canHarvestCalls)
+      const results = farmsConfig.map((farm, index) => ({
+        ...farm,
+        balance: new BigNumber(rawResults[index]),
+        canHarvest: rawResultsCanHarvest[index][0],
+      }))
+      const farmsWithBalances = results.filter((farm) => farm.balance.gt(0) && farm.canHarvest)
       const totalEarned = farmsWithBalances.reduce((accum, earning) => {
         const earningNumber = new BigNumber(earning.balance)
         if (earningNumber.eq(0)) {

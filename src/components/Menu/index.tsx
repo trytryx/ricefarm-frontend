@@ -11,7 +11,6 @@ import UserMenu from './UserMenu'
 const Menu = (props) => {
   const { isDark, toggleTheme } = useTheme()
   const cakePriceUsd = usePriceCakeBusd()
-  console.log('cakePriceUsd:', cakePriceUsd.toString())
   const { profile } = useProfile()
   const { currentLanguage, setLanguage, t } = useTranslation()
 
