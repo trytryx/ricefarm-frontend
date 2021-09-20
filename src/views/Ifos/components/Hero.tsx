@@ -4,25 +4,14 @@ import { Box, Heading, Text } from '@ricefarm/uikitv2'
 import Container from 'components/Layout/Container'
 import { useTranslation } from 'contexts/Localization'
 
-const getGradient = (isDark: boolean) => {
-  if (isDark) {
-    return 'repeating-linear-gradient(to right, #332453, #332453 40px, #281D44 40px, #281D44 80px)'
-  }
-
-  return 'repeating-linear-gradient(to right, #21d4e2, #21d4e2 40px, #53dee9 40px, #53dee9 80px)'
-}
-
 const StyledHero = styled.div`
-  background: ${({ theme }) => getGradient(theme.isDark)};
-  padding-bottom: 40px;
-  padding-top: 40px;
-`
-
-const CurtainBottom = styled.div`
-  background-image: url('/images/curtain-bottom-${({ theme }) => (theme.isDark ? 'dark' : 'light')}.png');
-  background-repeat: repeat-x;
+  background-color: ${({ theme }) => (theme.isDark ? '#396a63' : '#e9faff')};
+  background-image: url('/images/ifo-header.svg');
+  background-repeat: no-repeat;
+  background-position: bottom;
   background-size: contain;
-  height: 20px;
+  padding-bottom: 60px;
+  padding-top: 40px;
 `
 
 const Hero = () => {
@@ -40,7 +29,6 @@ const Hero = () => {
           </Text>
         </Container>
       </StyledHero>
-      <CurtainBottom />
     </Box>
   )
 }

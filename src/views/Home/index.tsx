@@ -6,9 +6,9 @@ import useTheme from 'hooks/useTheme'
 import Container from 'components/Layout/Container'
 import Hero from './components/Hero'
 import { swapSectionData, earnSectionData, cakeSectionData } from './components/SalesSection/data'
-import MetricsSection from './components/MetricsSection'
+// import MetricsSection from './components/MetricsSection'
 import SalesSection from './components/SalesSection'
-import WinSection from './components/WinSection'
+// import WinSection from './components/WinSection'
 import Footer from './components/Footer'
 import CakeDataRow from './components/CakeDataRow'
 import { WedgeTopLeft, InnerWedgeWrapper, OuterWedgeWrapper, WedgeTopRight } from './components/WedgeSvgs'
@@ -50,8 +50,8 @@ const Home: React.FC = () => {
         innerProps={{ style: { margin: '0', width: '100%' } }}
         background={
           theme.isDark
-            ? 'radial-gradient(103.12% 50% at 50% 50%, #21193A 0%, #191326 100%)'
-            : 'linear-gradient(139.73deg, #E6FDFF 0%, #F3EFFF 100%)'
+            ? 'radial-gradient(103.12% 50% at 50% 50%, #325b75 0%, #466b8c 100%)'
+            : 'linear-gradient(139.73deg, #E6FDFF 0%, #eff0ff 100%)'
         }
         index={2}
         hasCurvedDivider={false}
@@ -63,18 +63,20 @@ const Home: React.FC = () => {
         )}
         <Hero />
       </StyledHeroSection>
-      <PageSection
+
+      {/*      <PageSection
         innerProps={{ style: { margin: '0', width: '100%' } }}
         background={
           theme.isDark
-            ? 'linear-gradient(180deg, #09070C 22%, #201335 100%)'
-            : 'linear-gradient(180deg, #FFFFFF 22%, #D7CAEC 100%)'
+            ? 'linear-gradient(180deg, #070a0c 22%, #132e35 100%)'
+            : 'linear-gradient(180deg, #FFFFFF 22%, #cad4ec 100%)'
         }
         index={2}
         hasCurvedDivider={false}
       >
-        <MetricsSection />
-      </PageSection>
+         <MetricsSection />
+      </PageSection>  */}
+
       <PageSection
         innerProps={{ style: HomeSectionContainerStyles }}
         background={theme.colors.background}
@@ -82,7 +84,7 @@ const Home: React.FC = () => {
         hasCurvedDivider={false}
       >
         <OuterWedgeWrapper>
-          <InnerWedgeWrapper top fill={theme.isDark ? '#201335' : '#D8CBED'}>
+          <InnerWedgeWrapper top fill={theme.isDark ? '#131d35' : '#cbd7ed'}>
             <WedgeTopLeft />
           </InnerWedgeWrapper>
         </OuterWedgeWrapper>
@@ -101,7 +103,8 @@ const Home: React.FC = () => {
         </OuterWedgeWrapper>
         <SalesSection {...earnSectionData} />
       </PageSection>
-      <PageSection
+
+      {/*      <PageSection
         innerProps={{ style: HomeSectionContainerStyles }}
         background={
           theme.isDark
@@ -111,8 +114,9 @@ const Home: React.FC = () => {
         index={2}
         hasCurvedDivider={false}
       >
-        <WinSection />
-      </PageSection>
+         <WinSection />
+      </PageSection> */}
+
       <PageSection
         innerProps={{ style: HomeSectionContainerStyles }}
         background={theme.colors.background}
@@ -124,7 +128,7 @@ const Home: React.FC = () => {
       </PageSection>
       <PageSection
         innerProps={{ style: HomeSectionContainerStyles }}
-        background="linear-gradient(180deg, #7645D9 0%, #5121B1 100%)"
+        background="linear-gradient(180deg, #4560d9 0%, #2134b1 100%)"
         index={2}
         hasCurvedDivider={false}
       >

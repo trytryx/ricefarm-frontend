@@ -1,7 +1,11 @@
+import Web3 from 'web3'
+import { AbiItem } from 'web3-utils'
 import { ethers } from 'ethers'
+import web3NoAccount from 'utils/web3'
 import { simpleRpcProvider } from 'utils/providers'
 import { poolsConfig } from 'config/constants'
 import { PoolCategory } from 'config/constants/types'
+import riceReferralAbi from 'config/abi/riceReferral.json'
 
 // Addresses
 import {
@@ -24,6 +28,7 @@ import {
   getBunnySpecialCakeVaultAddress,
   getBunnySpecialPredictionAddress,
   getFarmAuctionAddress,
+  getRiceReferralAddress,
 } from 'utils/addressHelpers'
 
 // ABI
@@ -34,7 +39,8 @@ import bunnySpecialAbi from 'config/abi/bunnySpecial.json'
 import bep20Abi from 'config/abi/erc20.json'
 import erc721Abi from 'config/abi/erc721.json'
 import lpTokenAbi from 'config/abi/lpToken.json'
-import cakeAbi from 'config/abi/cake.json'
+// import cakeAbi from 'config/abi/cake.json'
+import riceAbi from 'config/abi/rice.json'
 import ifoV1Abi from 'config/abi/ifoV1.json'
 import ifoV2Abi from 'config/abi/ifoV2.json'
 import pointCenterIfo from 'config/abi/pointCenterIfo.json'
@@ -46,7 +52,7 @@ import sousChefBnb from 'config/abi/sousChefBnb.json'
 import claimRefundAbi from 'config/abi/claimRefund.json'
 import tradingCompetitionAbi from 'config/abi/tradingCompetition.json'
 import easterNftAbi from 'config/abi/easterNft.json'
-import cakeVaultAbi from 'config/abi/cakeVault.json'
+import cakeVaultAbi from 'config/abi/riceVault.json'
 import predictionsAbi from 'config/abi/predictions.json'
 import chainlinkOracleAbi from 'config/abi/chainlinkOracle.json'
 import MultiCallAbi from 'config/abi/Multicall.json'
@@ -88,7 +94,7 @@ export const getPointCenterIfoContract = (signer?: ethers.Signer | ethers.provid
   return getContract(pointCenterIfo, getPointCenterIfoAddress(), signer)
 }
 export const getCakeContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
-  return getContract(cakeAbi, getCakeAddress(), signer)
+  return getContract(riceAbi, getCakeAddress(), signer)
 }
 export const getProfileContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
   return getContract(profileABI, getPancakeProfileAddress(), signer)
@@ -120,11 +126,9 @@ export const getEasterNftContract = (signer?: ethers.Signer | ethers.providers.P
 export const getCakeVaultContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
   return getContract(cakeVaultAbi, getCakeVaultAddress(), signer)
 }
-
 export const getPredictionsContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
   return getContract(predictionsAbi, getPredictionsAddress(), signer) as PredictionsContract
 }
-
 export const getChainlinkOracleContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
   return getContract(chainlinkOracleAbi, getChainlinkOracleAddress(), signer) as ChainLinkOracleContract
 }
@@ -139,4 +143,14 @@ export const getBunnySpecialPredictionContract = (signer?: ethers.Signer | ether
 }
 export const getFarmAuctionContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
   return getContract(farmAuctionAbi, getFarmAuctionAddress(), signer) as FarmAuctionContract
+}
+export const getRiceContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
+  return getContract(riceAbi, getCakeAddress(), signer)
+}
+const getContractv1 = (abi: any, address: string, web3?: Web3) => {
+  const _web3 = web3 ?? web3NoAccount
+  return new _web3.eth.Contract(abi as unknown as AbiItem, address)
+}
+export const getReferralContract = (web3?: Web3) => {
+  return getContractv1(riceReferralAbi, getRiceReferralAddress(), web3)
 }

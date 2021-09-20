@@ -1,9 +1,34 @@
 import React from 'react'
 import { useRouteMatch, Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { ButtonMenu, ButtonMenuItem, Toggle, Text, NotificationDot } from '@ricefarm/uikitv2'
+import {
+  ButtonMenu,
+  ButtonMenuItem,
+  Toggle,
+  Text,
+  NotificationDot,
+  Flex,
+  Button,
+  HelpIcon,
+  Link as UiKitLink,
+} from '@ricefarm/uikitv2'
 import { useTranslation } from 'contexts/Localization'
-import ToggleView, { ViewMode } from './ToggleView/ToggleView'
+// import ToggleView, { ViewMode } from './ToggleView/ToggleView'
+
+const ButtonText = styled(Text)`
+  display: none;
+  ${({ theme }) => theme.mediaQueries.lg} {
+    display: block;
+  }
+`
+
+const StyledLink = styled(UiKitLink)`
+  width: 100%;
+
+  &:hover {
+    text-decoration: none;
+  }
+`
 
 const ToggleWrapper = styled.div`
   display: flex;
@@ -21,6 +46,7 @@ const ViewControls = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
+  margin: 0 auto;
 
   > div {
     padding: 8px 0px;
@@ -51,11 +77,12 @@ const Wrapper = styled.div`
   }
 `
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const PoolTabButtons = ({ stakedOnly, setStakedOnly, hasStakeInFinishedPools, viewMode, setViewMode }) => {
   const { url, isExact } = useRouteMatch()
   const { t } = useTranslation()
 
-  const viewModeToggle = <ToggleView viewMode={viewMode} onToggle={(mode: ViewMode) => setViewMode(mode)} />
+  // const viewModeToggle = <ToggleView viewMode={viewMode} onToggle={(mode: ViewMode) => setViewMode(mode)} />
 
   const liveOrFinishedSwitch = (
     <Wrapper>
@@ -81,9 +108,19 @@ const PoolTabButtons = ({ stakedOnly, setStakedOnly, hasStakeInFinishedPools, vi
 
   return (
     <ViewControls>
-      {viewModeToggle}
+      {/* {viewModeToggle} */}
       {stakedOnlySwitch}
       {liveOrFinishedSwitch}
+      <Flex ml="24px" alignItems="center" justifyContent="flex-end">
+        <StyledLink external href="https://docs.ricefarm.fi/products/vaults-rice-cooker">
+          <Button px={['14px', null, null, null, '20px']} variant="subtle">
+            <ButtonText color="backgroundAlt" bold fontSize="16px">
+              {t('Help')}
+            </ButtonText>
+            <HelpIcon color="backgroundAlt" ml={[null, null, null, 0, '6px']} />
+          </Button>
+        </StyledLink>
+      </Flex>
     </ViewControls>
   )
 }

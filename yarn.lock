@@ -2591,20 +2591,6 @@
     truffle-flattener "^1.4.4"
     truffle-hdwallet-provider "^1.0.17"
 
-"@pancakeswap/eslint-config-pancake@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@pancakeswap/eslint-config-pancake/-/eslint-config-pancake-1.1.0.tgz#ddb916af3726359095207306cfc87098cec43f41"
-  integrity sha512-TGyHaDZjXPtubV39S4vPVVRZk9FgsSyBwP6qTP1/H0+nUoKEh+RIUs/nCVxZgN7f8MbbVioLg00gVqV0XI8a7Q==
-  dependencies:
-    "@typescript-eslint/eslint-plugin" "^4.7.0"
-    "@typescript-eslint/parser" "^4.7.0"
-    eslint-config-airbnb "^18.2.1"
-    eslint-config-prettier "^6.15.0"
-    eslint-plugin-import "^2.22.1"
-    eslint-plugin-jsx-a11y "^6.4.1"
-    eslint-plugin-react "^7.21.5"
-    eslint-plugin-react-hooks "^4.0.0"
-
 "@pancakeswap/sdk@^2.3.2":
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/@pancakeswap/sdk/-/sdk-2.3.2.tgz#35c986ac4965dff713bb06d523ffa34312a07228"
@@ -2794,10 +2780,24 @@
     debug "^3.1.0"
     hosted-git-info "^2.6.0"
 
-"@ricefarm/uikitv2@^0.42.1":
-  version "0.42.1"
-  resolved "https://registry.yarnpkg.com/@ricefarm/uikitv2/-/uikitv2-0.42.1.tgz#e374680205047287246f9d8bea78d5e476d183c0"
-  integrity sha512-XaDYyzPuQ8fv1j7Sf+RtJMyugFDp9gwFep66zZMJE10trvXHpBpjMXLvE0mGPKC+AuVR1GX/0PypS2JTIN5D1g==
+"@ricefarm/eslint-config-rice@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@ricefarm/eslint-config-rice/-/eslint-config-rice-1.0.0.tgz#ade282b61800a9ac16f974690f7240c0ed52c8a4"
+  integrity sha512-DOajwtxPe3BgRR8olK5P90NLkg9MkVItSMtgNdD3p3TevsW1cp0kU/BNzRQaK9wQZMccbtgs8JF5NkgKT3pPeQ==
+  dependencies:
+    "@typescript-eslint/eslint-plugin" "^4.7.0"
+    "@typescript-eslint/parser" "^4.7.0"
+    eslint-config-airbnb "^18.2.1"
+    eslint-config-prettier "^6.15.0"
+    eslint-plugin-import "^2.22.1"
+    eslint-plugin-jsx-a11y "^6.4.1"
+    eslint-plugin-react "^7.21.5"
+    eslint-plugin-react-hooks "^4.0.0"
+
+"@ricefarm/uikitv2@^0.45.4":
+  version "0.45.4"
+  resolved "https://registry.yarnpkg.com/@ricefarm/uikitv2/-/uikitv2-0.45.4.tgz#10c0a41caca59e7358d3aff0dc2c28683ee57b63"
+  integrity sha512-5Xru0gHTU2JIv73c5idQODf87aNgYN+1WgGw1RR5n4RPy84ApKh/i/Q/KODL7UH2PtQwbE05LYP32Q5jVSUCoA==
   dependencies:
     "@popperjs/core" "^2.9.2"
     "@types/lodash" "^4.14.168"

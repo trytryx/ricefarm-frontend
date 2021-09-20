@@ -5,16 +5,16 @@ import { useTranslation } from 'contexts/Localization'
 import FoldableText from 'components/FoldableText'
 import config from './config'
 
-const ImageWrapper = styled.div`
-  flex: none;
-  order: 2;
-  max-width: 414px;
-  width: 100%;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    order: 1;
-  }
-`
+// const ImageWrapper = styled.div`
+//   flex: none;
+//   order: 2;
+//   max-width: 414px;
+//   width: 100%;
+//
+//   ${({ theme }) => theme.mediaQueries.md} {
+//     order: 1;
+//   }
+// `
 
 const DetailsWrapper = styled.div`
   order: 1;
@@ -32,9 +32,6 @@ const IfoQuestions = () => {
 
   return (
     <Flex alignItems={['center', null, null, 'start']} flexDirection={['column', null, null, 'row']}>
-      <ImageWrapper>
-        <img src="/images/ifos/ifo-bunny.png" alt="ifo bunny" width="414px" height="500px" />
-      </ImageWrapper>
       <DetailsWrapper>
         <Card>
           <CardHeader>

@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import BigNumber from 'bignumber.js'
 import styled, { keyframes } from 'styled-components'
 import { Flex, Text, Skeleton } from '@ricefarm/uikitv2'
 import { Farm } from 'state/types'
-import { getBscScanLink } from 'utils'
+import { getBscScanAddressUrl } from 'utils/bscscan'
 import { useTranslation } from 'contexts/Localization'
 import ExpandableSectionButton from 'components/ExpandableSectionButton'
-import { BASE_ADD_LIQUIDITY_URL } from 'config'
+import { BASE_ADD_LIQUIDITY_URL, BASE_V1_ADD_LIQUIDITY_URL, BASE_V1_SWAP_TOKEN_URL, BASE_SWAP_TOKEN_URL } from 'config'
 import { getAddress } from 'utils/addressHelpers'
 import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
 import DetailsSection from './DetailsSection'
@@ -18,6 +18,7 @@ export interface FarmWithStakedValue extends Farm {
   apr?: number
   lpRewardsApr?: number
   liquidity?: BigNumber
+  harvestInterval?: number
 }
 
 const AccentGradient = keyframes`  
@@ -80,7 +81,6 @@ interface FarmCardProps {
 
 const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePrice, account }) => {
   const { t } = useTranslation()
-
   const [showExpandableSection, setShowExpandableSection] = useState(false)
 
   const totalValueFormatted =
@@ -88,16 +88,34 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
       ? `$${farm.liquidity.toNumber().toLocaleString(undefined, { maximumFractionDigits: 0 })}`
       : ''
 
-  const lpLabel = farm.lpSymbol && farm.lpSymbol.toUpperCase().replace('PANCAKE', '')
-  const earnLabel = farm.dual ? farm.dual.earnLabel : t('CAKE + Fees')
+  const lpLabel = farm.lpSymbol && farm.lpSymbol.toUpperCase().replace('RICEFARM', '')
+  const earnLabel = farm.dual ? farm.dual.earnLabel : t('RICE + Fees')
 
   const liquidityUrlPathParts = getLiquidityUrlPathParts({
     quoteTokenAddress: farm.quoteToken.address,
     tokenAddress: farm.token.address,
   })
-  const addLiquidityUrl = `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
-  const lpAddress = getAddress(farm.lpAddresses)
-  const isPromotedFarm = farm.token.symbol === 'CAKE'
+
+  const addLiquidityUrl = farm.isV1
+    ? `${BASE_V1_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
+    : `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
+  const buyUrl = farm.isV1
+    ? `${BASE_V1_SWAP_TOKEN_URL}${getAddress(farm.token.address)}`
+    : `${BASE_SWAP_TOKEN_URL}${getAddress(farm.token.address)}`
+
+  const lpAddress = farm.isTokenOnly ? getAddress(farm.tokenAddresses) : getAddress(farm.lpAddresses)
+  const isPromotedFarm = farm.token.symbol === 'RICE' || farm.token.symbol === 'TeslaSafe'
+
+  const depositFee = typeof farm.depositFee !== 'undefined' ? `${farm.depositFee / 100}%` : `0%`
+  const [harvestInterval, setHarvestInterval] = useState('0')
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setHarvestInterval(`${(farm.harvestInterval / 60 / 60).toFixed(2)} hour(s)`)
+    }, 1000)
+    // Clear timeout if the component is unmounted
+    return () => clearTimeout(timer)
+  }, [farm])
 
   return (
     <FCard isPromotedFarm={isPromotedFarm}>
@@ -108,6 +126,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
         isCommunityFarm={farm.isCommunity}
         token={farm.token}
         quoteToken={farm.quoteToken}
+        isTokenOnly={farm.isTokenOnly}
       />
       {!removed && (
         <Flex justifyContent="space-between" alignItems="center">
@@ -117,7 +136,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
               <>
                 <ApyButton
                   lpLabel={lpLabel}
-                  addLiquidityUrl={addLiquidityUrl}
+                  addLiquidityUrl={farm.isTokenOnly ? buyUrl : addLiquidityUrl}
                   cakePrice={cakePrice}
                   apr={farm.apr}
                   displayApr={displayApr}
@@ -134,6 +153,20 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
         <Text>{t('Earn')}:</Text>
         <Text bold>{earnLabel}</Text>
       </Flex>
+      <Flex justifyContent="space-between">
+        <Text>{t('Deposit Fee')}:</Text>
+        <Text bold>{depositFee}</Text>
+      </Flex>
+      <Flex justifyContent="space-between">
+        <Text>{t('Harvest Delay')}:</Text>
+        <Text bold>{harvestInterval}</Text>
+      </Flex>
+      {!farm.isTokenOnly && (
+        <Flex justifyContent="space-between">
+          <Text>{t('LP Type')}:</Text>
+          <Text bold>{farm.lpType}</Text>
+        </Flex>
+      )}
       <CardActionsContainer farm={farm} account={account} addLiquidityUrl={addLiquidityUrl} />
       <Divider />
       <ExpandableSectionButton
@@ -143,11 +176,15 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
       <ExpandingWrapper expanded={showExpandableSection}>
         <DetailsSection
           removed={removed}
-          bscScanAddress={getBscScanLink(lpAddress, 'address')}
-          infoAddress={`https://pancakeswap.info/pool/${lpAddress}`}
+          bscScanAddress={
+            farm.isTokenOnly
+              ? getBscScanAddressUrl(getAddress(farm.tokenAddresses))
+              : getBscScanAddressUrl(getAddress(farm.lpAddresses))
+          }
+          infoAddress={farm.isTokenOnly ? null : `https://pancakeswap.info/pair/${lpAddress}`}
           totalValueFormatted={totalValueFormatted}
           lpLabel={lpLabel}
-          addLiquidityUrl={addLiquidityUrl}
+          addLiquidityUrl={farm.isTokenOnly ? buyUrl : addLiquidityUrl}
         />
       </ExpandingWrapper>
     </FCard>

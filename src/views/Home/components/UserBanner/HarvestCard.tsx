@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import styled from 'styled-components'
-import { AutoRenewIcon, Button, Card, CardBody, Flex, Skeleton, Text, Link, ArrowForwardIcon } from '@pancakeswap/uikit'
+import { AutoRenewIcon, Button, Card, CardBody, Flex, Skeleton, Text, Link, ArrowForwardIcon } from '@ricefarm/uikitv2'
 import BigNumber from 'bignumber.js'
 import { useTranslation } from 'contexts/Localization'
 import { usePriceCakeBusd } from 'state/farms/hooks'
@@ -28,7 +28,7 @@ const HarvestCard = () => {
   const earningsText = t('%earningsBusd% to collect from %count% %farms%', {
     earningsBusd: earningsBusd.toString(),
     count: numFarmsToCollect > 0 ? numFarmsToCollect : '',
-    farms: numFarmsToCollect === 0 || numFarmsToCollect > 1 ? 'farms' : 'farm',
+    farms: numFarmsToCollect === 0 || numFarmsToCollect > 1 ? 'farms/pools' : 'farm/pool',
   })
   const [preText, toCollectText] = earningsText.split(earningsBusd.toString())
 
@@ -41,7 +41,7 @@ const HarvestCard = () => {
         await harvestFarm(masterChefContract, farmWithBalance.pid)
         toastSuccess(
           `${t('Harvested')}!`,
-          t('Your %symbol% earnings have been sent to your wallet!', { symbol: 'CAKE' }),
+          t('Your %symbol% earnings have been sent to your wallet!', { symbol: 'RICE' }),
         )
       } catch (error) {
         toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))

@@ -24,14 +24,18 @@ const ContributeButton: React.FC<Props> = ({ poolId, ifo, publicIfoData, walletI
   const { limitPerUserInLP } = publicPoolCharacteristics
   const { t } = useTranslation()
   const { toastSuccess } = useToast()
-  const { balance: userCurrencyBalance } = useTokenBalance(getAddress(ifo.currency.address))
+  const currency = (poolId === 'poolBasic' ? ifo.currency : ifo.currency2) || ifo.currency
+  const { balance: userCurrencyBalance } = useTokenBalance(getAddress(currency.address))
 
-  // Refetch all the data, and display a message when fetching is done
+  // Re-fetch all the data, and display a message when fetching is done
   const handleContributeSuccess = async (amount: BigNumber) => {
     await Promise.all([publicIfoData.fetchIfoData(), walletIfoData.fetchIfoData()])
     toastSuccess(
       t('Success!'),
-      t('You have contributed %amount% CAKE-BNB LP tokens to this IFO!', { amount: getBalanceNumber(amount) }),
+      t('You have contributed %amount% %lpName% tokens to this IFO!', {
+        amount: getBalanceNumber(amount),
+        lpName: currency.symbol,
+      }),
     )
   }
 
@@ -47,7 +51,7 @@ const ContributeButton: React.FC<Props> = ({ poolId, ifo, publicIfoData, walletI
     false,
   )
 
-  const [onPresentGetLpModal] = useModal(<GetLpModal currency={ifo.currency} />, false)
+  const [onPresentGetLpModal] = useModal(<GetLpModal currency={currency} />, false)
 
   const isDisabled =
     isPendingTx ||

@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
+import { MEDIUM_GAS_LIMIT } from 'config'
 import { Modal, Text, Flex, Button, HelpIcon, AutoRenewIcon, useTooltip } from '@ricefarm/uikitv2'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { useCakeVaultContract } from 'hooks/useContract'
@@ -14,6 +15,7 @@ import { usePriceCakeBusd } from 'state/farms/hooks'
 import { useCakeVault } from 'state/pools/hooks'
 
 interface BountyModalProps {
+  callFee: number
   onDismiss?: () => void
   TooltipComponent: React.ElementType
 }
@@ -58,10 +60,13 @@ const BountyModal: React.FC<BountyModalProps> = ({ onDismiss, TooltipComponent }
   const handleConfirmClick = async () => {
     setPendingTx(true)
     try {
-      const tx = await cakeVaultContract.harvest({ gasLimit: 300000 })
+      const tx = await cakeVaultContract.harvest({ gasLimit: MEDIUM_GAS_LIMIT })
       const receipt = await tx.wait()
       if (receipt.status) {
-        toastSuccess(t('Bounty collected!'), t('CAKE bounty has been sent to your wallet.'))
+        toastSuccess(
+          t('Vault Compounded!'),
+          t('RICE Vault Bounty has been sent to your wallet. Please note this may be 0 if you were not first.'),
+        )
         setPendingTx(false)
         onDismiss()
       }
@@ -72,12 +77,12 @@ const BountyModal: React.FC<BountyModalProps> = ({ onDismiss, TooltipComponent }
   }
 
   return (
-    <Modal title={t('Claim Bounty')} onDismiss={onDismiss} headerBackground={theme.colors.gradients.cardHeader}>
+    <Modal title={t('Compound For All')} onDismiss={onDismiss} headerBackground={theme.colors.gradients.cardHeader}>
       {tooltipVisible && tooltip}
       <Flex alignItems="flex-start" justifyContent="space-between">
         <Text>{t('You’ll claim')}</Text>
         <Flex flexDirection="column">
-          <Balance bold value={cakeBountyToDisplay} decimals={7} unit=" CAKE" />
+          <Balance bold value={cakeBountyToDisplay} decimals={7} unit=" RICE" />
           <Text fontSize="12px" color="textSubtle">
             <Balance
               fontSize="12px"
@@ -95,7 +100,7 @@ const BountyModal: React.FC<BountyModalProps> = ({ onDismiss, TooltipComponent }
         <Text fontSize="14px" color="textSubtle">
           {t('Pool total pending yield')}
         </Text>
-        <Balance color="textSubtle" value={totalYieldToDisplay} unit=" CAKE" />
+        <Balance color="textSubtle" value={totalYieldToDisplay} unit=" RICE" />
       </Flex>
       <Flex alignItems="center" justifyContent="space-between" mb="24px">
         <Text fontSize="14px" color="textSubtle">

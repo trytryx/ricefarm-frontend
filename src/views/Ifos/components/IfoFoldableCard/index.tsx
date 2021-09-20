@@ -100,13 +100,17 @@ const StyledCardFooter = styled(CardFooter)`
 const IfoFoldableCard: React.FC<IfoFoldableCardProps> = ({ ifo, publicIfoData, walletIfoData, isInitiallyVisible }) => {
   const [isVisible, setIsVisible] = useState(isInitiallyVisible)
   const [enableStatus, setEnableStatus] = useState(EnableStatus.DISABLED)
+  const [enableStatus2, setEnableStatus2] = useState(EnableStatus.DISABLED)
   const { t } = useTranslation()
   const { account } = useWeb3React()
+  const currency2 = ifo.version === 1 ? ifo.currency : ifo.currency2
   const raisingTokenContract = useERC20(getAddress(ifo.currency.address))
+  const raisingTokenContract2 = useERC20(getAddress(currency2.address))
   const Ribbon = getRibbonComponent(ifo, publicIfoData.status, t)
   const isActive = publicIfoData.status !== 'finished' && ifo.isActive
   const { contract } = walletIfoData
   const onApprove = useIfoApprove(raisingTokenContract, contract.address)
+  const onApprove2 = useIfoApprove(raisingTokenContract2, contract.address)
   const { toastSuccess } = useToast()
 
   const handleApprove = async () => {
@@ -125,6 +129,25 @@ const IfoFoldableCard: React.FC<IfoFoldableCardProps> = ({ ifo, publicIfoData, w
     }
   }
 
+  const handleApprove2 = async () => {
+    try {
+      setEnableStatus2(EnableStatus.IS_ENABLING)
+
+      await onApprove2()
+
+      setEnableStatus2(EnableStatus.ENABLED)
+      toastSuccess(
+        t('Successfully Enabled!'),
+        t('You can now participate in the %symbol% IFO with %currency%.', {
+          symbol: ifo.token.symbol,
+          currency: ifo.currency2.symbol,
+        }),
+      )
+    } catch (error) {
+      setEnableStatus2(EnableStatus.DISABLED)
+    }
+  }
+
   useEffect(() => {
     const checkAllowance = async () => {
       try {
@@ -140,6 +163,22 @@ const IfoFoldableCard: React.FC<IfoFoldableCardProps> = ({ ifo, publicIfoData, w
       checkAllowance()
     }
   }, [account, raisingTokenContract, contract, setEnableStatus])
+
+  useEffect(() => {
+    const checkAllowance2 = async () => {
+      try {
+        const response = await raisingTokenContract2.methods.allowance(account, contract.options.address).call()
+        const currentAllowance = new BigNumber(response)
+        setEnableStatus2(currentAllowance.lte(0) ? EnableStatus.DISABLED : EnableStatus.ENABLED)
+      } catch (error) {
+        setEnableStatus2(EnableStatus.DISABLED)
+      }
+    }
+
+    if (account) {
+      checkAllowance2()
+    }
+  }, [account, raisingTokenContract2, contract, setEnableStatus2])
 
   return (
     <StyledCard ribbon={Ribbon}>
@@ -166,8 +205,8 @@ const IfoFoldableCard: React.FC<IfoFoldableCardProps> = ({ ifo, publicIfoData, w
               ifo={ifo}
               publicIfoData={publicIfoData}
               walletIfoData={walletIfoData}
-              onApprove={handleApprove}
-              enableStatus={enableStatus}
+              onApprove={handleApprove2}
+              enableStatus={enableStatus2}
             />
           </CardsWrapper>
           <Achievement ifo={ifo} publicIfoData={publicIfoData} />

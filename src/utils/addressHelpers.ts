@@ -8,8 +8,11 @@ export const getAddress = (address: Address): string => {
   return address[chainId] ? address[chainId] : address[ChainId.MAINNET]
 }
 
+export const getRiceVaultAddress = () => {
+  return getAddress(addresses.riceVault)
+}
 export const getCakeAddress = () => {
-  return getAddress(tokens.cake.address)
+  return getAddress(tokens.rice.address)
 }
 export const getMasterChefAddress = () => {
   return getAddress(addresses.masterChef)
@@ -48,7 +51,7 @@ export const getEasterNftAddress = () => {
   return getAddress(addresses.easterNft)
 }
 export const getCakeVaultAddress = () => {
-  return getAddress(addresses.cakeVault)
+  return getAddress(addresses.riceVault)
 }
 export const getPredictionsAddress = () => {
   return getAddress(addresses.predictions)
@@ -64,4 +67,7 @@ export const getBunnySpecialPredictionAddress = () => {
 }
 export const getFarmAuctionAddress = () => {
   return getAddress(addresses.farmAuction)
+}
+export const getRiceReferralAddress = () => {
+  return getAddress(addresses.riceReferral)
 }

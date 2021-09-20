@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import styled from 'styled-components'
 import BigNumber from 'bignumber.js'
 import { Button, Flex, Text } from '@ricefarm/uikitv2'
@@ -16,6 +16,45 @@ import useApproveFarm from '../../hooks/useApproveFarm'
 const Action = styled.div`
   padding-top: 16px;
 `
+
+const getDisplayTime = (time, isSeconds = false) => {
+  if (!time) {
+    return isSeconds ? '00' : null
+  }
+
+  const timeFixed = parseFloat(time).toFixed(0)
+  return timeFixed.toString().length === 2 ? timeFixed.toString() : `0${timeFixed}`
+}
+
+const calculateTimeLeft = (unixTimeStamp) => {
+  const difference = +new Date(parseInt(unixTimeStamp) * 1000) - +new Date()
+  let timeLeftArray = []
+
+  const days = Math.floor(difference / (1000 * 60 * 60 * 24))
+  const hours = Math.floor((difference / (1000 * 60 * 60)) % 24)
+  const minutes = Math.floor((difference / 1000 / 60) % 60)
+  const seconds = Math.floor((difference / 1000) % 60)
+
+  if (difference > 0) {
+    timeLeftArray = [
+      getDisplayTime(days),
+      getDisplayTime(hours),
+      getDisplayTime(minutes),
+      getDisplayTime(seconds, true),
+    ]
+  }
+
+  const timesuffix = ['d', 'h', 'm', 's']
+
+  let toDisplay = ''
+  for (let i = 0; i < 4; i++) {
+    if (typeof timeLeftArray[i] !== 'undefined' && timeLeftArray[i] !== null) {
+      toDisplay = `${toDisplay}${timeLeftArray[i]}${timesuffix[i]} `
+    }
+  }
+  return toDisplay
+}
+
 export interface FarmWithStakedValue extends Farm {
   apr?: number
 }
@@ -35,6 +74,7 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
     tokenBalance: tokenBalanceAsString = 0,
     stakedBalance: stakedBalanceAsString = 0,
     earnings: earningsAsString = 0,
+    canHarvest,
   } = farm.userData || {}
   const allowance = new BigNumber(allowanceAsString)
   const tokenBalance = new BigNumber(tokenBalanceAsString)
@@ -45,7 +85,6 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
   const dispatch = useAppDispatch()
 
   const lpContract = useERC20(lpAddress)
-
   const { onApprove } = useApproveFarm(lpContract)
 
   const handleApprove = useCallback(async () => {
@@ -58,6 +97,17 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
       console.error(e)
     }
   }, [onApprove, dispatch, account, pid])
+
+  const nextHarvestValue = farm.userData.nextHarvest ? farm.userData.nextHarvest : 0
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(nextHarvestValue))
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setTimeLeft(calculateTimeLeft(nextHarvestValue))
+    }, 1000)
+    // Clear timeout if the component is unmounted
+    return () => clearTimeout(timer)
+  })
 
   const renderApprovalOrStakeButton = () => {
     return isApproved ? (
@@ -77,15 +127,20 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
 
   return (
     <Action>
-      <Flex>
-        <Text bold textTransform="uppercase" color="secondary" fontSize="12px" pr="4px">
-          CAKE
-        </Text>
-        <Text bold textTransform="uppercase" color="textSubtle" fontSize="12px">
-          {t('Earned')}
-        </Text>
+      <Flex justifyContent="space-between" mb="12px">
+        <div>
+          <Text bold textTransform="uppercase" color="secondary" fontSize="12px" pr="4px">
+            RICE
+          </Text>
+          <Text bold textTransform="uppercase" color="textSubtle" fontSize="12px">
+            {t('Earned')}
+          </Text>
+        </div>
+
+        {earnings.gt(0) && !canHarvest && <Text fontSize="14px">{timeLeft}</Text>}
+        {/* {earnings.gt(0) && !canHarvest && <TimerIconLink onClick={onHarvestTimer} />} */}
       </Flex>
-      <HarvestAction earnings={earnings} pid={pid} />
+      <HarvestAction farm={farm} earnings={earnings} pid={pid} />
       <Flex>
         <Text bold textTransform="uppercase" color="secondary" fontSize="12px" pr="4px">
           {farm.lpSymbol}

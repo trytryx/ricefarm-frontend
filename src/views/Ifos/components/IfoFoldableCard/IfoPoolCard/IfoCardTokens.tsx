@@ -57,9 +57,9 @@ const TokenSection: React.FC<TokenSectionProps> = ({ primaryToken, secondaryToke
   )
 }
 
-const CakeBnbTokenSection: React.FC<TokenSectionProps> = (props) => {
-  return <TokenSection primaryToken={tokens.cake} secondaryToken={tokens.wbnb} {...props} />
-}
+// const CakeBnbTokenSection: React.FC<TokenSectionProps> = (props) => {
+//   return <TokenSection primaryToken={tokens.cake} secondaryToken={tokens.wbnb} {...props} />
+// }
 
 const Label = (props) => <Text bold fontSize="12px" color="secondary" textTransform="uppercase" {...props} />
 
@@ -70,7 +70,7 @@ interface IfoCardTokensProps {
   ifo: Ifo
   publicIfoData: PublicIfoData
   walletIfoData: WalletIfoData
-  hasProfile: boolean
+  // hasProfile: boolean
   isLoading: boolean
   onApprove: () => Promise<any>
   enableStatus: EnableStatus
@@ -81,7 +81,7 @@ const IfoCardTokens: React.FC<IfoCardTokensProps> = ({
   ifo,
   publicIfoData,
   walletIfoData,
-  hasProfile,
+  // hasProfile,
   isLoading,
   onApprove,
   enableStatus,
@@ -98,26 +98,33 @@ const IfoCardTokens: React.FC<IfoCardTokensProps> = ({
   const publicPoolCharacteristics = publicIfoData[poolId]
   const userPoolCharacteristics = walletIfoData[poolId]
 
-  const { currency, token } = ifo
+  const { currency, currency2, token } = ifo
   const { hasClaimed } = userPoolCharacteristics
   const distributionRatio = ifo[poolId].distributionRatio * 100
+
+  const primaryToken = poolId === 'poolBasic' ? tokens.teslasafe : tokens.rice
+  const lpToken = (poolId === 'poolBasic' ? currency : currency2) || currency
 
   const renderTokenSection = () => {
     if (isLoading) {
       return <SkeletonCardTokens />
     }
-    if (account && !hasProfile) {
-      if (publicIfoData.status === 'finished') {
-        return <Text textAlign="center">{t('Activate PancakeSwap Profile to take part in next IFO‘s!')}</Text>
-      }
-      return <Text textAlign="center">{t('You need an active PancakeSwap Profile to take part in an IFO!')}</Text>
-    }
+    // if (account && !hasProfile) {
+    //   if (publicIfoData.status === 'finished') {
+    //     return <Text textAlign="center">{t('Activate PancakeSwap Profile to take part in next IFO‘s!')}</Text>
+    //   }
+    //   return <Text textAlign="center">{t('You need an active PancakeSwap Profile to take part in an IFO!')}</Text>
+    // }
     if (publicIfoData.status === 'coming_soon') {
       return (
         <>
           <TokenSection>
-            <Label>{t('On sale')}</Label>
-            <Value>{ifo[poolId].saleAmount}</Value>
+            <Label>{t('Your %symbol% committed', { symbol: lpToken.symbol })}</Label>
+            <Value>{getBalanceNumber(userPoolCharacteristics.amountTokenCommittedInLP, currency.decimals)}</Value>
+            <PercentageOfTotal
+              userAmount={userPoolCharacteristics.amountTokenCommittedInLP}
+              totalAmount={publicPoolCharacteristics.totalAmountPool}
+            />
           </TokenSection>
           <Text fontSize="14px" color="textSubtle" pl="48px">
             {t('%ratio%% of total sale', { ratio: distributionRatio })}
@@ -139,14 +146,14 @@ const IfoCardTokens: React.FC<IfoCardTokensProps> = ({
     if (publicIfoData.status === 'live') {
       return (
         <>
-          <CakeBnbTokenSection mb="24px">
-            <Label>{t('Your %symbol% committed', { symbol: currency.symbol })}</Label>
-            <Value>{getBalanceNumber(userPoolCharacteristics.amountTokenCommittedInLP, currency.decimals)}</Value>
+          <TokenSection primaryToken={primaryToken} secondaryToken={tokens.wbnb} mb="24px">
+            <Label>{t('Your %symbol% committed', { symbol: lpToken.symbol })}</Label>
+            <Value>{getBalanceNumber(userPoolCharacteristics.amountTokenCommittedInLP, lpToken.decimals)}</Value>
             <PercentageOfTotal
               userAmount={userPoolCharacteristics.amountTokenCommittedInLP}
               totalAmount={publicPoolCharacteristics.totalAmountPool}
             />
-          </CakeBnbTokenSection>
+          </TokenSection>
           <TokenSection primaryToken={ifo.token}>
             <Label>{t('%symbol% to receive', { symbol: token.symbol })}</Label>
             <Value>{getBalanceNumber(userPoolCharacteristics.offeringAmountInToken, token.decimals)}</Value>
@@ -162,9 +169,9 @@ const IfoCardTokens: React.FC<IfoCardTokensProps> = ({
         </Flex>
       ) : (
         <>
-          <CakeBnbTokenSection mb="24px">
+          <TokenSection primaryToken={primaryToken} secondaryToken={tokens.wbnb} mb="24px">
             <Label>
-              {t(hasClaimed ? 'Your %symbol% RECLAIMED' : 'Your %symbol% TO RECLAIM', { symbol: currency.symbol })}
+              {t(hasClaimed ? 'Your %symbol% RECLAIMED' : 'Your %symbol% TO RECLAIM', { symbol: lpToken.symbol })}
             </Label>
             <Flex alignItems="center">
               <Value>{getBalanceNumber(userPoolCharacteristics.refundingAmountInLP, currency.decimals)}</Value>
@@ -174,11 +181,13 @@ const IfoCardTokens: React.FC<IfoCardTokensProps> = ({
               userAmount={userPoolCharacteristics.amountTokenCommittedInLP}
               totalAmount={publicPoolCharacteristics.totalAmountPool}
             />
-          </CakeBnbTokenSection>
+          </TokenSection>
           <TokenSection primaryToken={ifo.token}>
             <Label> {t(hasClaimed ? '%symbol% received' : '%symbol% to receive', { symbol: token.symbol })}</Label>
             <Flex alignItems="center">
-              <Value>{getBalanceNumber(userPoolCharacteristics.offeringAmountInToken, token.decimals)}</Value>
+              <Value>
+                {getBalanceNumber(userPoolCharacteristics.offeringAmountInToken, token.decimals).toFixed(6)}
+              </Value>
               {!hasClaimed && userPoolCharacteristics.offeringAmountInToken.isEqualTo(0) && (
                 <div ref={targetRef} style={{ display: 'flex', marginLeft: '8px' }}>
                   <HelpIcon />

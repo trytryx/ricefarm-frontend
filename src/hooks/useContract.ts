@@ -1,8 +1,9 @@
 import { useMemo } from 'react'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import useWeb3 from 'hooks/useWeb3'
 import {
   getBep20Contract,
-  getCakeContract,
+  // getCakeContract,
   getBunnyFactoryContract,
   getBunnySpecialContract,
   getPancakeRabbitContract,
@@ -24,6 +25,8 @@ import {
   getBunnySpecialCakeVaultContract,
   getBunnySpecialPredictionContract,
   getFarmAuctionContract,
+  getReferralContract,
+  getRiceContract,
 } from 'utils/contractHelpers'
 
 // Imports below migrated from Exchange useContract.ts
@@ -67,7 +70,12 @@ export const useERC721 = (address: string) => {
 
 export const useCake = () => {
   const { library } = useActiveWeb3React()
-  return useMemo(() => getCakeContract(library.getSigner()), [library])
+  return useMemo(() => getRiceContract(library.getSigner()), [library])
+}
+
+export const useRice = () => {
+  const { library } = useActiveWeb3React()
+  return useMemo(() => getRiceContract(library.getSigner()), [library])
 }
 
 export const useBunnyFactory = () => {
@@ -134,6 +142,11 @@ export const useCakeVaultContract = () => {
   const { library } = useActiveWeb3React()
   return useMemo(() => getCakeVaultContract(library.getSigner()), [library])
 }
+
+// export const useRiceVaultContract = () => {
+//   const { library } = useActiveWeb3React()
+//   return useMemo(() => getCakeVaultContract(library.getSigner()), [library])
+// }
 
 export const usePredictionsContract = () => {
   const { library } = useActiveWeb3React()
@@ -227,4 +240,9 @@ export function usePairContract(pairAddress?: string, withSignerIfPossible?: boo
 export function useMulticallContract(): Contract | null {
   const { chainId } = useActiveWeb3React()
   return useContract(chainId && MULTICALL_NETWORKS[chainId], MULTICALL_ABI, false)
+}
+
+export const useReferralContract = () => {
+  const web3 = useWeb3()
+  return useMemo(() => getReferralContract(web3), [web3])
 }
