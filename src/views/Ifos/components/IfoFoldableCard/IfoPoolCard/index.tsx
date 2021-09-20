@@ -2,7 +2,7 @@ import React from 'react'
 import { useTranslation } from 'contexts/Localization'
 import { Card, CardBody, CardHeader, Text, useTooltip, HelpIcon, Flex } from '@ricefarm/uikitv2'
 import { Ifo, PoolIds } from 'config/constants/types'
-import { useProfile } from 'state/profile/hooks'
+// import { useProfile } from 'state/profile/hooks'
 import { PublicIfoData, WalletIfoData } from 'views/Ifos/types'
 import { EnableStatus } from '../types'
 import IfoCardTokens from './IfoCardTokens'
@@ -28,13 +28,13 @@ interface CardConfig {
 
 const cardConfig: CardConfig = {
   [PoolIds.poolBasic]: {
-    title: 'Basic Sale',
-    variant: 'blue',
+    title: 'TeslaSafe (Limited)',
+    variant: 'violet',
     tooltip: 'Every person can only commit a limited amount, but may expect a higher return per token committed.',
   },
   [PoolIds.poolUnlimited]: {
-    title: 'Unlimited Sale',
-    variant: 'violet',
+    title: 'Rice (Unlimited)',
+    variant: 'blue',
     tooltip: 'No limits on the amount you can commit. Additional fee applies when claiming.',
   },
 }
@@ -42,10 +42,10 @@ const cardConfig: CardConfig = {
 const SmallCard: React.FC<IfoCardProps> = ({ poolId, ifo, publicIfoData, walletIfoData, onApprove, enableStatus }) => {
   const { t } = useTranslation()
   const config = cardConfig[poolId]
-  const { hasProfile, isLoading: isProfileLoading } = useProfile()
+  // const { hasProfile, isLoading: isProfileLoading } = useProfile()
   const { targetRef, tooltip, tooltipVisible } = useTooltip(t(config.tooltip), { placement: 'bottom' })
 
-  const isLoading = isProfileLoading || publicIfoData.status === 'idle'
+  const isLoading = /* isProfileLoading || */ publicIfoData.status === 'idle'
 
   return (
     <>
@@ -67,7 +67,7 @@ const SmallCard: React.FC<IfoCardProps> = ({ poolId, ifo, publicIfoData, walletI
             ifo={ifo}
             publicIfoData={publicIfoData}
             walletIfoData={walletIfoData}
-            hasProfile={hasProfile}
+            // hasProfile={hasProfile}
             isLoading={isLoading}
             onApprove={onApprove}
             enableStatus={enableStatus}
@@ -77,7 +77,7 @@ const SmallCard: React.FC<IfoCardProps> = ({ poolId, ifo, publicIfoData, walletI
             ifo={ifo}
             publicIfoData={publicIfoData}
             walletIfoData={walletIfoData}
-            hasProfile={hasProfile}
+            // hasProfile={hasProfile}
             isLoading={isLoading}
           />
           <IfoCardDetails poolId={poolId} ifo={ifo} publicIfoData={publicIfoData} />

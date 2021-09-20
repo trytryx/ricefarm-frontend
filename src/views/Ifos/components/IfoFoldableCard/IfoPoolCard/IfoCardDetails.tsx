@@ -36,8 +36,10 @@ const FooterEntry: React.FC<FooterEntryProps> = ({ label, value }) => {
 
 const IfoCardDetails: React.FC<IfoCardDetailsProps> = ({ poolId, ifo, publicIfoData }) => {
   const { t } = useTranslation()
-  const { status, currencyPriceInUSD } = publicIfoData
+  const { status, currencyPriceInUSD: currencyPriceInUSD1, currencyPriceInUSD2 } = publicIfoData
   const poolCharacteristic = publicIfoData[poolId]
+  const burnText = poolId === 'poolBasic' ? 'TeslaSafe to Pledge:' : 'RICE to Burn:'
+  const currencyPriceInUSD = poolId === 'poolBasic' ? currencyPriceInUSD1 : currencyPriceInUSD2 || currencyPriceInUSD1
 
   /* Format start */
   const maxLpTokens = getBalanceNumber(poolCharacteristic.limitPerUserInLP, ifo.currency.decimals)
@@ -59,7 +61,7 @@ const IfoCardDetails: React.FC<IfoCardDetailsProps> = ({ poolId, ifo, publicIfoD
         <>
           {poolId === PoolIds.poolBasic && <FooterEntry label={t('Max. LP token entry')} value={maxLpTokens} />}
           <FooterEntry label={t('Funds to raise:')} value={ifo[poolId].raiseAmount} />
-          <FooterEntry label={t('CAKE to burn:')} value={ifo[poolId].cakeToBurn} />
+          <FooterEntry label={t(burnText)} value={ifo[poolId].cakeToBurn} />
           <FooterEntry
             label={t('Price per %symbol%:', { symbol: ifo.token.symbol })}
             value={`$${ifo.tokenOfferingPrice}`}
@@ -83,7 +85,7 @@ const IfoCardDetails: React.FC<IfoCardDetailsProps> = ({ poolId, ifo, publicIfoD
           {poolId === PoolIds.poolUnlimited && <FooterEntry label={t('Additional fee:')} value={taxRate} />}
           <FooterEntry label={t('Total committed:')} value={currencyPriceInUSD.gt(0) ? totalCommitted : null} />
           <FooterEntry label={t('Funds to raise:')} value={ifo[poolId].raiseAmount} />
-          <FooterEntry label={t('CAKE to burn:')} value={ifo[poolId].cakeToBurn} />
+          <FooterEntry label={t('RICE to burn:')} value={ifo[poolId].cakeToBurn} />
           <FooterEntry
             label={t('Price per %symbol%:', { symbol: ifo.token.symbol })}
             value={`$${ifo.tokenOfferingPrice ? ifo.tokenOfferingPrice : '?'}`}

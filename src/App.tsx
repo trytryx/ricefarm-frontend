@@ -16,6 +16,7 @@ import EasterEgg from './components/EasterEgg'
 import history from './routerHistory'
 // Views included in the main bundle
 import Pools from './views/Pools'
+import Farms from './views/Farms'
 import Swap from './views/Swap'
 import {
   RedirectDuplicateTokenIds,
@@ -28,9 +29,9 @@ import { RedirectPathToSwapOnly, RedirectToSwap } from './views/Swap/redirects'
 // Route-based code splitting
 // Only pool is included in the main bundle because of it's the most visited page
 const Home = lazy(() => import('./views/Home'))
-const Farms = lazy(() => import('./views/Farms'))
+// const Farms = lazy(() => import('./views/Farms'))
 // const FarmAuction = lazy(() => import('./views/FarmAuction'))
-const Lottery = lazy(() => import('./views/Lottery'))
+// const Lottery = lazy(() => import('./views/Lottery'))
 const Ifos = lazy(() => import('./views/Ifos'))
 const NotFound = lazy(() => import('./views/NotFound'))
 // const Collectibles = lazy(() => import('./views/Collectibles'))
@@ -38,11 +39,11 @@ const NotFound = lazy(() => import('./views/NotFound'))
 // const Team = lazy(() => import('./views/Teams/Team'))
 // const Profile = lazy(() => import('./views/Profile'))
 // const TradingCompetition = lazy(() => import('./views/TradingCompetition'))
-const Predictions = lazy(() => import('./views/Predictions'))
-const Voting = lazy(() => import('./views/Voting'))
+// const Predictions = lazy(() => import('./views/Predictions'))
+// const Voting = lazy(() => import('./views/Voting'))
 const Referrals = lazy(() => import('./views/Referrals'))
-const Proposal = lazy(() => import('./views/Voting/Proposal'))
-const CreateProposal = lazy(() => import('./views/Voting/CreateProposal'))
+// const Proposal = lazy(() => import('./views/Voting/Proposal'))
+// const CreateProposal = lazy(() => import('./views/Voting/CreateProposal'))
 const AddLiquidity = lazy(() => import('./views/AddLiquidity'))
 const Liquidity = lazy(() => import('./views/Pool'))
 const PoolFinder = lazy(() => import('./views/PoolFinder'))
@@ -75,7 +76,7 @@ const App: React.FC = () => {
             <Route path="/vaults" component={Pools} />
             <Route path="/ifo" component={Ifos} />
             <Route path="/referrals" component={Referrals} />
-            <Route path="/lottery">
+            {/*         <Route path="/lottery">
               <Lottery />
             </Route>
             <Route path="/prediction">
@@ -89,7 +90,7 @@ const App: React.FC = () => {
             </Route>
             <Route path="/voting/proposal/:id">
               <Proposal />
-            </Route>
+            </Route>  */}
 
             {/* Using this format because these components use routes injected props. We need to rework them with hooks */}
             <Route exact strict path="/swap" component={Swap} />
@@ -117,9 +118,9 @@ const App: React.FC = () => {
             <Route path="/syrup">
               <Redirect to="/pools" />
             </Route>
-            <Route path="/nft">
+            {/*            <Route path="/nft">
               <Redirect to="/collectibles" />
-            </Route>
+            </Route> */}
 
             {/* 404 */}
             <Route component={NotFound} />

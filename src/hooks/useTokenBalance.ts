@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
-import { getBep20Contract, getCakeContract } from 'utils/contractHelpers'
+import { getBep20Contract, getCakeContract, getMasterchefContract } from 'utils/contractHelpers'
 import { BIG_ZERO } from 'utils/bigNumber'
 import { simpleRpcProvider } from 'utils/providers'
 import useRefresh from './useRefresh'
@@ -107,6 +107,74 @@ export const useGetBnbBalance = () => {
   }, [account, lastUpdated, setBalance, setFetchStatus])
 
   return { balance, fetchStatus, refresh: setLastUpdated }
+}
+
+export const useMaxTransferAmount = () => {
+  const { slowRefresh } = useRefresh()
+  const [maxTransferAmount, setMaxTransferAmount] = useState<BigNumber>()
+
+  useEffect(() => {
+    async function fetchMaxTransferAmount() {
+      const riceContract = getCakeContract()
+      const maxTransfer = await riceContract.maxTransferAmount()
+      setMaxTransferAmount(new BigNumber(maxTransfer.toString()))
+    }
+
+    fetchMaxTransferAmount()
+  }, [slowRefresh])
+
+  return maxTransferAmount
+}
+
+export const useLockedRewards = () => {
+  const { slowRefresh } = useRefresh()
+  const [lockedRewards, setLockedRewards] = useState<BigNumber>()
+
+  useEffect(() => {
+    async function fetchLockedRewards() {
+      const masterChefContract = getMasterchefContract()
+      const totalLocked = await masterChefContract.totalLockedRewards()
+      setLockedRewards(new BigNumber(totalLocked.toString()))
+    }
+
+    fetchLockedRewards()
+  }, [slowRefresh])
+
+  return lockedRewards
+}
+
+export const useRicePerBlock = () => {
+  const { slowRefresh } = useRefresh()
+  const [ricePerBlock, setRicePerBlock] = useState<BigNumber>()
+
+  useEffect(() => {
+    async function fetchRicePerBlock() {
+      const masterChef = getMasterchefContract()
+      const _ricePerBlock = await masterChef.ricePerBlock()
+      setRicePerBlock(new BigNumber(_ricePerBlock.toString()))
+    }
+
+    fetchRicePerBlock()
+  }, [slowRefresh])
+
+  return ricePerBlock
+}
+
+export const useTransferTaxRate = () => {
+  const { slowRefresh } = useRefresh()
+  const [transferTaxRate, setTransferTaxRate] = useState<BigNumber>()
+
+  useEffect(() => {
+    async function fetchTransferTaxRate() {
+      const riceContract = getCakeContract()
+      const taxRate = await riceContract.transferTaxRate()
+      setTransferTaxRate(new BigNumber(taxRate.toString()).div(100))
+    }
+
+    fetchTransferTaxRate()
+  }, [slowRefresh])
+
+  return transferTaxRate
 }
 
 export default useTokenBalance

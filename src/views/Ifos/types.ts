@@ -22,7 +22,8 @@ export interface PublicIfoData {
   startBlockNum: number
   endBlockNum: number
   currencyPriceInUSD: BigNumber
-  numberPoints: number
+  currencyPriceInUSD2?: BigNumber
+  numberPoints?: number
   fetchIfoData: () => void
   [PoolIds.poolBasic]?: PoolCharacteristics
   [PoolIds.poolUnlimited]: PoolCharacteristics
