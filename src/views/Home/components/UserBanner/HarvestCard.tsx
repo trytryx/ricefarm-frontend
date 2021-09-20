@@ -28,7 +28,7 @@ const HarvestCard = () => {
   const earningsText = t('%earningsBusd% to collect from %count% %farms%', {
     earningsBusd: earningsBusd.toString(),
     count: numFarmsToCollect > 0 ? numFarmsToCollect : '',
-    farms: numFarmsToCollect === 0 || numFarmsToCollect > 1 ? 'farms' : 'farm',
+    farms: numFarmsToCollect === 0 || numFarmsToCollect > 1 ? 'farms/pools' : 'farm/pool',
   })
   const [preText, toCollectText] = earningsText.split(earningsBusd.toString())
 
