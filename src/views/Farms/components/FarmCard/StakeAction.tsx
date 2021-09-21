@@ -8,7 +8,7 @@ import Balance from 'components/Balance'
 import { useTranslation } from 'contexts/Localization'
 import { useAppDispatch } from 'state'
 import { fetchFarmUserDataAsync } from 'state/farms'
-import { useLpTokenPrice } from 'state/farms/hooks'
+import { useLpTokenPrice, useBusdPriceFromPid } from 'state/farms/hooks'
 import { getBalanceAmount, getBalanceNumber, getFullDisplayBalance } from 'utils/formatBalance'
 import { DEFAULT_TOKEN_DECIMAL_PLACES, TESLA_SAFE_DECIMAL_PLACES } from 'config'
 import DepositModal from '../DepositModal'
@@ -22,6 +22,7 @@ interface FarmCardActionsProps {
   tokenName?: string
   pid?: number
   addLiquidityUrl?: string
+  isTokenOnly?: boolean
 }
 
 const IconButtonWrapper = styled.div`
@@ -37,6 +38,7 @@ const StakeAction: React.FC<FarmCardActionsProps> = ({
   tokenName,
   pid,
   addLiquidityUrl,
+  isTokenOnly
 }) => {
   const { t } = useTranslation()
   const { onStake } = useStakeFarms(pid)
@@ -45,6 +47,8 @@ const StakeAction: React.FC<FarmCardActionsProps> = ({
   const dispatch = useAppDispatch()
   const { account } = useWeb3React()
   const lpPrice = useLpTokenPrice(tokenName)
+  const tokenPrice = useBusdPriceFromPid(pid)
+  const price = isTokenOnly ? tokenPrice : lpPrice
 
   const handleStake = async (amount: string) => {
     await onStake(amount)
@@ -103,12 +107,13 @@ const StakeAction: React.FC<FarmCardActionsProps> = ({
     <Flex justifyContent="space-between" alignItems="center">
       <Flex flexDirection="column" alignItems="flex-start">
         <Heading color={stakedBalance.eq(0) ? 'textDisabled' : 'text'}>{displayBalance()}</Heading>
-        {stakedBalance.gt(0) && lpPrice.gt(0) && (
+        {stakedBalance.gt(0) && price.gt(0) && (
           <Balance
             fontSize="12px"
             color="textSubtle"
             decimals={2}
-            value={getBalanceNumber(lpPrice.times(stakedBalance))}
+            value={getBalanceNumber(price.times(stakedBalance),
+              pid === 1 ? TESLA_SAFE_DECIMAL_PLACES : DEFAULT_TOKEN_DECIMAL_PLACES,)}
             unit=" USD"
             prefix="~"
           />

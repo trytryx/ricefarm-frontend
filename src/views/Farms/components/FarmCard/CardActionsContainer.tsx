@@ -112,6 +112,7 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
   const renderApprovalOrStakeButton = () => {
     return isApproved ? (
       <StakeAction
+        isTokenOnly={farm.isTokenOnly}
         stakedBalance={stakedBalance}
         tokenBalance={tokenBalance}
         tokenName={farm.lpSymbol}
