@@ -38,7 +38,7 @@ const StakeAction: React.FC<FarmCardActionsProps> = ({
   tokenName,
   pid,
   addLiquidityUrl,
-  isTokenOnly
+  isTokenOnly,
 }) => {
   const { t } = useTranslation()
   const { onStake } = useStakeFarms(pid)
@@ -85,7 +85,7 @@ const StakeAction: React.FC<FarmCardActionsProps> = ({
         onClick={onPresentDeposit}
         disabled={['history', 'archived'].some((item) => location.pathname.includes(item))}
       >
-        {t('Stake LP')}
+        {t(isTokenOnly ? 'Stake' : 'Stake LP')}
       </Button>
     ) : (
       <IconButtonWrapper>
@@ -112,8 +112,10 @@ const StakeAction: React.FC<FarmCardActionsProps> = ({
             fontSize="12px"
             color="textSubtle"
             decimals={2}
-            value={getBalanceNumber(price.times(stakedBalance),
-              pid === 1 ? TESLA_SAFE_DECIMAL_PLACES : DEFAULT_TOKEN_DECIMAL_PLACES,)}
+            value={getBalanceNumber(
+              price.times(stakedBalance),
+              pid === 1 ? TESLA_SAFE_DECIMAL_PLACES : DEFAULT_TOKEN_DECIMAL_PLACES,
+            )}
             unit=" USD"
             prefix="~"
           />
