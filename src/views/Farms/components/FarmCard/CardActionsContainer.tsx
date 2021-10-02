@@ -68,7 +68,7 @@ interface FarmCardActionsProps {
 const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidityUrl }) => {
   const { t } = useTranslation()
   const [requestedApproval, setRequestedApproval] = useState(false)
-  const { pid, lpAddresses } = farm
+  const { pid, lpAddresses, tokenAddresses } = farm
   const {
     allowance: allowanceAsString = 0,
     tokenBalance: tokenBalanceAsString = 0,
@@ -80,7 +80,7 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
   const tokenBalance = new BigNumber(tokenBalanceAsString)
   const stakedBalance = new BigNumber(stakedBalanceAsString)
   const earnings = new BigNumber(earningsAsString)
-  const lpAddress = getAddress(lpAddresses)
+  const lpAddress = farm.isTokenOnly ? getAddress(tokenAddresses) : getAddress(lpAddresses)
   const isApproved = account && allowance && allowance.isGreaterThan(0)
   const dispatch = useAppDispatch()
 
