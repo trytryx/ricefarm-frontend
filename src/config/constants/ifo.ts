@@ -15,6 +15,36 @@ const teslaSafeBnbLpToken: Token = {
 }
 
 const ifos: Ifo[] = [
+  // live: 0x122F037584Db76c327884EEC8aa9b654FEbBF99e
+  {
+    id: 'paz',
+    address: '0x122F037584Db76c327884EEC8aa9b654FEbBF99e',
+    isActive: true,
+    name: 'Pazzive (PAZ)',
+    poolBasic: {
+      saleAmount: '120 Billion PAZ',
+      raiseAmount: '$200,000',
+      cakeToBurn: '$100,000',
+      distributionRatio: 0.4,
+      tokenOfferingPrice: 0.000001666666667,
+    },
+    poolUnlimited: {
+      saleAmount: '180 Billion PAZ',
+      raiseAmount: '$300,000',
+      cakeToBurn: '$150,000',
+      distributionRatio: 0.6,
+      tokenOfferingPrice: 0.000001666666667,
+    },
+    currency: teslaSafeBnbLpToken,
+    currency2: riceBnbLpToken,
+    token: tokens.pazzive,
+    releaseBlockNumber: 1634673600,
+    campaignId: '511100000',
+    articleUrl: 'https://paz.fuzion.team',
+    tokenOfferingPrice: 0.000001666666667,
+    tokenListingPrice: 0.000003333333333,
+    version: 2,
+  },
   /**
    * live: 0x50A1255A52B027C93ae5ED5042175BDdC16a320F
    * testnet 0xebCd54d2208980fB82034Ddec17776C407016AC7 starts in 1 year
@@ -28,7 +58,7 @@ const ifos: Ifo[] = [
   {
     id: 'epic',
     address: '0x50A1255A52B027C93ae5ED5042175BDdC16a320F',
-    isActive: true,
+    isActive: false,
     name: 'EpicBuy (EPIC)',
     poolBasic: {
       saleAmount: '120 Trillion EPIC',

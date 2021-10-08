@@ -81,6 +81,15 @@ const tokens = {
     symbol: 'BNB',
     projectLink: 'https://www.binance.com/',
   },
+  pazzive: {
+    symbol: 'PAZ',
+    address: {
+      56: '0x8C8B57F82b662553B2BdD053c7154Fe1821cC9C4', // currently epic
+      97: '0x61E4E99BD42475fadC700C9CD1e3d365682E906A',
+    },
+    decimals: 9,
+    projectLink: 'https://paz.fuzion.team',
+  },
   epic: {
     symbol: 'EPIC',
     address: {
