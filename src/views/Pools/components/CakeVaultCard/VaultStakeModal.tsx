@@ -6,7 +6,7 @@ import { useWeb3React } from '@web3-react/core'
 import { useAppDispatch } from 'state'
 import { BIG_TEN } from 'utils/bigNumber'
 import { usePriceCakeBusd } from 'state/farms/hooks'
-import { MEDIUM_GAS_LIMIT } from 'config'
+import { HIGH_GAS_LIMIT } from 'config'
 import { useCakeVault } from 'state/pools/hooks'
 import { useCakeVaultContract } from 'hooks/useContract'
 import useTheme from 'hooks/useTheme'
@@ -33,7 +33,7 @@ const StyledButton = styled(Button)`
 `
 
 const callOptions = {
-  gasLimit: MEDIUM_GAS_LIMIT,
+  gasLimit: HIGH_GAS_LIMIT,
 }
 
 const VaultStakeModal: React.FC<VaultStakeModalProps> = ({ pool, stakingMax, isRemovingStake = false, onDismiss }) => {
