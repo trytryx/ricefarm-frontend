@@ -82,7 +82,6 @@ const Achievement: React.FC<Props> = ({ ifo /* publicIfoData */ }) => {
           {t('Learn more about %title%', { title: campaignTitle })}
         </StyledLinkExternal>
         <StyledLinkExternal href={getBscScanLink(ifo.address, 'address')}>{t('View Contract')}</StyledLinkExternal>
-        {/*
         <StyledLink>
           <Button
             variant="text"
@@ -98,7 +97,6 @@ const Achievement: React.FC<Props> = ({ ifo /* publicIfoData */ }) => {
             <MetamaskIcon ml="4px" />
           </Button>
         </StyledLink>
-        */}
       </Flex>
     </Container>
   )
