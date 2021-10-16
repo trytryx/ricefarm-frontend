@@ -16,6 +16,7 @@ const teslaSafeBnbLpToken: Token = {
 
 const ifos: Ifo[] = [
   // live: 0x122F037584Db76c327884EEC8aa9b654FEbBF99e
+  // testnet: 0x99f1db68A1C35eCA772E35F04A47fb5edffe532E
   {
     id: 'paz',
     address: '0x122F037584Db76c327884EEC8aa9b654FEbBF99e',
