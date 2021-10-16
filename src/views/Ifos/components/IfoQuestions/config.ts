@@ -2,7 +2,7 @@ const config = [
   {
     title: 'What’s the difference between a TeslaSafe Sale (Limited) and Rice Sale (Unlimited)?',
     description: [
-      'In the TeslaSafe Sale, every user can commit a maximum of about 1000 USD worth of TeslaSafe-BNB LP Tokens. We calculate the maximum LP amount about 30 minutes before each IFO. The TeslaSafe Sale has no participation fee.',
+      'In the TeslaSafe Sale, every user can commit a maximum of about 2500 USD worth of TeslaSafe-BNB LP Tokens. We calculate the maximum LP amount about 30 minutes before each IFO. The TeslaSafe Sale has no participation fee.',
       'In the Rice Sale, there’s no limit to the amount of RICE-BNB LP Tokens you can commit. However, there’s a fee for participation: see below.',
       'In the TeslaSafe Sale, the price is slightly more favorable.',
     ],
