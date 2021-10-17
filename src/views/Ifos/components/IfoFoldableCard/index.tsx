@@ -167,7 +167,7 @@ const IfoFoldableCard: React.FC<IfoFoldableCardProps> = ({ ifo, publicIfoData, w
   useEffect(() => {
     const checkAllowance2 = async () => {
       try {
-        const response = await raisingTokenContract2.methods.allowance(account, contract.options.address).call()
+        const response = await raisingTokenContract2.allowance(account, contract.address)
         const currentAllowance = new BigNumber(response)
         setEnableStatus2(currentAllowance.lte(0) ? EnableStatus.DISABLED : EnableStatus.ENABLED)
       } catch (error) {
