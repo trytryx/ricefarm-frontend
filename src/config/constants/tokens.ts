@@ -84,10 +84,10 @@ const tokens = {
   pazzive: {
     symbol: 'PAZ',
     address: {
-      56: '0x169057Fe31590644f0a5f5C1279A22160a4c61Bb',
-      97: '0x825267B1b99355872D01C2642d12fE8377F36E3B',
+      56: '0xb9f5C03d733C9F7eBA6B81c48A55ef0bEBBB200A',
+      97: '0x0B036007dbbeAd58dA9469140E3B0a8E7e7bC4c6',
     },
-    decimals: 9,
+    decimals: 18,
     projectLink: 'https://paz.fuzion.team',
   },
   epic: {
