@@ -38,6 +38,7 @@ const IfoCardDetails: React.FC<IfoCardDetailsProps> = ({ poolId, ifo, publicIfoD
   const { t } = useTranslation()
   const { status, currencyPriceInUSD: currencyPriceInUSD1, currencyPriceInUSD2 } = publicIfoData
   const poolCharacteristic = publicIfoData[poolId]
+  const ifoPool = ifo[poolId]
   const burnText = poolId === 'poolBasic' ? 'TeslaSafe to Pledge:' : 'RICE to Burn:'
   const currencyPriceInUSD = poolId === 'poolBasic' ? currencyPriceInUSD1 : currencyPriceInUSD2 || currencyPriceInUSD1
 
@@ -64,7 +65,7 @@ const IfoCardDetails: React.FC<IfoCardDetailsProps> = ({ poolId, ifo, publicIfoD
           <FooterEntry label={t(burnText)} value={ifo[poolId].cakeToBurn} />
           <FooterEntry
             label={t('Price per %symbol%:', { symbol: ifo.token.symbol })}
-            value={`$${ifo.tokenOfferingPrice}`}
+            value={`$${ifoPool.tokenOfferingPrice || ifo.tokenOfferingPrice}`}
           />
         </>
       )

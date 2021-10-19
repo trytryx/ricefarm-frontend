@@ -17,6 +17,7 @@ const teslaSafeBnbLpToken: Token = {
 const ifos: Ifo[] = [
   // live: 0x122F037584Db76c327884EEC8aa9b654FEbBF99e
   // testnet: 0x99f1db68A1C35eCA772E35F04A47fb5edffe532E
+  // testnet: 0xF311B402c96B93eBB4aDa3660743f7A1EfC2B528
   {
     id: 'paz',
     address: '0x122F037584Db76c327884EEC8aa9b654FEbBF99e',
@@ -39,7 +40,7 @@ const ifos: Ifo[] = [
     currency: teslaSafeBnbLpToken,
     currency2: riceBnbLpToken,
     token: tokens.pazzive,
-    releaseBlockNumber: 1634673600,
+    releaseBlockNumber: 11996300,
     campaignId: '511100000',
     articleUrl: 'https://paz.fuzion.team',
     tokenOfferingPrice: 0.000001666666667,
