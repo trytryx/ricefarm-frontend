@@ -2,9 +2,9 @@ import { ContextApi } from 'contexts/Localization/types'
 import { PageMeta } from './types'
 
 export const DEFAULT_META: PageMeta = {
-  title: 'Ricefarm',
+  title: 'RiceFarm',
   description:
-    'Cheaper and faster than Uniswap? Discover Rice Farm, the leading DEX on Binance Smart Chain (BSC) with the best farms in DeFi.',
+    'The next evolution of yielc farming on BSC!',
   image: 'https://ricefarm.fi/images/logo.png',
 }
 
